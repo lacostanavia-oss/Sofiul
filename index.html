@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOFIUL - Autonomous Smart Ecosystem</title>
+    <title>SOFIUL - Fully Autonomous Smart Ecosystem</title>
     <meta name="theme-color" content="#070a12">
     <style>
         :root {
@@ -21,6 +21,7 @@
             background-color: var(--bg-color); color: var(--text-main);
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; padding-bottom: 40px;
+            transition: background-color 0.6s ease;
         }
         header {
             width: 100%; padding: 12px 0; text-align: center;
@@ -31,13 +32,9 @@
             border: 2px solid var(--accent-primary);
             box-shadow: 0 0 15px var(--glow-color);
             position: relative; overflow: hidden; background: #000; margin: 0 auto;
-            display: flex; align-items: center; justify-content: center; font-size: 3rem;
-            animation: pulseGlow 3s infinite ease-in-out;
         }
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 10px var(--glow-color); }
-            50% { box-shadow: 0 0 25px var(--accent-primary); }
-            100% { box-shadow: 0 0 10px var(--glow-color); }
+        .neon-container img {
+            position: absolute; width: 100%; height: 100%; top: -3%; left: -4.5%; object-fit: cover;
         }
         .container { width: 92%; max-width: 420px; margin: 15px auto; display: flex; flex-direction: column; }
         .card {
@@ -65,14 +62,15 @@
 <body>
 
     <header>
-        <div class="neon-container">🤖</div>
+        <div class="neon-container">
+            <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size: 3rem;">🤖</div>
+        </div>
     </header>
 
     <div class="container">
-        <!-- Panel de Identidad y Voces Únicas -->
+        <!-- Panel de Voces e Idiomas -->
         <div class="card">
-            <div class="card-title">✨ Personalización de Voz y Tono</div>
-            
+            <div class="card-title">🔊 Selector de Voz y Tono</div>
             <div class="input-group">
                 <label>Idioma Activo:</label>
                 <select id="langSelect" onchange="filterVoices()">
@@ -81,31 +79,24 @@
                     <option value="en">English (Vibrant & Dynamic)</option>
                 </select>
             </div>
-
             <div class="input-group">
-                <label>Seleccionar Timbre / Voz Específica:</label>
+                <label>Elige la voz del asistente:</label>
                 <select id="voiceSelect">
-                    <option value="">Cargando voces fluidas...</option>
+                    <option value="">Cargando voces...</option>
                 </select>
             </div>
-
-            <div class="input-group">
-                <label>Inyectar ID / Enlace de Voz Externa (Opcional):</label>
-                <input type="text" id="customVoiceInput" placeholder="Pega aquí código o ID de voz personalizada">
-            </div>
-
             <button class="action-button" onclick="testVoice()">Probar Tono Acogedor</button>
         </div>
 
-        <!-- Panel de Interacción en Directo -->
+        <!-- Panel de Interacción -->
         <div class="card">
-            <div class="card-title">⚡ Interacción Inteligente</div>
+            <div class="card-title">⚡ Interacción en Directo</div>
             <div class="input-group">
                 <label>Saludar o Agradecer a:</label>
-                <input type="text" id="usernameInput" placeholder="Ej. Mariana / Carlos">
+                <input type="text" id="usernameInput" placeholder="Ej. JuanPerez99">
             </div>
-            <button class="action-button" onclick="triggerGreeting()">Lanzar Saludo con Calidez</button>
-            <div id="statusText" class="status-box">Piloto automático inteligente activo (15s)</div>
+            <button class="action-button" onclick="triggerGreeting()">Enviar Saludo con Voz</button>
+            <div id="statusText" class="status-box">Piloto automático activo (15s)</div>
         </div>
     </div>
 
@@ -125,14 +116,12 @@
             voiceSelect.innerHTML = '';
             
             const filtered = voices.filter(v => v.lang.includes(selectedLang) || v.lang.startsWith(selectedLang));
-            const listToUse = filtered.length > 0 ? filtered : voices; // Respaldo si no encuentra exactas
+            const listToUse = filtered.length > 0 ? filtered : voices;
 
             listToUse.forEach((voice, index) => {
                 const option = document.createElement('option');
                 option.value = voices.indexOf(voice);
-                // Resaltar nombres que suelen ser más naturales (como Google o Natural)
-                let tag = voice.name.includes('Google') || voice.name.includes('Natural') || voice.name.includes('Female') ? '💎 [Recomendada]' : '';
-                option.textContent = `${voice.name} ${tag}`;
+                option.textContent = `${voice.name} (${voice.lang})`;
                 voiceSelect.appendChild(option);
             });
         }
@@ -149,45 +138,42 @@
             if (voices[selectedVoiceIndex]) {
                 utterance.voice = voices[selectedVoiceIndex];
             }
-            
-            // MODULACIÓN CLAVE PARA EVITAR VOZ SECA:
-            // Un tono ligeramente más alto (pitch) y una velocidad dinámica (rate) dan la sensación de sonrisa y cercanía.
-            utterance.pitch = 1.15; 
-            utterance.rate = 1.02;  
-            
+            // Modulación cálida para que no suene robótico ni seco
+            utterance.pitch = 1.12;
+            utterance.rate = 1.02;
             window.speechSynthesis.speak(utterance);
         }
 
         function testVoice() {
             const lang = langSelect.value;
             if (lang === 'pt') {
-                speak("¡Olá! Que alegria ter você por aqui. Vamos fazer uma live incrível hoje!");
+                speak("¡Olá! Que alegria ter você por aqui hoje.");
             } else if (lang === 'en') {
-                speak("Hello everyone! Welcome to the stream, let's make this session amazing.");
+                speak("Hello! Welcome to the stream, let's have a great time.");
             } else {
-                speak("¡Hola! Qué gusto saludarte. Vamos a pasar un momento genial y súper divertido en este directo.");
+                speak("¡Hola! Qué gusto saludarte, vamos a pasar un momento genial.");
             }
         }
 
         function triggerGreeting() {
-            const name = document.getElementById('usernameInput').value.trim() || "Amig@";
+            const name = document.getElementById('usernameInput').value.trim() || "Amigo";
             const lang = langSelect.value;
             let msg = "";
 
             if (lang === 'pt') {
-                msg = `¡Muito obrigado ${name} pelo carinho e apoio incrível! Seja muito bem-vindo à nossa família!`;
+                msg = `¡Muito obrigado ${name} pelo carinho e apoio incrível! Seja muito bem-vindo!`;
             } else if (lang === 'en') {
-                msg = `A huge thank you to ${name} for the amazing support! Welcome to the family!`;
+                msg = `A huge thank you to ${name} for the amazing support! Welcome!`;
             } else {
-                msg = `¡Muchísimas gracias ${name} por ese detalle tan hermoso y tu apoyo incondicional! ¡Qué alegría tenerte en la familia!`;
+                msg = `¡Muchísimas gracias ${name} por ese tremendo apoyo! ¡Bienvenidos a la familia!`;
             }
 
-            statusText.innerText = "Transmitiendo con calidez...";
+            statusText.innerText = "Reproduciendo saludo...";
             speak(msg);
-            setTimeout(() => { statusText.innerText = "Piloto automático inteligente activo (15s)"; }, 5000);
+            setTimeout(() => { statusText.innerText = "Piloto automático activo (15s)"; }, 4000);
         }
 
-        // Piloto automático anti-silencio ultra dinámico y acogedor
+        // Sistema Anti-Silencio (Cada 15s)
         let idleTimer = 0;
         setInterval(() => {
             idleTimer += 5;
@@ -198,28 +184,28 @@
 
                 if (lang === 'pt') {
                     phrases = [
-                        "¡Pessoal, deixem o seu like e compartilhem a live para crescer nossa comunidade!",
-                        "¡Que energia maravilhosa temos hoje no chat! Sejam todos muito bem-vindos.",
-                        "¡Vamos interagir família! Deixem nos comentários de onde vocês estão assistindo."
+                        "¡Pessoal, deixem o seu like e compartilhem a live!",
+                        "¡Que energia maravilhosa temos hoje no chat!",
+                        "¡Vamos interagir família, deixem suas mensagens!"
                     ];
                 } else if (lang === 'en') {
                     phrases = [
-                        "Hey everyone, don't forget to tap the screen and share the live!",
-                        "Such an incredible energy in the chat today, welcome everyone!",
-                        "Let's keep the energy high family, let's go for our goals!"
+                        "Hey everyone, don't forget to tap the screen!",
+                        "Such an incredible energy in the chat today!",
+                        "Let's keep the energy high family!"
                     ];
                 } else {
                     phrases = [
-                        "¡Mi gente hermosa, vamos a tocar la pantalla y compartir el directo para llegar a más metas!",
-                        "¡Qué buena vibra se siente en el chat el día de hoy, gracias por estar aquí!",
-                        "¡Activos todos en la familia, vamos con toda la energía a romperla hoy!"
+                        "¡Vamos equipo, compartan el directo y toquen la pantalla!",
+                        "¡Gracias a todos los que se van conectando, dejen su me gusta!",
+                        "¡Activos en el chat familia, vamos por más metas hoy!"
                     ];
                 }
 
                 const phrase = phrases[Math.floor(Math.random() * phrases.length)];
-                statusText.innerText = "IA Autónoma hablando...";
+                statusText.innerText = "Modo autónomo hablando...";
                 speak(phrase);
-                setTimeout(() => { statusText.innerText = "Piloto automático inteligente activo (15s)"; }, 5000);
+                setTimeout(() => { statusText.innerText = "Piloto automático activo (15s)"; }, 4000);
             }
         }, 5000);
 
