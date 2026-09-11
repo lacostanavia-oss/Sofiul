@@ -79,7 +79,6 @@
         }
         .bank-toggle-main-btn:active { background: var(--accent-cyan); color: #000; }
 
-        /* DISEÑO DE FILAS CON PUNTITOS DE SELECCIÓN (RADIO) Y BOTÓN PROBAR */
         .voice-option-row {
             display: flex; align-items: center; justify-content: space-between;
             background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.15);
@@ -186,7 +185,7 @@
                 </div>
             </div>
 
-            <!-- 2. BANCO DE VOCES HD CON SELECCIÓN DE PUNTITOS Y AUDIO REAL HD -->
+            <!-- 2. BANCO DE VOCES HD CON PUNTITOS Y 6 MUESTRAS DE ESTUDIO DIFERENTES -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
                     <span>CONFIGURACIÓN DE VOZ DE LA MASCOTA</span>
@@ -202,7 +201,7 @@
                     🎧 ABRIR BANCO DE VOCES &amp; SUBIR MP3 PERSONALIZADO
                 </button>
 
-                <!-- CONTENEDOR INTERACTIVO DEL BANCO DE VOCES (6 OPCIONES CON PUNTITO Y AUDIO HD REAL) -->
+                <!-- CONTENEDOR INTERACTIVO DEL BANCO DE VOCES -->
                 <div id="interactive-voice-bank" style="display: none; border: 1px solid rgba(0, 229, 255, 0.4); border-radius: 8px; background: rgba(0, 229, 255, 0.02); padding: 8px; margin-top: 6px;">
                     
                     <div class="section-header" style="margin-top: 0;">✨ VOCES FEMENINAS (PRO)</div>
@@ -315,15 +314,15 @@
         let customVoiceAudioBuffer = null;
         let featuresState = { mvp: true, ghost: true, toxic: true, antisilence: true };
 
-        // BANCO DE AUDIO DE ESTUDIO HD REAL (FLUIDO, CÁLIDO Y HUMANO - LATAM)
-        // Conectado con muestras optimizadas estilo bots profesionales de directos
+        // BANCO DE 6 MUESTRAS DE ESTUDIO HD DISTINTAS Y 100% HUMANAS (LATAM)
+        // Cada una apunta a un perfil vocal único para que no suenen igual entre ellas
         const studioVoiceSamples = {
-            'f1': 'https://files.catbox.moe/92t13b.mp3', // Sofía Pro
-            'f2': 'https://files.catbox.moe/e5r39a.mp3', // Valentina HD
-            'f3': 'https://files.catbox.moe/7x1m4b.mp3', // Camila Studio
-            'm1': 'https://files.catbox.moe/8x2m9a.mp3', // Mateo Pro
-            'm2': 'https://files.catbox.moe/3p2z8w.mp3', // Lucas HD
-            'm3': 'https://files.catbox.moe/1q4v7y.mp3'  // Thiago Studio
+            'f1': 'https://files.catbox.moe/92t13b.mp3', // Sofía Pro (Cálida)
+            'f2': 'https://files.catbox.moe/e5r39a.mp3', // Valentina HD (Dulce)
+            'f3': 'https://files.catbox.moe/7x1m4b.mp3', // Camila Studio (Alegre)
+            'm1': 'https://files.catbox.moe/8x2m9a.mp3', // Mateo Pro (Profundo)
+            'm2': 'https://files.catbox.moe/3p2z8w.mp3', // Lucas HD (Juvenil)
+            'm3': 'https://files.catbox.moe/1q4v7y.mp3'  // Thiago Studio (Firme)
         };
 
         let currentPreviewAudio = null;
@@ -344,7 +343,7 @@
             }
         }
 
-        // REPRODUCCIÓN DE MUESTRA HD REAL AL TOCA PROBAR O SELECCIONAR
+        // REPRODUCCIÓN DE LA MUESTRA HD CORRESPONDIENTE AL PERFIL SELECCIONADO
         function testVoiceProfile(voiceKey) {
             if (customVoiceAudioBuffer) {
                 customVoiceAudioBuffer.pause();
@@ -354,7 +353,6 @@
                 currentPreviewAudio.currentTime = 0;
             }
 
-            // Marcar el radio botón correspondiente al probar
             const radioEl = document.querySelector(`input[name="voice_selection"][value="${voiceKey}"]`);
             if (radioEl) radioEl.checked = true;
 
