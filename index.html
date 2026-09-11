@@ -65,10 +65,10 @@
         }
         
         .file-upload-btn {
-            display: block; width: 100%; background: rgba(154, 43, 162, 0.15);
-            border: 1px dashed rgba(154, 43, 162, 0.5); color: #e2b7ff; padding: 5px 6px;
+            display: block; width: 100%; background: rgba(154, 43, 162, 0.2);
+            border: 1px dashed rgba(154, 43, 162, 0.6); color: #e2b7ff; padding: 6px;
             border-radius: 6px; text-align: center; font-size: 0.65rem; font-weight: bold;
-            cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 4px;
+            cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 5px;
         }
 
         .toggle-row {
@@ -102,7 +102,7 @@
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
             color: #000; border: none; border-radius: 6px; padding: 10px 6px;
             font-size: 0.7rem; font-weight: bold; text-align: center; cursor: pointer;
-            text-transform: uppercase; font-style: italic; width: 100%;
+            text-transform: uppercase; font-style: italic; width: 100%; box-sizing: border-box;
         }
         .sfx-btn:active { transform: scale(0.95); opacity: 0.8; }
 
@@ -143,7 +143,7 @@
     </header>
 
     <div class="container">
-        <!-- BOTÓN DE ACCESO AL MANDO EN VIVO -->
+        <!-- BOTÓN ROJIZO DE ACCESO AL MANDO EN VIVO -->
         <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
                 🚀 PANEL DE CONTROL &amp; MANDO EN VIVO
@@ -153,7 +153,7 @@
             </button>
         </div>
 
-        <!-- PANELES DE CONFIGURACIÓN PRINCIPALES (BOTONES 100% FUNCIONALES ON/OFF) -->
+        <!-- PANELES DE CONFIGURACIÓN PRINCIPALES (LIMPIOS) -->
         <div id="config-panels">
             <!-- 1. ESTADO DE CUENTA Y SEGURIDAD -->
             <div class="card" style="border-color: rgba(0, 229, 255, 0.4);">
@@ -213,15 +213,6 @@
                         <option value="en">English (Global - Ultra nítido)</option>
                     </select>
                 </div>
-                
-                <div class="input-group" style="margin-top: 6px; border-top: 1px dashed rgba(154, 43, 162, 0.4); padding-top: 6px;">
-                    <label style="color: #e2b7ff; font-weight: bold;">📁 Clonación de Voz Personalizada (Opcional):</label>
-                    <label class="file-upload-btn">
-                        📁 Subir archivo de voz (.mp3 / .wav)
-                        <input type="file" id="voice-file" style="display: none;" accept="audio/*">
-                    </label>
-                    <div id="voice-file-name" style="font-size: 0.65rem; color: #e2b7ff; font-style: italic; margin-top: 3px;">Ningún archivo cargado</div>
-                </div>
             </div>
 
             <!-- 4. CONEXIÓN DIRECTA SPOTIFY LIVE BACKGROUND -->
@@ -239,7 +230,7 @@
                 </div>
             </div>
 
-            <!-- 5. ANIMACIONES MVP & FANTASMAS (BOTONES INTERACTIVOS ON/OFF) -->
+            <!-- 5. ANIMACIONES MVP & FANTASMAS (BOTONES INTERACTIVOS) -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>ANIMACIONES MVP &amp; FANTASMAS</span>
@@ -255,7 +246,7 @@
                 </div>
             </div>
 
-            <!-- 6. IA EMOCIONAL & ANTISILENCIO (BOTONES INTERACTIVOS ON/OFF) -->
+            <!-- 6. IA EMOCIONAL & ANTISILENCIO (BOTONES INTERACTIVOS) -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>IA EMOCIONAL &amp; ANTISILENCIO</span>
@@ -287,7 +278,7 @@
             <button class="action-button" id="main-action-btn">GUARDAR Y LANZAR SOFIUL</button>
         </div>
 
-        <!-- PANTALLA DE CONTROL EN VIVO (MANDO DIRECTO CON BOTONES DE SUBIDA INTERNOS) -->
+        <!-- PANTALLA DE CONTROL EN VIVO (DENTRO DEL BOTÓN ROJIZO: CON BOTONES Y SUBIDA DE AUDIO INDEPENDIENTE) -->
         <div id="live-control-panel" class="card" style="display: none; border-color: #ff2a5f; background: rgba(11, 20, 36, 0.98);">
             <div class="card-title" style="color: #ff2a5f;">
                 <span>🔴 MANDO DE TRANSMISIÓN EN VIVO (SFX &amp; CONTROLES)</span>
@@ -295,7 +286,7 @@
             </div>
             
             <div style="font-size: 0.65rem; color: #fff; margin-bottom: 6px; font-style: italic;">
-                🎮 Toca el botón para disparar el efecto o sube tu propio audio personalizado (.mp3/.wav) debajo de cada uno:
+                🎮 Toca el botón para disparar el efecto o sube tu propio audio personalizado (.mp3/.wav) para cada comando:
             </div>
 
             <div class="sfx-grid">
@@ -357,10 +348,8 @@
 
     <script>
         let voicesList = [];
-        let globalClonedVoice = null;
         let buttonCustomAudios = { welcome: null, hype: null, laugh: null, win: null };
         
-        // Estado de funciones operativas
         let featuresState = {
             mvp: true,
             ghost: true,
@@ -374,7 +363,7 @@
             if (featuresState[featureKey]) {
                 btn.classList.add('active');
                 btn.innerText = featureKey === 'toxic' ? 'SMART' : 'ON';
-                speakCrystalHD(`Función ${featureKey} activada con éxito.`, 'es', 'female-hd');
+                speakCrystalHD(`Función ${featureKey} activada.`, 'es', 'female-hd');
             } else {
                 btn.classList.remove('active');
                 btn.innerText = 'OFF';
@@ -401,12 +390,6 @@
         }
 
         function speakCrystalHD(text, explicitLang = 'auto-poly', gender = 'female-hd') {
-            if (globalClonedVoice) {
-                globalClonedVoice.currentTime = 0;
-                globalClonedVoice.play().catch(e => console.log("Reproduciendo voz clonada"));
-                return;
-            }
-
             if (!window.speechSynthesis) return;
             window.speechSynthesis.cancel();
             
@@ -492,13 +475,9 @@
             const botGenderSelect = document.getElementById("bot-voice-gender");
             const botLangSelect = document.getElementById("bot-lang");
             
-            const voiceFileInput = document.getElementById("voice-file");
-            const voiceFileName = document.getElementById("voice-file-name");
-            
             const spotifyInput = document.getElementById("spotify-link");
             const spotifyIframe = document.getElementById("spotify-iframe");
 
-            // Cargar datos y estados guardados
             if(localStorage.getItem("sofiul_email")) emailInput.value = localStorage.getItem("sofiul_email");
             if(localStorage.getItem("sofiul_tiktok")) tiktokInput.value = localStorage.getItem("sofiul_tiktok");
             if(localStorage.getItem("sofiul_assistant")) assistantInput.value = localStorage.getItem("sofiul_assistant");
@@ -527,21 +506,14 @@
                 updateSpotifyEmbed(localStorage.getItem("sofiul_spotify"));
             }
 
-            voiceFileInput.addEventListener("change", function() {
-                if(this.files && this.files[0]) {
-                    const file = this.files[0];
-                    globalClonedVoice = new Audio(URL.createObjectURL(file));
-                    voiceFileName.innerText = "📁 Archivo cargado: " + file.name;
-                }
-            });
-
+            // Asignación de audios personalizados dentro del panel rojizo del mando en vivo
             document.querySelectorAll('.btn-audio-file').forEach(input => {
                 input.addEventListener('change', function() {
                     const btnType = this.getAttribute('data-btn');
                     if(this.files && this.files[0]) {
                         const file = this.files[0];
                         buttonCustomAudios[btnType] = new Audio(URL.createObjectURL(file));
-                        document.getElementById('txt-' + btnType).innerText = "🎵 " + file.name.substring(0, 12) + "...";
+                        document.getElementById('txt-' + btnType).innerText = "🎵 " + file.name.substring(0, 10) + "...";
                     }
                 });
             });
@@ -586,12 +558,12 @@
                 localStorage.setItem("sofiul_lang", botLangSelect.value);
 
                 const nameAsistente = assistantInput.value.trim() || "Sofiul";
-                speakCrystalHD(`¡Configuración guardada y funciones activas! Hola, soy ${nameAsistente}, lista para tu transmisión en vivo.`, botLangSelect.value, botGenderSelect.value);
+                speakCrystalHD(`¡Configuración guardada! Hola, soy ${nameAsistente}, lista para tu transmisión.`, botLangSelect.value, botGenderSelect.value);
 
-                alert("¡Configuración guardada con comandos interactivos listos!");
+                alert("¡Configuración guardada correctamente con comandos interactivos!");
             });
 
-            // Piloto automático inteligente y modo antisilencio (Funciona si está activo)
+            // Piloto automático inteligente (Modo Antisilencio) cada 15 segundos
             setInterval(() => {
                 if (liveControlPanel.style.display === "block" && featuresState.antisilence) {
                     const mode = botLangSelect.value;
