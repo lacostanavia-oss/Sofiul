@@ -90,7 +90,7 @@
             border: 1px solid var(--accent-cyan); border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 5px;
         }
         
-        /* ESTILO IDÉNTICO AL DE LA IMAGEN REFERENCIA */
+        /* GRILLA DE BOTONES DE CONTROL VISIBLE SIEMPRE */
         .sfx-grid-embedded {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
         }
@@ -144,28 +144,27 @@
     </header>
 
     <div class="container">
-        <!-- BOTÓN ROJIZO DE INICIO QUE DESPLIEGA EL MANDO AQUÍ ADENTRO -->
-        <div class="live-mode-banner" id="banner-trigger-container">
+        <!-- BOTÓN ROJIZO PRINCIPAL -->
+        <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
                 🚀 PANEL DE CONTROL &amp; MANDO EN VIVO
             </div>
-            <button class="action-button" id="toggle-live-view" style="margin-top: 0; background: linear-gradient(135deg, #ff2a5f, var(--accent-cyan)); color: #fff; font-size: 0.8rem;">
-                ⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES
+            <button class="action-button" style="margin-top: 0; background: linear-gradient(135deg, #ff2a5f, var(--accent-cyan)); color: #fff; font-size: 0.8rem; pointer-events: none;">
+                ⚡ MANDO DE TRANSMISIÓN ACTIVO
             </button>
         </div>
 
-        <!-- MANDO DE TRANSMISIÓN EMBEBIDO (APARECE JUSTO AQUÍ ADENTRO AL PRESIONAR EL BOTÓN ROJIZO) -->
-        <div id="embedded-live-panel" class="card" style="display: none; border-color: #ff2a5f; background: rgba(11, 20, 36, 0.99);">
+        <!-- MANDO DE TRANSMISIÓN VISIBLE DESDE EL PRIMER MOMENTO (CON BOTONES Y SUBIDA DE ARCHIVOS) -->
+        <div class="card" style="border-color: #ff2a5f; background: rgba(11, 20, 36, 0.99);">
             <div class="card-title" style="color: #ff2a5f;">
                 <span>🔴 MANDO DE TRANSMISIÓN EN VIVO</span>
                 <span class="status-badge" style="background: rgba(255, 42, 95, 0.2); color: #ff2a5f;">EN DIRECTO</span>
             </div>
             
             <div style="font-size: 0.65rem; color: #a19bc8; margin-bottom: 6px; font-style: italic;">
-                🎮 Botones de Control de Voz &amp; Efectos (Toca para lanzar o sube tu propio audio en cada uno):
+                🎮 Botones de Control de Voz &amp; Efectos (Sube tu audio personalizado en cada botón antes de conectar):
             </div>
 
-            <!-- GRILLA IDÉNTICA A TU REFERENCIA CON OPCIÓN DE SUBIDA EN CADA BOTÓN -->
             <div class="sfx-grid-embedded">
                 <!-- 1. BIENVENIDA -->
                 <div class="sfx-box-embedded">
@@ -216,14 +215,10 @@
                 <button class="spotify-ctrl-btn" onclick="controlSpotify('pause')">⏸ PAUSAR</button>
                 <button class="spotify-ctrl-btn" onclick="controlSpotify('next')">⏭ SIGUIENTE</button>
             </div>
-
-            <button class="action-button" id="exit-live-view" style="margin-top: 12px; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); font-size: 0.75rem;">
-                ⚙️ VOLVER A AJUSTES
-            </button>
         </div>
 
-        <!-- PANELES DE CONFIGURACIÓN PRINCIPALES -->
-        <div id="config-panels" style="display: block;">
+        <!-- PANELES DE CONFIGURACIÓN -->
+        <div id="config-panels">
             <!-- 1. ESTADO DE CUENTA Y SEGURIDAD -->
             <div class="card" style="border-color: rgba(0, 229, 255, 0.4);">
                 <div class="card-title" style="color: var(--accent-cyan);">
@@ -299,7 +294,7 @@
                 </div>
             </div>
 
-            <!-- 5. ANIMACIONES MVP & FANTASMAS (BOTONES INTERACTIVOS) -->
+            <!-- 5. ANIMACIONES MVP & FANTASMAS -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>ANIMACIONES MVP &amp; FANTASMAS</span>
@@ -315,7 +310,7 @@
                 </div>
             </div>
 
-            <!-- 6. IA EMOCIONAL & ANTISILENCIO (BOTONES INTERACTIVOS) -->
+            <!-- 6. IA EMOCIONAL & ANTISILENCIO -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>IA EMOCIONAL &amp; ANTISILENCIO</span>
@@ -344,7 +339,7 @@
                 </div>
             </div>
 
-            <button class="action-button" id="main-action-btn">GUARDAR Y LANZAR SOFIUL</button>
+            <button class="action-button" id="main-action-btn">GUARDAR Y CONECTAR SOFIUL</button>
         </div>
     </div>
 
@@ -451,11 +446,6 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             const actionBtn = document.getElementById("main-action-btn");
-            const toggleLiveBtn = document.getElementById("toggle-live-view");
-            const exitLiveBtn = document.getElementById("exit-live-view");
-            const embeddedLivePanel = document.getElementById("embedded-live-panel");
-            const configPanels = document.getElementById("config-panels");
-            
             const emailInput = document.getElementById("user-email");
             const tiktokInput = document.getElementById("tiktok-user");
             const assistantInput = document.getElementById("assistant-name");
@@ -465,21 +455,6 @@
             
             const spotifyInput = document.getElementById("spotify-link");
             const spotifyIframe = document.getElementById("spotify-iframe");
-
-            // APERTURA EMBEBIDA DIRECTA EN EL INICIO AL TOCAR EL BOTÓN ROJIZO
-            if(toggleLiveBtn && embeddedLivePanel) {
-                toggleLiveBtn.addEventListener("click", function() {
-                    embeddedLivePanel.style.display = "block";
-                    embeddedLivePanel.scrollIntoView({ behavior: 'smooth' });
-                });
-            }
-
-            if(exitLiveBtn && embeddedLivePanel) {
-                exitLiveBtn.addEventListener("click", function() {
-                    embeddedLivePanel.style.display = "none";
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
 
             // Carga de datos guardados
             if(localStorage.getItem("sofiul_email")) emailInput.value = localStorage.getItem("sofiul_email");
@@ -510,7 +485,7 @@
                 updateSpotifyEmbed(localStorage.getItem("sofiul_spotify"));
             }
 
-            // Asignación de audios personalizados directo en cada botón del panel embebido
+            // Asignación de audios personalizados directo en cada botón
             document.querySelectorAll('.btn-audio-file').forEach(input => {
                 input.addEventListener('change', function() {
                     const btnType = this.getAttribute('data-btn');
@@ -550,13 +525,13 @@
                 localStorage.setItem("sofiul_lang", botLangSelect.value);
 
                 const nameAsistente = assistantInput.value.trim() || "Sofiul";
-                speakCrystalHD(`¡Configuración guardada! Hola, soy ${nameAsistente}, lista para tu directo.`, botLangSelect.value, botGenderSelect.value);
+                speakCrystalHD(`¡Configuración guardada y lista para TikTok Live! Hola, soy ${nameAsistente}.`, botLangSelect.value, botGenderSelect.value);
                 alert("¡Configuración guardada correctamente!");
             });
 
             // Piloto automático inteligente (Modo Antisilencio)
             setInterval(() => {
-                if (embeddedLivePanel.style.display === "block" && featuresState.antisilence) {
+                if (featuresState.antisilence) {
                     const mode = botLangSelect.value;
                     const gender = botGenderSelect.value;
                     let frasesAuto = [
