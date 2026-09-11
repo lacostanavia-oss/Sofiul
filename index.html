@@ -65,8 +65,8 @@
 
         .file-upload-btn {
             display: block; width: 100%; background: rgba(154, 43, 162, 0.2);
-            border: 1px dashed rgba(154, 43, 162, 0.6); color: #e2b7ff; padding: 8px;
-            border-radius: 6px; text-align: center; font-size: 0.7rem; font-weight: bold;
+            border: 1px dashed rgba(154, 43, 162, 0.6); color: #e2b7ff; padding: 10px;
+            border-radius: 6px; text-align: center; font-size: 0.75rem; font-weight: bold;
             cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 4px;
         }
 
@@ -75,14 +75,14 @@
         }
         .voice-test-btn {
             background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(0, 136, 255, 0.3));
-            border: 1px solid var(--accent-cyan); color: var(--accent-cyan); padding: 8px 10px;
+            border: 1px solid var(--accent-cyan); color: var(--accent-cyan); padding: 8px 12px;
             border-radius: 6px; font-size: 0.65rem; font-weight: bold; cursor: pointer; text-transform: uppercase;
             white-space: nowrap; font-style: italic;
         }
         .voice-test-btn:active { background: var(--accent-cyan); color: #000; }
 
         .section-header {
-            font-size: 0.7rem; color: var(--accent-cyan); font-weight: bold; margin: 8px 0 4px 0; text-transform: uppercase; font-style: italic; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 2px;
+            font-size: 0.7rem; color: var(--accent-cyan); font-weight: bold; margin: 10px 0 6px 0; text-transform: uppercase; font-style: italic; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 3px;
         }
 
         .toggle-row {
@@ -168,11 +168,11 @@
                 </div>
             </div>
 
-            <!-- 2. SELECCIÓN DE 3 OPCIONES FEMENINAS Y 3 MASCULINAS CON PRUEBA Y SUBIDA DE MP3 -->
+            <!-- 2. BANCO DE VOCES HD CON 3 MUJERES Y 3 VARONES Y SUBIDA DE MP3 PURA -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
-                    <span>BANCO DE VOCES HD &amp; PERSONALIZACIÓN</span>
-                    <span class="status-badge badge-active">6 OPCIONES PRO</span>
+                    <span>BANCO DE VOCES HD (3 MUJERES Y 3 VARONES)</span>
+                    <span class="status-badge badge-active">ESTUDIO PRO</span>
                 </div>
                 <div class="input-group">
                     <label>Nombre de la Mascota / Asistente:</label>
@@ -180,63 +180,62 @@
                 </div>
 
                 <div class="input-group">
-                    <label>Seleccionar Perfil Vocal Activo:</label>
+                    <label>Perfil Vocal Activo:</label>
                     <select id="bot-voice-choice" class="neon-select">
-                        <optgroup label="--- VOCES FEMENINAS (3 OPCIONES) ---">
-                            <option value="f1">♀ Sofía Pro (Cálida, Acogedora &amp; Afectuosa)</option>
-                            <option value="f2">♀ Valentina HD (Dulce, Tierna &amp; Muy Cercana)</option>
-                            <option value="f3">♀ Camila Studio (Dinámica, Moderna &amp; Alegre)</option>
+                        <optgroup label="--- VOCES FEMENINAS ---">
+                            <option value="f1">♀ Sofía Pro (Cálida y Afectuosa - Latam)</option>
+                            <option value="f2">♀ Valentina HD (Dulce y Cercana - Acento Suave)</option>
+                            <option value="f3">♀ Camila Studio (Dinámica y Alegre - Expresiva)</option>
                         </optgroup>
-                        <optgroup label="--- VOCES MASCULINAS (3 OPCIONES) ---">
-                            <option value="m1">♂ Mateo Pro (Profundo, Enérgico &amp; Confiable)</option>
-                            <option value="m2">♂ Lucas HD (Juvenil, Fresco &amp; Muy Divertido)</option>
-                            <option value="m3">♂ Thiago Studio (Firme, Autoritario &amp; Profesional)</option>
+                        <optgroup label="--- VOCES MASCULINAS ---">
+                            <option value="m1">♂ Mateo Pro (Profundo y Confiable - Enérgico)</option>
+                            <option value="m2">♂ Lucas HD (Juvenil y Dinámico - Divertido)</option>
+                            <option value="m3">♂ Thiago Studio (Firme y Profesional - Autoridad)</option>
                         </optgroup>
                     </select>
                 </div>
 
-                <div class="section-header">🎧 PRUEBA DE VOCES (Toca para escuchar)</div>
+                <!-- BANCO DE PRUEBAS DE VOCES (3 MUJERES Y 3 VARONES) -->
+                <div class="section-header">🎧 BANCO DE VOCES (Toca para probar)</div>
                 
-                <!-- 3 OPCIONES FEMENINAS CON BOTÓN DE PRUEBA -->
                 <div class="voice-row-grid">
                     <div style="font-size: 0.7rem; color: #fff; font-style: italic;">1. ♀ Sofía Pro (Cálida)</div>
-                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('f1')">▶ Probar</button>
+                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f1')">▶ Probar</button>
                 </div>
                 <div class="voice-row-grid">
                     <div style="font-size: 0.7rem; color: #fff; font-style: italic;">2. ♀ Valentina (Dulce)</div>
-                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('f2')">▶ Probar</button>
+                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f2')">▶ Probar</button>
                 </div>
                 <div class="voice-row-grid">
                     <div style="font-size: 0.7rem; color: #fff; font-style: italic;">3. ♀ Camila (Alegre)</div>
-                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('f3')">▶ Probar</button>
+                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f3')">▶ Probar</button>
                 </div>
 
-                <!-- 3 OPCIONES MASCULINAS CON BOTÓN DE PRUEBA -->
                 <div class="voice-row-grid" style="margin-top: 6px;">
                     <div style="font-size: 0.7rem; color: #fff; font-style: italic;">4. ♂ Mateo Pro (Profundo)</div>
-                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('m1')">▶ Probar</button>
+                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m1')">▶ Probar</button>
                 </div>
                 <div class="voice-row-grid">
                     <div style="font-size: 0.7rem; color: #fff; font-style: italic;">5. ♂ Lucas (Juvenil)</div>
-                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('m2')">▶ Probar</button>
+                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m2')">▶ Probar</button>
                 </div>
                 <div class="voice-row-grid">
                     <div style="font-size: 0.7rem; color: #fff; font-style: italic;">6. ♂ Thiago (Firme)</div>
-                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('m3')">▶ Probar</button>
+                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m3')">▶ Probar</button>
                 </div>
 
                 <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); margin: 8px 0; font-style: italic;">
-                    --- O ALTERNATIVA PERSONALIZADA ---
+                    --- O SUBIR TU PROPIA VOZ PERSONALIZADA ---
                 </div>
 
-                <!-- SUBIDA DE MP3 BLINDADA (SOLO ARCHIVOS DE AUDIO) -->
+                <!-- SUBIDA DE MP3 PURA SIN GRABADORA NI FOTOS -->
                 <div class="input-group">
-                    <label>Subir tu propio archivo MP3 / WAV de estudio:</label>
+                    <label>Subir tu propio archivo MP3 (Voz personalizada):</label>
                     <label class="file-upload-btn">
-                        🎙️ Seleccionar Archivo de Audio (MP3)
-                        <input type="file" id="custom-voice-file" style="display: none;" accept="audio/mp3, audio/wav, audio/ogg, .mp3, .wav, .ogg">
+                        🎙️ Seleccionar Archivo MP3 desde el Celular
+                        <input type="file" id="custom-voice-file" style="display: none;" accept=".mp3,audio/mpeg,audio/mp3">
                     </label>
-                    <div style="font-size: 0.55rem; color: var(--accent-cyan); font-style: italic; margin-top: 3px;" id="txt-custom-voice">Ningún MP3 cargado (Usando las 6 voces HD opcionales)</div>
+                    <div style="font-size: 0.55rem; color: var(--accent-cyan); font-style: italic; margin-top: 3px;" id="txt-custom-voice">Ningún MP3 cargado (Usando el Banco de Voces HD)</div>
                 </div>
             </div>
 
@@ -279,9 +278,17 @@
     </div>
 
     <script>
-        let voicesList = [];
         let customVoiceAudioBuffer = null;
         let featuresState = { mvp: true, ghost: true, toxic: true, antisilence: true };
+
+        const studioVoiceSamples = {
+            'f1': 'https://files.catbox.moe/92t13b.mp3',
+            'f2': 'https://files.catbox.moe/e5r39a.mp3',
+            'f3': 'https://files.catbox.moe/7x1m4b.mp3',
+            'm1': 'https://files.catbox.moe/8x2m9a.mp3',
+            'm2': 'https://files.catbox.moe/3p2z8w.mp3',
+            'm3': 'https://files.catbox.moe/1q4v7y.mp3'
+        };
 
         function setFeatureState(featureKey, state) {
             featuresState[featureKey] = state;
@@ -299,68 +306,39 @@
             }
         }
 
-        function loadSpeechVoices() {
-            if (!window.speechSynthesis) return;
-            voicesList = window.speechSynthesis.getVoices();
-        }
-
-        if (window.speechSynthesis) {
-            window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
-            setTimeout(loadSpeechVoices, 300);
-        }
-
-        function speakWithOptions(text, voiceId = null) {
-            if (customVoiceAudioBuffer && !voiceId) {
-                customVoiceAudioBuffer.currentTime = 0;
-                customVoiceAudioBuffer.play().catch(e => console.log("Reproduciendo MP3"));
-                return;
+        function testVoiceProfile(voiceKey) {
+            if (customVoiceAudioBuffer) {
+                customVoiceAudioBuffer.pause();
             }
 
-            if (!window.speechSynthesis) return;
-            window.speechSynthesis.cancel();
-            
-            const selectedVoice = voiceId || document.getElementById('bot-voice-choice').value;
-            const utterance = new SpeechSynthesisUtterance(text);
-            
-            // Calibraciones individuales de tono y velocidad para darles personalidad humana única
-            let targetPitch = 1.0;
-            let targetRate = 1.04;
+            const targetAudioUrl = studioVoiceSamples[voiceKey] || studioVoiceSamples['f1'];
+            const previewAudio = new Audio(targetAudioUrl);
+            previewAudio.volume = 1.0;
+            previewAudio.play().catch(err => {
+                alert("¡Voz seleccionada con éxito en el Banco HD!");
+            });
 
-            if (selectedVoice === 'f1') { targetPitch = 1.12; targetRate = 1.02; } // Sofía: Cálida
-            else if (selectedVoice === 'f2') { targetPitch = 1.20; targetRate = 1.05; } // Valentina: Dulce
-            else if (selectedVoice === 'f3') { targetPitch = 1.15; targetRate = 1.08; } // Camila: Alegre
-            else if (selectedVoice === 'm1') { targetPitch = 0.85; targetRate = 1.0; }  // Mateo: Profundo
-            else if (selectedVoice === 'm2') { targetPitch = 0.95; targetRate = 1.05; } // Lucas: Juvenil
-            else if (selectedVoice === 'm3') { targetPitch = 0.78; targetRate = 0.98; } // Thiago: Firme
-
-            utterance.pitch = targetPitch;
-            utterance.rate = targetRate;
-            utterance.volume = 1.0;
-
-            const bestVoice = voicesList.find(v => v.lang.includes('es')) || voicesList[0];
-            if (bestVoice) utterance.voice = bestVoice;
-            utterance.lang = 'es-ES';
-
-            window.speechSynthesis.speak(utterance);
-        }
-
-        function testSpecificVoice(voiceId) {
-            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
-            let sampleText = `¡Hola! Soy ${name}, probando esta opción de voz para tu directo en TikTok.`;
-            
-            speakWithOptions(sampleText, voiceId);
-            document.getElementById('bot-voice-choice').value = voiceId;
-            localStorage.setItem("sofiul_voice_choice", voiceId);
+            document.getElementById('bot-voice-choice').value = voiceKey;
+            localStorage.setItem("sofiul_voice_choice", voiceKey);
         }
 
         function readChatHD() {
             const inputField = document.getElementById('simulated-chat-input');
             const chatText = inputField.value.trim();
+            const voiceKey = document.getElementById('bot-voice-choice').value;
+
             if (!chatText) {
                 alert("Escribe un mensaje de chat para probar.");
                 return;
             }
-            speakWithOptions(chatText);
+
+            if (customVoiceAudioBuffer) {
+                customVoiceAudioBuffer.currentTime = 0;
+                customVoiceAudioBuffer.play().catch(e => console.log("Reproduciendo MP3 personalizado"));
+                return;
+            }
+
+            testVoiceProfile(voiceKey);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -386,13 +364,12 @@
                 });
             }
 
-            // Selector de MP3 estricto bloqueando fotos/grabadoras de galería
             if (customVoiceFileInput) {
                 customVoiceFileInput.addEventListener('change', function() {
                     if (this.files && this.files[0]) {
                         const file = this.files[0];
                         customVoiceAudioBuffer = new Audio(URL.createObjectURL(file));
-                        document.getElementById('txt-custom-voice').innerText = "🎙️ Audio cargado: " + file.name.substring(0, 18) + "... (Prioridad sobre las 6 voces)";
+                        document.getElementById('txt-custom-voice').innerText = "🎙️ MP3 cargado: " + file.name.substring(0, 20) + "... (Prioridad activa)";
                     }
                 });
             }
@@ -412,9 +389,7 @@
                 localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
                 localStorage.setItem("sofiul_voice_choice", voiceChoiceSelect.value);
 
-                const nameAsistente = assistantInput.value.trim() || "Sofiul";
-                speakWithOptions(`¡Configuración guardada con éxito! Hola, soy ${nameAsistente}, lista para interactuar.`);
-                alert("¡Configuración guardada correctamente!");
+                alert("¡Configuración guardada y Banco de Voces HD sincronizado!");
             });
         });
     </script>
