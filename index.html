@@ -77,9 +77,11 @@
             padding: 8px 10px; border-radius: 6px; margin-top: 5px; font-style: italic; font-size: 0.8rem;
         }
         
+        /* BOTÓN DE INTERRUPTOR ON/OFF */
         .toggle-btn {
             background: rgba(255, 42, 95, 0.2); border: 1px solid #ff2a5f; color: #ff2a5f;
-            padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            padding: 4px 14px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            transition: all 0.2s ease;
         }
         .toggle-btn.active {
             background: rgba(0, 229, 255, 0.2); border-color: var(--accent-cyan); color: var(--accent-cyan);
@@ -143,7 +145,7 @@
     </header>
 
     <div class="container">
-        <!-- CONTENEDOR PRINCIPAL DEL BOTÓN ROJIZO CON EL ACORDEÓN INTERNO -->
+        <!-- BOTÓN ROJIZO DE INICIO CON ACORDEÓN -->
         <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
                 🚀 PANEL DE CONTROL &amp; MANDO EN VIVO
@@ -153,7 +155,7 @@
                 ⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES
             </button>
 
-            <!-- MANDO DE TRANSMISIÓN OCULTO POR DEFECTO -->
+            <!-- MANDO DE TRANSMISIÓN OCULTO HASTA HACER CLIC -->
             <div id="embedded-live-panel" style="display: none; margin-top: 10px; border: 1px solid #ff2a5f; border-radius: 8px; background: rgba(11, 20, 36, 0.98); padding: 10px; text-align: left;">
                 <div class="card-title" style="color: #ff2a5f;">
                     <span>🔴 MANDO DE TRANSMISIÓN EN VIVO</span>
@@ -294,7 +296,7 @@
                 </div>
             </div>
 
-            <!-- 5. ANIMACIONES MVP & FANTASMAS (BOTONES INTERACTIVOS FUNCIONALES) -->
+            <!-- 5. ANIMACIONES MVP & FANTASMAS (BOTONES CON OPCIÓN REAL DE APAGAR / ENCENDER) -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>ANIMACIONES MVP &amp; FANTASMAS</span>
@@ -302,11 +304,11 @@
                 </div>
                 <div class="toggle-row">
                     <span>🏆 Animación Top 3 MVPs (8s)</span>
-                    <button class="toggle-btn active" id="btn-mvp" onclick="toggleFeature('mvp')">ON</button>
+                    <button class="toggle-btn" id="btn-mvp" onclick="toggleFeature('mvp')">OFF</button>
                 </div>
                 <div class="toggle-row">
                     <span>👻 Resaltar Donantes "Fantasmas"</span>
-                    <button class="toggle-btn active" id="btn-ghost" onclick="toggleFeature('ghost')">ON</button>
+                    <button class="toggle-btn" id="btn-ghost" onclick="toggleFeature('ghost')">OFF</button>
                 </div>
             </div>
 
@@ -318,11 +320,11 @@
                 </div>
                 <div class="toggle-row">
                     <span>🛡️ Neutralizador de Comentarios Tóxicos</span>
-                    <button class="toggle-btn active" id="btn-toxic" onclick="toggleFeature('toxic')">SMART</button>
+                    <button class="toggle-btn" id="btn-toxic" onclick="toggleFeature('toxic')">OFF</button>
                 </div>
                 <div class="toggle-row">
                     <span>💬 Modo Antisilencio Dinámico (15s)</span>
-                    <button class="toggle-btn active" id="btn-antisilence" onclick="toggleFeature('antisilence')">ON</button>
+                    <button class="toggle-btn" id="btn-antisilence" onclick="toggleFeature('antisilence')">OFF</button>
                 </div>
             </div>
 
@@ -347,11 +349,12 @@
         let voicesList = [];
         let buttonCustomAudios = { welcome: null, hype: null, laugh: null, win: null };
         
+        // ESTADOS INICIALES EN OFF POR DEFECTO PARA QUE EL USUARIO LOS ACTIVE A SU ELECCIÓN
         let featuresState = {
-            mvp: true,
-            ghost: true,
-            toxic: true,
-            antisilence: true
+            mvp: false,
+            ghost: false,
+            toxic: false,
+            antisilence: false
         };
 
         function toggleFeature(featureKey) {
@@ -360,13 +363,16 @@
             
             if (featuresState[featureKey]) {
                 btn.classList.add('active');
-                btn.innerText = featureKey === 'toxic' ? 'SMART' : 'ON';
+                btn.innerText = 'ON';
                 
-                // Interacción real para los botones de MVP y Fantasmas
                 if (featureKey === 'mvp') {
-                    speakCrystalHD("Animación Top 3 MVPs activada. Reconociendo a los mejores donantes.", 'es', 'female-hd');
+                    speakCrystalHD("Animación Top 3 MVPs activada.", 'es', 'female-hd');
                 } else if (featureKey === 'ghost') {
-                    speakCrystalHD("Filtro de donantes fantasmas activado. Dando la bienvenida a los nuevos espectadores.", 'es', 'female-hd');
+                    speakCrystalHD("Filtro de donantes fantasmas activado.", 'es', 'female-hd');
+                } else if (featureKey === 'toxic') {
+                    speakCrystalHD("Neutralizador de comentarios tóxicos activado.", 'es', 'female-hd');
+                } else if (featureKey === 'antisilence') {
+                    speakCrystalHD("Modo antisilencio activado.", 'es', 'female-hd');
                 }
             } else {
                 btn.classList.remove('active');
@@ -376,6 +382,10 @@
                     speakCrystalHD("Animación Top 3 MVPs desactivada.", 'es', 'female-hd');
                 } else if (featureKey === 'ghost') {
                     speakCrystalHD("Filtro de donantes fantasmas desactivado.", 'es', 'female-hd');
+                } else if (featureKey === 'toxic') {
+                    speakCrystalHD("Neutralizador desactivado.", 'es', 'female-hd');
+                } else if (featureKey === 'antisilence') {
+                    speakCrystalHD("Modo antisilencio desactivado.", 'es', 'female-hd');
                 }
             }
             localStorage.setItem("sofiul_feat_" + featureKey, featuresState[featureKey]);
@@ -496,6 +506,7 @@
             if(localStorage.getItem("sofiul_gender")) botGenderSelect.value = localStorage.getItem("sofiul_gender");
             if(localStorage.getItem("sofiul_lang")) botLangSelect.value = localStorage.getItem("sofiul_lang");
             
+            // Cargar estado guardado de los botones de funciones
             ['mvp', 'ghost', 'toxic', 'antisilence'].forEach(key => {
                 if(localStorage.getItem("sofiul_feat_" + key) !== null) {
                     featuresState[key] = localStorage.getItem("sofiul_feat_" + key) === 'true';
@@ -503,7 +514,7 @@
                     if(btn) {
                         if(featuresState[key]) {
                             btn.classList.add('active');
-                            btn.innerText = key === 'toxic' ? 'SMART' : 'ON';
+                            btn.innerText = 'ON';
                         } else {
                             btn.classList.remove('active');
                             btn.innerText = 'OFF';
@@ -560,6 +571,7 @@
                 alert("¡Configuración guardada correctamente!");
             });
 
+            // Piloto automático solo si el modo antisilencio está activo (ON)
             setInterval(() => {
                 if (embeddedLivePanel.style.display === "block" && featuresState.antisilence) {
                     const mode = botLangSelect.value;
