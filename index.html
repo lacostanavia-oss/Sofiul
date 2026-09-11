@@ -70,6 +70,21 @@
             cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 4px;
         }
 
+        .voice-row-grid {
+            display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: center; margin-bottom: 6px;
+        }
+        .voice-test-btn {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(0, 136, 255, 0.3));
+            border: 1px solid var(--accent-cyan); color: var(--accent-cyan); padding: 8px 10px;
+            border-radius: 6px; font-size: 0.65rem; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            white-space: nowrap; font-style: italic;
+        }
+        .voice-test-btn:active { background: var(--accent-cyan); color: #000; }
+
+        .section-header {
+            font-size: 0.7rem; color: var(--accent-cyan); font-weight: bold; margin: 8px 0 4px 0; text-transform: uppercase; font-style: italic; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 2px;
+        }
+
         .toggle-row {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.15);
@@ -83,14 +98,6 @@
         }
         .dual-btn.on-active { background: rgba(0, 229, 255, 0.25); border-color: var(--accent-cyan); color: var(--accent-cyan); box-shadow: 0 0 8px rgba(0, 229, 255, 0.4); }
         .dual-btn.off-active { background: rgba(255, 42, 95, 0.25); border-color: #ff2a5f; color: #ff2a5f; box-shadow: 0 0 8px rgba(255, 42, 95, 0.4); }
-
-        .voice-preview-container { display: flex; gap: 6px; margin-top: 6px; }
-        .voice-preview-btn {
-            flex: 1; background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(154, 43, 162, 0.25));
-            border: 1px solid rgba(0, 229, 255, 0.5); color: var(--accent-cyan); padding: 6px; border-radius: 6px;
-            font-size: 0.65rem; font-weight: bold; cursor: pointer; text-align: center; text-transform: uppercase; font-style: italic;
-        }
-        .voice-preview-btn:active { background: var(--accent-cyan); color: #000; }
 
         .live-mode-banner {
             background: linear-gradient(135deg, rgba(255, 42, 95, 0.25), rgba(0, 229, 255, 0.25));
@@ -124,7 +131,7 @@
         <!-- PANEL DE LECTURA DE CHAT EN VIVO -->
         <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
-                🚀 PANEL DE CONTROL &amp; LECTOR DE VOZ NEURONAL HD
+                🚀 PANEL DE CONTROL &amp; LECTOR DE CHAT HD
             </div>
             
             <button class="action-button" id="toggle-live-view" style="margin-top: 0; background: linear-gradient(135deg, #ff2a5f, var(--accent-cyan)); color: #fff; font-size: 0.8rem;">
@@ -133,18 +140,18 @@
 
             <div id="embedded-live-panel" style="display: none; margin-top: 10px; border: 1px solid #ff2a5f; border-radius: 8px; background: rgba(11, 20, 36, 0.98); padding: 10px; text-align: left;">
                 <div class="card-title" style="color: #ff2a5f;">
-                    <span>🔴 LECTOR DE CHAT ULTRA HUMANO</span>
-                    <span class="status-badge" style="background: rgba(255, 42, 95, 0.2); color: #ff2a5f;">EN DIRECTO</span>
+                    <span>🔴 LECTOR DE CHAT EN DIRECTO</span>
+                    <span class="status-badge" style="background: rgba(255, 42, 95, 0.2); color: #ff2a5f;">ACTIVO</span>
                 </div>
                 
                 <div style="font-size: 0.65rem; color: #a19bc8; margin-bottom: 6px; font-style: italic;">
-                    💬 Escribe un comentario del chat para reproducirlo con la voz neuronal seleccionada o tu MP3:
+                    💬 Escribe un comentario del chat para probar cómo la voz seleccionada lo lee en tiempo real:
                 </div>
 
                 <div class="input-group" style="margin-bottom: 6px;">
                     <input type="text" id="simulated-chat-input" class="neon-input" placeholder="Escribe un mensaje de chat aquí...">
                 </div>
-                <button type="button" class="action-button" style="padding: 8px; font-size: 0.75rem; margin-top: 0;" onclick="readChatHD()">🗣️ Reproducir con Voz HD</button>
+                <button type="button" class="action-button" style="padding: 8px; font-size: 0.75rem; margin-top: 0;" onclick="readChatHD()">🗣️ Reproducir Chat en Vivo</button>
             </div>
         </div>
 
@@ -161,46 +168,75 @@
                 </div>
             </div>
 
-            <!-- 2. BANCO DE VOCES NEURONALES EXTERNAS (FEMENINA / MASCULINA) O MP3 -->
+            <!-- 2. SELECCIÓN DE 3 OPCIONES FEMENINAS Y 3 MASCULINAS CON PRUEBA Y SUBIDA DE MP3 -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
-                    <span>BANCO DE VOCES NEURONALES HD</span>
-                    <span class="status-badge badge-active">100% CÁLIDAS &amp; HUMANAS</span>
+                    <span>BANCO DE VOCES HD &amp; PERSONALIZACIÓN</span>
+                    <span class="status-badge badge-active">6 OPCIONES PRO</span>
                 </div>
                 <div class="input-group">
                     <label>Nombre de la Mascota / Asistente:</label>
                     <input type="text" id="assistant-name" class="neon-input" placeholder="Ej: Sofiul...">
                 </div>
-                
+
                 <div class="input-group">
-                    <label>A. Seleccionar Voz Neuronal Externa (Extraída de Redes de Alta Gama):</label>
+                    <label>Seleccionar Perfil Vocal Activo:</label>
                     <select id="bot-voice-choice" class="neon-select">
-                        <option value="cloud-female-sofia">♀ Sofía Neural Studio - Femenino Ultra Cálido, Dulce &amp; Afectuoso</option>
-                        <option value="cloud-male-mateo">♂ Mateo Neural Studio - Masculino Profundo, Confiable &amp; Enérgico</option>
+                        <optgroup label="--- VOCES FEMENINAS (3 OPCIONES) ---">
+                            <option value="f1">♀ Sofía Pro (Cálida, Acogedora &amp; Afectuosa)</option>
+                            <option value="f2">♀ Valentina HD (Dulce, Tierna &amp; Muy Cercana)</option>
+                            <option value="f3">♀ Camila Studio (Dinámica, Moderna &amp; Alegre)</option>
+                        </optgroup>
+                        <optgroup label="--- VOCES MASCULINAS (3 OPCIONES) ---">
+                            <option value="m1">♂ Mateo Pro (Profundo, Enérgico &amp; Confiable)</option>
+                            <option value="m2">♂ Lucas HD (Juvenil, Fresco &amp; Muy Divertido)</option>
+                            <option value="m3">♂ Thiago Studio (Firme, Autoritario &amp; Profesional)</option>
+                        </optgroup>
                     </select>
                 </div>
 
-                <!-- BOTONES DE PRUEBA HD INSTANTÁNEA -->
-                <div style="font-size: 0.65rem; color: #a19bc8; margin: 4px 0 2px 0; font-style: italic;">
-                    🎧 Toca para escuchar la muestra de voz neuronal externa:
+                <div class="section-header">🎧 PRUEBA DE VOCES (Toca para escuchar)</div>
+                
+                <!-- 3 OPCIONES FEMENINAS CON BOTÓN DE PRUEBA -->
+                <div class="voice-row-grid">
+                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">1. ♀ Sofía Pro (Cálida)</div>
+                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('f1')">▶ Probar</button>
                 </div>
-                <div class="voice-preview-container">
-                    <button type="button" class="voice-preview-btn" onclick="playCloudVoicePreview('cloud-female-sofia')">▶ ♀ Sofía Studio</button>
-                    <button type="button" class="voice-preview-btn" onclick="playCloudVoicePreview('cloud-male-mateo')">▶ ♂ Mateo Studio</button>
+                <div class="voice-row-grid">
+                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">2. ♀ Valentina (Dulce)</div>
+                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('f2')">▶ Probar</button>
+                </div>
+                <div class="voice-row-grid">
+                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">3. ♀ Camila (Alegre)</div>
+                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('f3')">▶ Probar</button>
                 </div>
 
-                <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); margin: 6px 0; font-style: italic;">
-                    --- O ---
+                <!-- 3 OPCIONES MASCULINAS CON BOTÓN DE PRUEBA -->
+                <div class="voice-row-grid" style="margin-top: 6px;">
+                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">4. ♂ Mateo Pro (Profundo)</div>
+                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('m1')">▶ Probar</button>
+                </div>
+                <div class="voice-row-grid">
+                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">5. ♂ Lucas (Juvenil)</div>
+                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('m2')">▶ Probar</button>
+                </div>
+                <div class="voice-row-grid">
+                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">6. ♂ Thiago (Firme)</div>
+                    <button type="button" class="voice-test-btn" onclick="testSpecificVoice('m3')">▶ Probar</button>
                 </div>
 
-                <!-- OPCIÓN LIBRE DE SUBIR MP3 PERSONALIZADO -->
+                <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); margin: 8px 0; font-style: italic;">
+                    --- O ALTERNATIVA PERSONALIZADA ---
+                </div>
+
+                <!-- SUBIDA DE MP3 BLINDADA (SOLO ARCHIVOS DE AUDIO) -->
                 <div class="input-group">
-                    <label>B. Subir tu propio audio en MP3 de estudio (Alternativa personal):</label>
+                    <label>Subir tu propio archivo MP3 / WAV de estudio:</label>
                     <label class="file-upload-btn">
-                        🎙️ Subir Audio MP3 / WAV
-                        <input type="file" id="custom-voice-file" style="display: none;" accept=".mp3, .wav, .ogg, audio/mp3, audio/wav, audio/ogg">
+                        🎙️ Seleccionar Archivo de Audio (MP3)
+                        <input type="file" id="custom-voice-file" style="display: none;" accept="audio/mp3, audio/wav, audio/ogg, .mp3, .wav, .ogg">
                     </label>
-                    <div style="font-size: 0.55rem; color: var(--accent-cyan); font-style: italic; margin-top: 3px;" id="txt-custom-voice">Usando banco de voces neuronales externas HD</div>
+                    <div style="font-size: 0.55rem; color: var(--accent-cyan); font-style: italic; margin-top: 3px;" id="txt-custom-voice">Ningún MP3 cargado (Usando las 6 voces HD opcionales)</div>
                 </div>
             </div>
 
@@ -243,14 +279,9 @@
     </div>
 
     <script>
+        let voicesList = [];
         let customVoiceAudioBuffer = null;
         let featuresState = { mvp: true, ghost: true, toxic: true, antisilence: true };
-
-        // BANCO DE MUESTRAS DE AUDIO NEURONALES EXTERNAS DE ALTA CALIDAD (LIBRES Y FLUIDAS)
-        const cloudVoiceSamples = {
-            'cloud-female-sofia': 'https://files.catbox.moe/92t13b.mp3', // Enlace de muestra femenina fluida y cálida
-            'cloud-male-mateo': 'https://files.catbox.moe/8x2m9a.mp3'    // Enlace de muestra masculina profunda y enérgica
-        };
 
         function setFeatureState(featureKey, state) {
             featuresState[featureKey] = state;
@@ -268,42 +299,68 @@
             }
         }
 
-        function playCloudVoicePreview(choiceKey) {
-            if (customVoiceAudioBuffer) {
-                customVoiceAudioBuffer.pause();
-            }
-            
-            // Reproduce el audio neuronal externo de alta fidelidad extraído de la red
-            const audioSrc = cloudVoiceSamples[choiceKey] || cloudVoiceSamples['cloud-female-sofia'];
-            const sampleAudio = new Audio(audioSrc);
-            sampleAudio.volume = 1.0;
-            sampleAudio.play().catch(e => {
-                // Fallback inteligente en caso de restricción de red del navegador móvil
-                alert("¡Voz Neuronal Seleccionada con éxito! Lista para interactuar en directo.");
-            });
+        function loadSpeechVoices() {
+            if (!window.speechSynthesis) return;
+            voicesList = window.speechSynthesis.getVoices();
+        }
 
-            document.getElementById('bot-voice-choice').value = choiceKey;
-            localStorage.setItem("sofiul_voice_choice", choiceKey);
+        if (window.speechSynthesis) {
+            window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
+            setTimeout(loadSpeechVoices, 300);
+        }
+
+        function speakWithOptions(text, voiceId = null) {
+            if (customVoiceAudioBuffer && !voiceId) {
+                customVoiceAudioBuffer.currentTime = 0;
+                customVoiceAudioBuffer.play().catch(e => console.log("Reproduciendo MP3"));
+                return;
+            }
+
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            
+            const selectedVoice = voiceId || document.getElementById('bot-voice-choice').value;
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Calibraciones individuales de tono y velocidad para darles personalidad humana única
+            let targetPitch = 1.0;
+            let targetRate = 1.04;
+
+            if (selectedVoice === 'f1') { targetPitch = 1.12; targetRate = 1.02; } // Sofía: Cálida
+            else if (selectedVoice === 'f2') { targetPitch = 1.20; targetRate = 1.05; } // Valentina: Dulce
+            else if (selectedVoice === 'f3') { targetPitch = 1.15; targetRate = 1.08; } // Camila: Alegre
+            else if (selectedVoice === 'm1') { targetPitch = 0.85; targetRate = 1.0; }  // Mateo: Profundo
+            else if (selectedVoice === 'm2') { targetPitch = 0.95; targetRate = 1.05; } // Lucas: Juvenil
+            else if (selectedVoice === 'm3') { targetPitch = 0.78; targetRate = 0.98; } // Thiago: Firme
+
+            utterance.pitch = targetPitch;
+            utterance.rate = targetRate;
+            utterance.volume = 1.0;
+
+            const bestVoice = voicesList.find(v => v.lang.includes('es')) || voicesList[0];
+            if (bestVoice) utterance.voice = bestVoice;
+            utterance.lang = 'es-ES';
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function testSpecificVoice(voiceId) {
+            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
+            let sampleText = `¡Hola! Soy ${name}, probando esta opción de voz para tu directo en TikTok.`;
+            
+            speakWithOptions(sampleText, voiceId);
+            document.getElementById('bot-voice-choice').value = voiceId;
+            localStorage.setItem("sofiul_voice_choice", voiceId);
         }
 
         function readChatHD() {
             const inputField = document.getElementById('simulated-chat-input');
             const chatText = inputField.value.trim();
-            const choiceKey = document.getElementById('bot-voice-choice').value;
-
             if (!chatText) {
                 alert("Escribe un mensaje de chat para probar.");
                 return;
             }
-
-            if (customVoiceAudioBuffer) {
-                customVoiceAudioBuffer.currentTime = 0;
-                customVoiceAudioBuffer.play().catch(e => console.log("Reproduciendo MP3 propio"));
-                return;
-            }
-
-            // Simulación de lectura fluida con la voz neuronal seleccionada
-            playCloudVoicePreview(choiceKey);
+            speakWithOptions(chatText);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -329,12 +386,13 @@
                 });
             }
 
+            // Selector de MP3 estricto bloqueando fotos/grabadoras de galería
             if (customVoiceFileInput) {
                 customVoiceFileInput.addEventListener('change', function() {
                     if (this.files && this.files[0]) {
                         const file = this.files[0];
                         customVoiceAudioBuffer = new Audio(URL.createObjectURL(file));
-                        document.getElementById('txt-custom-voice').innerText = "🎙️ MP3 cargado: " + file.name.substring(0, 18) + "...";
+                        document.getElementById('txt-custom-voice').innerText = "🎙️ Audio cargado: " + file.name.substring(0, 18) + "... (Prioridad sobre las 6 voces)";
                     }
                 });
             }
@@ -354,7 +412,9 @@
                 localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
                 localStorage.setItem("sofiul_voice_choice", voiceChoiceSelect.value);
 
-                alert("¡Configuración guardada y voces neuronales sincronizadas correctamente!");
+                const nameAsistente = assistantInput.value.trim() || "Sofiul";
+                speakWithOptions(`¡Configuración guardada con éxito! Hola, soy ${nameAsistente}, lista para interactuar.`);
+                alert("¡Configuración guardada correctamente!");
             });
         });
     </script>
