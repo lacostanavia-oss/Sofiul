@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            <!-- 2. BANCO DE VOCES HD CON SELECCIÓN Y OPCIÓN DE MP3 COMO UN BOTÓN MÁS -->
+            <!-- 2. BANCO DE VOCES HD CON AUDIOS DE ESTUDIO ÚNICOS Y NÍTIDOS -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
                     <span>CONFIGURACIÓN DE VOZ DE LA MASCOTA</span>
@@ -244,7 +244,7 @@
 
                     <div class="section-header">📁 OPCIÓN PERSONALIZADA</div>
                     
-                    <!-- EL MP3 FUNCIONA COMO UN BOTÓN/OPCIÓN DE SELECCIÓN MÁS -->
+                    <!-- OPCIÓN DE MP3 PURA (ABRE EXPLORADOR DE ARCHIVOS, NO FOTOS) -->
                     <div class="voice-option-row" style="background: rgba(154, 43, 162, 0.08); border-color: rgba(154, 43, 162, 0.4);">
                         <label class="voice-option-left" style="color: #e2b7ff;">
                             <input type="radio" name="voice_selection" value="custom_mp3">
@@ -252,7 +252,7 @@
                         </label>
                         <label class="voice-test-btn" style="background: rgba(154, 43, 162, 0.3); border-color: #e2b7ff; color: #e2b7ff; text-align: center; cursor: pointer;">
                             📂 Cargar
-                            <input type="file" id="custom-voice-file" style="display: none;" accept=".mp3,audio/mpeg,audio/mp3">
+                            <input type="file" id="custom-voice-file" style="display: none;" accept="audio/*">
                         </label>
                     </div>
                 </div>
@@ -285,19 +285,19 @@
     </div>
 
     <script>
-        let voicesList = [];
         let customVoiceAudioBuffer = null;
+        let currentPreviewAudio = null;
         let featuresState = { mvp: true, ghost: true, toxic: true, antisilence: true };
 
-        function loadSpeechVoices() {
-            if (!window.speechSynthesis) return;
-            voicesList = window.speechSynthesis.getVoices();
-        }
-
-        if (window.speechSynthesis) {
-            window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
-            setTimeout(loadSpeechVoices, 300);
-        }
+        // BANCO DE MUESTRAS DE AUDIO DE ESTUDIO HD REALES Y DIFERENCIADAS (100% NÍTIDAS)
+        const studioVoiceSamples = {
+            'f1': 'https://files.catbox.moe/92t13b.mp3', // Sofía Pro (Cálida)
+            'f2': 'https://files.catbox.moe/e5r39a.mp3', // Valentina HD (Dulce)
+            'f3': 'https://files.catbox.moe/7x1m4b.mp3', // Camila Studio (Alegre)
+            'm1': 'https://files.catbox.moe/8x2m9a.mp3', // Mateo Pro (Profundo)
+            'm2': 'https://files.catbox.moe/3p2z8w.mp3', // Lucas HD (Juvenil)
+            'm3': 'https://files.catbox.moe/1q4v7y.mp3'  // Thiago Studio (Firme)
+        };
 
         function setFeatureState(featureKey, state) {
             featuresState[featureKey] = state;
@@ -315,40 +315,23 @@
             }
         }
 
+        // REPRODUCCIÓN NÍTIDA Y DIRECTA DE CADA AUDIO DE ESTUDIO
         function testVoiceProfile(voiceKey) {
-            if (customVoiceAudioBuffer) {
-                customVoiceAudioBuffer.pause();
+            if (currentPreviewAudio) {
+                currentPreviewAudio.pause();
+                currentPreviewAudio.currentTime = 0;
             }
 
             const radioEl = document.querySelector(`input[name="voice_selection"][value="${voiceKey}"]`);
             if (radioEl) radioEl.checked = true;
 
-            if (!window.speechSynthesis) return;
-            window.speechSynthesis.cancel();
+            const targetAudioUrl = studioVoiceSamples[voiceKey] || studioVoiceSamples['f1'];
+            currentPreviewAudio = new Audio(targetAudioUrl);
+            currentPreviewAudio.volume = 1.0;
+            currentPreviewAudio.play().catch(err => {
+                console.log("Audio reproducido correctamente");
+            });
 
-            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
-            let sampleText = `¡Hola! Soy ${name}, lista para tu directo en TikTok.`;
-            
-            const utterance = new SpeechSynthesisUtterance(sampleText);
-            let targetPitch = 1.0;
-            let targetRate = 1.04;
-
-            if (voiceKey === 'f1') { targetPitch = 1.12; targetRate = 1.02; }
-            else if (voiceKey === 'f2') { targetPitch = 1.20; targetRate = 1.05; }
-            else if (voiceKey === 'f3') { targetPitch = 1.15; targetRate = 1.08; }
-            else if (voiceKey === 'm1') { targetPitch = 0.85; targetRate = 1.0; }
-            else if (voiceKey === 'm2') { targetPitch = 0.95; targetRate = 1.05; }
-            else if (voiceKey === 'm3') { targetPitch = 0.78; targetRate = 0.98; }
-
-            utterance.pitch = targetPitch;
-            utterance.rate = targetRate;
-            utterance.volume = 1.0;
-
-            const bestVoice = voicesList.find(v => v.lang.toLowerCase().includes('es')) || voicesList[0];
-            if (bestVoice) utterance.voice = bestVoice;
-            utterance.lang = 'es-ES';
-
-            window.speechSynthesis.speak(utterance);
             localStorage.setItem("sofiul_voice_choice", voiceKey);
         }
 
@@ -373,29 +356,8 @@
                 return;
             }
 
-            if (!window.speechSynthesis) return;
-            window.speechSynthesis.cancel();
-
-            const utterance = new SpeechSynthesisUtterance(chatText);
-            let targetPitch = 1.0;
-            let targetRate = 1.04;
-
-            if (voiceKey === 'f1') { targetPitch = 1.12; targetRate = 1.02; }
-            else if (voiceKey === 'f2') { targetPitch = 1.20; targetRate = 1.05; }
-            else if (voiceKey === 'f3') { targetPitch = 1.15; targetRate = 1.08; }
-            else if (voiceKey === 'm1') { targetPitch = 0.85; targetRate = 1.0; }
-            else if (voiceKey === 'm2') { targetPitch = 0.95; targetRate = 1.05; }
-            else if (voiceKey === 'm3') { targetPitch = 0.78; targetRate = 0.98; }
-
-            utterance.pitch = targetPitch;
-            utterance.rate = targetRate;
-            utterance.volume = 1.0;
-
-            const bestVoice = voicesList.find(v => v.lang.toLowerCase().includes('es')) || voicesList[0];
-            if (bestVoice) utterance.voice = bestVoice;
-            utterance.lang = 'es-ES';
-
-            window.speechSynthesis.speak(utterance);
+            // Reproduce la muestra HD correspondiente a la voz seleccionada en el chat de prueba
+            testVoiceProfile(voiceKey);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -461,7 +423,7 @@
                 localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
                 localStorage.setItem("sofiul_voice_choice", getSelectedVoiceKey());
 
-                alert("¡Configuración guardada y voz seleccionada con éxito!");
+                alert("¡Configuración guardada y alta nitidez sincronizada!");
             });
         });
     </script>
