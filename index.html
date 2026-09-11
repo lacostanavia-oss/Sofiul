@@ -70,6 +70,16 @@
             cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 4px;
         }
 
+        /* DISEÑO DE BOTÓN PRINCIPAL PARA ABRIR EL BANCO DE VOCES */
+        .bank-toggle-main-btn {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(154, 43, 162, 0.3));
+            border: 1px solid var(--accent-cyan); color: #fff; border-radius: 8px; padding: 10px;
+            font-size: 0.75rem; font-weight: bold; text-align: center; cursor: pointer;
+            text-transform: uppercase; font-style: italic; width: 100%; box-sizing: border-box; margin-bottom: 8px;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        }
+        .bank-toggle-main-btn:active { background: var(--accent-cyan); color: #000; }
+
         .voice-row-grid {
             display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: center; margin-bottom: 6px;
         }
@@ -82,7 +92,7 @@
         .voice-test-btn:active { background: var(--accent-cyan); color: #000; }
 
         .section-header {
-            font-size: 0.7rem; color: var(--accent-cyan); font-weight: bold; margin: 10px 0 6px 0; text-transform: uppercase; font-style: italic; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 3px;
+            font-size: 0.7rem; color: var(--accent-cyan); font-weight: bold; margin: 8px 0 4px 0; text-transform: uppercase; font-style: italic; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 2px;
         }
 
         .toggle-row {
@@ -168,10 +178,10 @@
                 </div>
             </div>
 
-            <!-- 2. BANCO DE VOCES HD CON 3 MUJERES Y 3 VARONES Y SUBIDA DE MP3 PURA -->
+            <!-- 2. BANCO DE VOCES PRINCIPAL CON BOTÓN DESPLEGABLE -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
-                    <span>BANCO DE VOCES HD (3 MUJERES Y 3 VARONES)</span>
+                    <span>CONFIGURACIÓN DE VOZ DE LA MASCOTA</span>
                     <span class="status-badge badge-active">ESTUDIO PRO</span>
                 </div>
                 <div class="input-group">
@@ -180,62 +190,65 @@
                 </div>
 
                 <div class="input-group">
-                    <label>Perfil Vocal Activo:</label>
+                    <label>Perfil Vocal Seleccionado Activo:</label>
                     <select id="bot-voice-choice" class="neon-select">
-                        <optgroup label="--- VOCES FEMENINAS ---">
-                            <option value="f1">♀ Sofía Pro (Cálida y Afectuosa - Latam)</option>
-                            <option value="f2">♀ Valentina HD (Dulce y Cercana - Acento Suave)</option>
-                            <option value="f3">♀ Camila Studio (Dinámica y Alegre - Expresiva)</option>
-                        </optgroup>
-                        <optgroup label="--- VOCES MASCULINAS ---">
-                            <option value="m1">♂ Mateo Pro (Profundo y Confiable - Enérgico)</option>
-                            <option value="m2">♂ Lucas HD (Juvenil y Dinámico - Divertido)</option>
-                            <option value="m3">♂ Thiago Studio (Firme y Profesional - Autoridad)</option>
-                        </optgroup>
+                        <option value="f1">♀ Sofía Pro (Cálida y Afectuosa - Latam)</option>
+                        <option value="f2">♀ Valentina HD (Dulce y Cercana - Acento Suave)</option>
+                        <option value="f3">♀ Camila Studio (Dinámica y Alegre - Expresiva)</option>
+                        <option value="m1">♂ Mateo Pro (Profundo y Confiable - Enérgico)</option>
+                        <option value="m2">♂ Lucas HD (Juvenil y Dinámico - Divertido)</option>
+                        <option value="m3">♂ Thiago Studio (Firme y Profesional - Autoridad)</option>
                     </select>
                 </div>
 
-                <!-- BANCO DE PRUEBAS DE VOCES (3 MUJERES Y 3 VARONES) -->
-                <div class="section-header">🎧 BANCO DE VOCES (Toca para probar)</div>
-                
-                <div class="voice-row-grid">
-                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">1. ♀ Sofía Pro (Cálida)</div>
-                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f1')">▶ Probar</button>
-                </div>
-                <div class="voice-row-grid">
-                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">2. ♀ Valentina (Dulce)</div>
-                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f2')">▶ Probar</button>
-                </div>
-                <div class="voice-row-grid">
-                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">3. ♀ Camila (Alegre)</div>
-                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f3')">▶ Probar</button>
-                </div>
+                <!-- BOTÓN PRINCIPAL PARA ABRIR / CERRAR EL BANCO DE VOCES INTERACTIVO -->
+                <button type="button" class="bank-toggle-main-btn" id="toggle-bank-view">
+                    🎧 ABRIR BANCO DE VOCES &amp; SUBIR MP3 PERSONALIZADO
+                </button>
 
-                <div class="voice-row-grid" style="margin-top: 6px;">
-                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">4. ♂ Mateo Pro (Profundo)</div>
-                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m1')">▶ Probar</button>
-                </div>
-                <div class="voice-row-grid">
-                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">5. ♂ Lucas (Juvenil)</div>
-                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m2')">▶ Probar</button>
-                </div>
-                <div class="voice-row-grid">
-                    <div style="font-size: 0.7rem; color: #fff; font-style: italic;">6. ♂ Thiago (Firme)</div>
-                    <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m3')">▶ Probar</button>
-                </div>
+                <!-- CONTENEDOR OCULTO DEL BANCO DE VOCES Y SUBIDA DE MP3 -->
+                <div id="interactive-voice-bank" style="display: none; border: 1px solid rgba(0, 229, 255, 0.4); border-radius: 8px; background: rgba(0, 229, 255, 0.02); padding: 8px; margin-top: 6px;">
+                    <div class="section-header" style="margin-top: 0;">✨ VOCES FEMENINAS (PRO)</div>
+                    <div class="voice-row-grid">
+                        <div style="font-size: 0.7rem; color: #fff; font-style: italic;">1. ♀ Sofía Pro (Cálida)</div>
+                        <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f1')">▶ Probar</button>
+                    </div>
+                    <div class="voice-row-grid">
+                        <div style="font-size: 0.7rem; color: #fff; font-style: italic;">2. ♀ Valentina (Dulce)</div>
+                        <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f2')">▶ Probar</button>
+                    </div>
+                    <div class="voice-row-grid">
+                        <div style="font-size: 0.7rem; color: #fff; font-style: italic;">3. ♀ Camila (Alegre)</div>
+                        <button type="button" class="voice-test-btn" onclick="testVoiceProfile('f3')">▶ Probar</button>
+                    </div>
 
-                <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); margin: 8px 0; font-style: italic;">
-                    --- O SUBIR TU PROPIA VOZ PERSONALIZADA ---
-                </div>
+                    <div class="section-header">⚡ VOCES MASCULINAS (PRO)</div>
+                    <div class="voice-row-grid">
+                        <div style="font-size: 0.7rem; color: #fff; font-style: italic;">4. ♂ Mateo Pro (Profundo)</div>
+                        <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m1')">▶ Probar</button>
+                    </div>
+                    <div class="voice-row-grid">
+                        <div style="font-size: 0.7rem; color: #fff; font-style: italic;">5. ♂ Lucas (Juvenil)</div>
+                        <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m2')">▶ Probar</button>
+                    </div>
+                    <div class="voice-row-grid">
+                        <div style="font-size: 0.7rem; color: #fff; font-style: italic;">6. ♂ Thiago (Firme)</div>
+                        <button type="button" class="voice-test-btn" onclick="testVoiceProfile('m3')">▶ Probar</button>
+                    </div>
 
-                <!-- SUBIDA DE MP3 PURA SIN GRABADORA NI FOTOS -->
-                <div class="input-group">
-                    <label>Subir tu propio archivo MP3 (Voz personalizada):</label>
-                    <label class="file-upload-btn">
-                        🎙️ Seleccionar Archivo MP3 desde el Celular
-                        <input type="file" id="custom-voice-file" style="display: none;" accept=".mp3,audio/mpeg,audio/mp3">
-                    </label>
-                    <div style="font-size: 0.55rem; color: var(--accent-cyan); font-style: italic; margin-top: 3px;" id="txt-custom-voice">Ningún MP3 cargado (Usando el Banco de Voces HD)</div>
+                    <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); margin: 8px 0; font-style: italic;">
+                        --- O SUBIR TU PROPIA VOZ PERSONALIZADA ---
+                    </div>
+
+                    <!-- SUBIDA DE MP3 PURA (BLINDADA CONTRA FOTOS Y GRABADORA) -->
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>Subir tu propio archivo MP3 de estudio:</label>
+                        <label class="file-upload-btn">
+                            🎙️ Seleccionar Archivo MP3 desde el Celular
+                            <input type="file" id="custom-voice-file" style="display: none;" accept=".mp3,audio/mpeg,audio/mp3">
+                        </label>
+                        <div style="font-size: 0.55rem; color: var(--accent-cyan); font-style: italic; margin-top: 3px;" id="txt-custom-voice">Ningún MP3 cargado (Usando el Banco de Voces HD)</div>
+                    </div>
                 </div>
             </div>
 
@@ -345,12 +358,16 @@
             const actionBtn = document.getElementById("main-action-btn");
             const toggleLiveBtn = document.getElementById("toggle-live-view");
             const embeddedLivePanel = document.getElementById("embedded-live-panel");
+            const toggleBankBtn = document.getElementById("toggle-bank-view");
+            const interactiveVoiceBank = document.getElementById("interactive-voice-bank");
+            
             const tiktokInput = document.getElementById("tiktok-user");
             const assistantInput = document.getElementById("assistant-name");
             const voiceChoiceSelect = document.getElementById("bot-voice-choice");
             const customVoiceFileInput = document.getElementById("custom-voice-file");
 
             if(embeddedLivePanel) embeddedLivePanel.style.display = "none";
+            if(interactiveVoiceBank) interactiveVoiceBank.style.display = "none";
 
             if(toggleLiveBtn && embeddedLivePanel) {
                 toggleLiveBtn.addEventListener("click", function() {
@@ -360,6 +377,19 @@
                     } else {
                         embeddedLivePanel.style.display = "none";
                         toggleLiveBtn.innerText = "⚡ ABRIR MANDO DE LECTURA EN DIRECTO";
+                    }
+                });
+            }
+
+            // Control para abrir y cerrar el Banco de Voces interactivo con el botón
+            if(toggleBankBtn && interactiveVoiceBank) {
+                toggleBankBtn.addEventListener("click", function() {
+                    if(interactiveVoiceBank.style.display === "none" || interactiveVoiceBank.style.display === "") {
+                        interactiveVoiceBank.style.display = "block";
+                        toggleBankBtn.innerText = "🎧 CERRAR BANCO DE VOCES HD";
+                    } else {
+                        interactiveVoiceBank.style.display = "none";
+                        toggleBankBtn.innerText = "🎧 ABRIR BANCO DE VOCES & SUBIR MP3 PERSONALIZADO";
                     }
                 });
             }
@@ -389,7 +419,7 @@
                 localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
                 localStorage.setItem("sofiul_voice_choice", voiceChoiceSelect.value);
 
-                alert("¡Configuración guardada y Banco de Voces HD sincronizado!");
+                alert("¡Configuración guardada y Banco de Voces HD sincronizado correctamente!");
             });
         });
     </script>
