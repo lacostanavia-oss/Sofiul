@@ -74,27 +74,37 @@
         .toggle-row {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.15);
-            padding: 8px 10px; border-radius: 6px; margin-top: 5px; font-style: italic; font-size: 0.8rem;
+            padding: 8px 10px; border-radius: 6px; margin-top: 5px; font-style: italic; font-size: 0.75rem;
         }
         
-        /* ESTILO INTERACTIVO ON / OFF */
-        .toggle-btn {
-            background: rgba(255, 42, 95, 0.2); 
-            border: 1px solid #ff2a5f; 
-            color: #ff2a5f;
-            padding: 4px 14px; 
-            border-radius: 6px; 
-            font-size: 0.7rem; 
+        /* CONTENEDOR PARA LOS DOS BOTONES SEPARADOS (ON / OFF) */
+        .dual-btn-group {
+            display: flex; gap: 4px;
+        }
+        .dual-btn {
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #8c82ce;
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 0.6rem; 
             font-weight: bold; 
             cursor: pointer; 
             text-transform: uppercase;
-            min-width: 50px;
-            text-align: center;
         }
-        .toggle-btn.active {
-            background: rgba(0, 229, 255, 0.2); 
+        /* ESTILO CUANDO EL BOTÓN ON ESTÁ ACTIVO */
+        .dual-btn.on-active {
+            background: rgba(0, 229, 255, 0.25); 
             border-color: var(--accent-cyan); 
             color: var(--accent-cyan);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+        }
+        /* ESTILO CUANDO EL BOTÓN OFF ESTÁ ACTIVO */
+        .dual-btn.off-active {
+            background: rgba(255, 42, 95, 0.25); 
+            border-color: #ff2a5f; 
+            color: #ff2a5f;
+            box-shadow: 0 0 8px rgba(255, 42, 95, 0.4);
         }
 
         .live-mode-banner {
@@ -306,7 +316,7 @@
                 </div>
             </div>
 
-            <!-- 5. ANIMACIONES MVP & FANTASMAS (AHORA ACTIVOS EN ON POR DEFECTO) -->
+            <!-- 5. ANIMACIONES MVP & FANTASMAS (DOS BOTONES SEPARADOS: ON / OFF) -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>ANIMACIONES MVP &amp; FANTASMAS</span>
@@ -314,15 +324,21 @@
                 </div>
                 <div class="toggle-row">
                     <span>🏆 Animación Top 3 MVPs (8s)</span>
-                    <button type="button" class="toggle-btn active" id="btn-mvp" onclick="toggleFeature('mvp')">ON</button>
+                    <div class="dual-btn-group">
+                        <button type="button" class="dual-btn" id="btn-mvp-on" onclick="setFeatureState('mvp', true)">ON</button>
+                        <button type="button" class="dual-btn" id="btn-mvp-off" onclick="setFeatureState('mvp', false)">OFF</button>
+                    </div>
                 </div>
                 <div class="toggle-row">
                     <span>👻 Resaltar Donantes "Fantasmas"</span>
-                    <button type="button" class="toggle-btn active" id="btn-ghost" onclick="toggleFeature('ghost')">ON</button>
+                    <div class="dual-btn-group">
+                        <button type="button" class="dual-btn" id="btn-ghost-on" onclick="setFeatureState('ghost', true)">ON</button>
+                        <button type="button" class="dual-btn" id="btn-ghost-off" onclick="setFeatureState('ghost', false)">OFF</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 6. IA EMOCIONAL & ANTISILENCIO -->
+            <!-- 6. IA EMOCIONAL & ANTISILENCIO (DOS BOTONES SEPARADOS: ON / OFF) -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>IA EMOCIONAL &amp; ANTISILENCIO</span>
@@ -330,11 +346,17 @@
                 </div>
                 <div class="toggle-row">
                     <span>🛡️ Neutralizador de Comentarios Tóxicos</span>
-                    <button type="button" class="toggle-btn active" id="btn-toxic" onclick="toggleFeature('toxic')">ON</button>
+                    <div class="dual-btn-group">
+                        <button type="button" class="dual-btn" id="btn-toxic-on" onclick="setFeatureState('toxic', true)">ON</button>
+                        <button type="button" class="dual-btn" id="btn-toxic-off" onclick="setFeatureState('toxic', false)">OFF</button>
+                    </div>
                 </div>
                 <div class="toggle-row">
                     <span>💬 Modo Antisilencio Dinámico (15s)</span>
-                    <button type="button" class="toggle-btn active" id="btn-antisilence" onclick="toggleFeature('antisilence')">ON</button>
+                    <div class="dual-btn-group">
+                        <button type="button" class="dual-btn" id="btn-antisilence-on" onclick="setFeatureState('antisilence', true)">ON</button>
+                        <button type="button" class="dual-btn" id="btn-antisilence-off" onclick="setFeatureState('antisilence', false)">OFF</button>
+                    </div>
                 </div>
             </div>
 
@@ -359,7 +381,7 @@
         let voicesList = [];
         let buttonCustomAudios = { welcome: null, hype: null, laugh: null, win: null };
         
-        // ESTADOS INICIALES EN TRUE (ON POR DEFECTO PARA QUE ESTÉN ACTIVOS Y ÚTILES)
+        // ESTADOS INICIALES (TRUE POR DEFECTO)
         let featuresState = {
             mvp: true,
             ghost: true,
@@ -367,21 +389,26 @@
             antisilence: true
         };
 
-        function toggleFeature(featureKey) {
-            featuresState[featureKey] = !featuresState[featureKey];
-            const btn = document.getElementById('btn-' + featureKey);
+        function setFeatureState(featureKey, state) {
+            featuresState[featureKey] = state;
+            updateDualButtonsUI(featureKey);
+            localStorage.setItem("sofiul_feat_" + featureKey, state);
+        }
+
+        function updateDualButtonsUI(featureKey) {
+            const isOn = featuresState[featureKey];
+            const btnOn = document.getElementById('btn-' + featureKey + '-on');
+            const btnOff = document.getElementById('btn-' + featureKey + '-off');
             
-            if (btn) {
-                if (featuresState[featureKey]) {
-                    btn.classList.add('active');
-                    btn.innerText = 'ON';
+            if (btnOn && btnOff) {
+                if (isOn) {
+                    btnOn.classList.add('on-active');
+                    btnOff.classList.remove('off-active');
                 } else {
-                    btn.classList.remove('active');
-                    btn.innerText = 'OFF';
+                    btnOn.classList.remove('on-active');
+                    btnOff.classList.add('off-active');
                 }
             }
-            // Guardamos la preferencia exacta del usuario
-            localStorage.setItem("sofiul_feat_" + featureKey, featuresState[featureKey]);
         }
 
         function loadSpeechVoices() {
@@ -499,22 +526,13 @@
             if(localStorage.getItem("sofiul_gender")) botGenderSelect.value = localStorage.getItem("sofiul_gender");
             if(localStorage.getItem("sofiul_lang")) botLangSelect.value = localStorage.getItem("sofiul_lang");
             
-            // CARGAR ESTADOS: SI NO HAY NADA GUARDADO, ARRANCAN EN TRUE (ON POR DEFECTO)
+            // CARGAR ESTADOS GUARDADOS PARA CADA BOTÓN DUAL
             ['mvp', 'ghost', 'toxic', 'antisilence'].forEach(key => {
                 const savedVal = localStorage.getItem("sofiul_feat_" + key);
-                const btn = document.getElementById('btn-' + key);
-                
-                if(btn) {
-                    if(savedVal === 'false') {
-                        featuresState[key] = false;
-                        btn.classList.remove('active');
-                        btn.innerText = 'OFF';
-                    } else {
-                        featuresState[key] = true;
-                        btn.classList.add('active');
-                        btn.innerText = 'ON';
-                    }
+                if(savedVal !== null) {
+                    featuresState[key] = (savedVal === 'true');
                 }
+                updateDualButtonsUI(key);
             });
 
             if(localStorage.getItem("sofiul_spotify")) {
