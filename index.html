@@ -3,509 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOFIUL - Mobile Live System</title>
+    <title>SOFIUL - Fully Autonomous Smart Ecosystem</title>
     <meta name="theme-color" content="#070a12">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SOFIUL">
-    
     <style>
         :root {
             --bg-color: #070a12;
-            --card-bg: #0d1424;
-            --accent-cyan: #00e5ff;
-            --accent-blue: #0088ff;
-            --accent-purple: #8a2be2;
-            --accent-red: #ff2a5f;
+            --card-bg: #0b1424;
+            --accent-primary: #00e5ff;
+            --accent-secondary: #0088ff;
+            --glow-color: rgba(0, 229, 255, 0.4);
             --text-main: #ffffff;
-            --text-muted: #7b8cbe;
+            --text-muted: #8c82ce;
         }
-
         body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-bottom: 80px;
+            margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color); color: var(--text-main);
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding-bottom: 40px;
+            transition: background-color 0.6s ease;
+        }
+        
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 15px var(--glow-color); border-color: var(--accent-primary); }
+            50% { box-shadow: 0 0 35px var(--accent-primary); border-color: var(--accent-secondary); }
+            100% { box-shadow: 0 0 15px var(--glow-color); border-color: var(--accent-primary); }
         }
 
         header {
-            width: 100%;
-            padding: 8px 0;
-            text-align: center;
-            border-bottom: 2px solid rgba(0, 229, 255, 0.4);
-            background: #070a12;
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            width: 100%; padding: 12px 0 8px 0; text-align: center;
+            background: var(--bg-color); position: sticky; top: 0; z-index: 10;
+            transition: background-color 0.6s ease;
         }
-
-        .official-image-container {
-            width: 100%;
-            max-width: 360px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid rgba(0, 229, 255, 0.7);
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
-            background: #05070d;
+        
+        .neon-container {
+            width: 180px; height: 180px; border-radius: 50%;
+            border: 2px solid var(--accent-primary); animation: neonPulse 3s infinite ease-in-out;
+            position: relative; overflow: hidden; background: #000; margin: 0 auto;
+            transition: border-color 0.6s ease;
         }
-
-        .official-image-container svg {
-            width: 100%;
-            height: auto;
-            display: block;
+        .neon-container img {
+            position: absolute; width: 109%; height: 109%; top: -9%; left: -4.5%; object-fit: cover;
         }
-
-        .container {
-            width: 92%;
-            max-width: 450px;
-            margin: 15px auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
+        
+        .container { width: 92%; max-width: 420px; margin: 15px auto 10px auto; display: flex; flex-direction: column; gap: 10px; }
+        
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            background-color: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px; padding: 10px 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.6s ease, border-color 0.6s ease;
+        }
+        .card-title { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-style: italic; }
+        .status-badge { font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .badge-active { background: rgba(0, 229, 255, 0.15); color: var(--accent-primary); border: 1px solid rgba(0, 229, 255, 0.3); }
+
+        .input-group { margin-bottom: 8px; }
+        .input-group label { display: block; font-size: 0.7rem; color: #a19bc8; margin-bottom: 3px; font-style: italic; }
+        .neon-input, .neon-select {
+            width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px; padding: 8px; color: #fff; font-size: 0.85rem; box-sizing: border-box;
+            outline: none; font-family: inherit; font-style: italic;
+        }
+        
+        .file-upload-btn {
+            display: block; width: 100%; background: rgba(154, 43, 162, 0.15);
+            border: 1px dashed rgba(154, 43, 162, 0.5); color: #e2b7ff; padding: 8px;
+            border-radius: 6px; text-align: center; font-size: 0.75rem; font-weight: bold;
+            cursor: pointer; box-sizing: border-box; font-style: italic;
         }
 
-        .card-red-accent {
-            border-left: 4px solid var(--accent-red);
-            border-color: rgba(255, 42, 95, 0.4);
+        .action-button {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #000; border: none; border-radius: 8px; padding: 10px;
+            font-size: 0.85rem; font-weight: bold; text-align: center; cursor: pointer;
+            box-shadow: 0 0 15px var(--glow-color); text-transform: uppercase; margin-top: 5px;
+            font-style: italic; width: 100%; text-decoration: none; display: block; box-sizing: border-box;
+            transition: background 0.6s ease;
         }
 
-        .card-purple-accent {
-            border-left: 4px solid var(--accent-purple);
-            border-color: rgba(138, 43, 226, 0.4);
+        .chat-bubble-live {
+            background: rgba(255, 255, 255, 0.03); border-left: 3px solid var(--accent-primary);
+            padding: 10px; border-radius: 0 8px 8px 0; font-size: 0.85rem; margin-top: 8px;
+            color: #fff; line-height: 1.4; font-style: italic; min-height: 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: border-color 0.6s ease;
         }
-
-        .status-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            background: rgba(255, 42, 95, 0.1);
-            color: var(--accent-red);
-            border: 1px solid rgba(255, 42, 95, 0.3);
-        }
-
-        .badge.active {
-            background: rgba(0, 255, 100, 0.1);
-            color: #00ff64;
-            border-color: rgba(0, 255, 100, 0.3);
-        }
-
-        .card h3 {
-            margin: 0 0 5px 0;
-            font-size: 15px;
-            color: var(--accent-cyan);
-        }
-
-        .card p {
-            margin: 0;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 6px;
-            color: white;
-            font-size: 14px;
-            box-sizing: border-box;
-            margin-top: 8px;
-        }
-
-        .sound-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .sound-btn {
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            color: var(--text-main);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .main-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #00e5ff, #0088ff);
-            color: #070a12;
-            font-size: 15px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
-            margin-top: 5px;
-            letter-spacing: 1px;
-        }
-
-        .main-btn.active {
-            background: linear-gradient(135deg, #ff2a5f, #aa0033);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(255, 42, 95, 0.5);
-        }
-
-        #floating-bubble {
-            position: fixed;
-            right: 20px;
-            bottom: 30px;
-            width: 60px;
-            height: 60px;
-            background: var(--card-bg);
-            border: 2px solid var(--accent-cyan);
-            border-radius: 30px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--accent-cyan);
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
-            z-index: 999;
-        }
-
-        #bubble-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            width: 85%;
-            max-width: 320px;
-            background: var(--card-bg);
-            border: 1px solid var(--accent-cyan);
-            border-radius: 14px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .modal-btn {
-            width: 100%;
-            background: rgba(0, 229, 255, 0.15);
-            border: 1px solid rgba(0, 229, 255, 0.4);
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .close-modal {
-            width: 100%;
-            background: var(--accent-red);
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-top: 15px;
-            cursor: pointer;
-        }
+        .auto-status { font-size: 0.65rem; color: #00ff66; font-weight: bold; }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="official-image-container">
-            <svg viewBox="0 0 500 680" xmlns="http://www.w3.org/2000/svg">
-                <rect width="500" height="680" fill="#080b13"/>
-                <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
-                    <circle cx="3" cy="3" r="1" fill="#131c31" opacity="0.6"/>
-                </pattern>
-                <rect width="500" height="680" fill="url(#grid)"/>
-
-                <g fill="none" stroke="#16243d" stroke-width="1.8">
-                    <path d="M 30 90 L 100 90 L 130 65 L 180 65"/>
-                    <path d="M 60 140 L 110 140 L 140 170 L 190 170"/>
-                    <rect x="75" y="75" width="12" height="12" stroke="#1f3358" fill="none"/>
-                    <path d="M 470 90 L 400 90 L 370 65 L 320 65"/>
-                    <path d="M 440 140 L 390 140 L 360 170 L 310 170"/>
-                    <rect x="413" y="75" width="12" height="12" stroke="#1f3358" fill="none"/>
-                    <path d="M 70 510 L 130 510 L 160 480 L 210 480"/>
-                    <path d="M 430 510 L 370 510 L 340 480 L 290 480"/>
-                    <path d="M 90 560 L 150 560"/>
-                    <path d="M 410 560 L 350 560"/>
-                </g>
-
-                <circle cx="180" cy="65" r="3" fill="#00e5ff" opacity="0.7"/>
-                <circle cx="320" cy="65" r="3" fill="#00e5ff" opacity="0.7"/>
-                <circle cx="190" cy="170" r="3" fill="#00e5ff" opacity="0.7"/>
-                <circle cx="310" cy="170" r="3" fill="#00e5ff" opacity="0.7"/>
-                <circle cx="210" cy="480" r="3" fill="#00e5ff" opacity="0.7"/>
-                <circle cx="290" cy="480" r="3" fill="#00e5ff" opacity="0.7"/>
-
-                <defs>
-                    <linearGradient id="metalWingLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="20%" stop-color="#b0bec5"/>
-                        <stop offset="50%" stop-color="#546e7a"/>
-                        <stop offset="85%" stop-color="#263238"/>
-                        <stop offset="100%" stop-color="#0d1b2a"/>
-                    </linearGradient>
-                    <linearGradient id="metalWingRight" x1="100%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="20%" stop-color="#b0bec5"/>
-                        <stop offset="50%" stop-color="#546e7a"/>
-                        <stop offset="85%" stop-color="#263238"/>
-                        <stop offset="100%" stop-color="#0d1b2a"/>
-                    </linearGradient>
-                    <linearGradient id="cyanGlowCore" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#00ffff"/>
-                        <stop offset="40%" stop-color="#0088ff"/>
-                        <stop offset="100%" stop-color="#031633"/>
-                    </linearGradient>
-                </defs>
-
-                <polygon points="105,185 210,185 250,470 185,385 135,300" fill="url(#metalWingLeft)" stroke="#00e5ff" stroke-width="1.5" stroke-linejoin="round"/>
-                <polygon points="145,225 200,225 232,410 185,345" fill="url(#cyanGlowCore)"/>
-
-                <polygon points="395,185 290,185 250,470 315,385 365,300" fill="url(#metalWingRight)" stroke="#00e5ff" stroke-width="1.5" stroke-linejoin="round"/>
-                <polygon points="355,225 300,225 268,410 315,345" fill="url(#cyanGlowCore)"/>
-
-                <polygon points="250,515 235,465 265,465" fill="#111c2e" stroke="#00e5ff" stroke-width="1"/>
-
-                <g transform="translate(250, 168)">
-                    <circle cx="0" cy="0" r="54" fill="none" stroke="#00e5ff" stroke-width="5" opacity="0.95" filter="drop-shadow(0 0 18px #00e5ff)"/>
-                    <circle cx="0" cy="0" r="46" fill="#060911" stroke="#ffffff" stroke-width="2.5"/>
-                    <path d="M -16 -5 C -24 -5 -27 0 -27 7 C -27 15 -24 20 -16 20 C -8 20 -4 14 2 4 C 8 -6 11 -13 19 -13 C 27 -13 30 -8 30 2 C 30 10 27 16 19 16 C 11 16 8 10 2 -2 C -4 -13 -8 -17 -16 -17 C -24 -17 -27 -12 -27 -5 Z" 
-                          fill="none" stroke="#00ffff" stroke-width="6" stroke-linecap="round" filter="drop-shadow(0 0 10px #00ffff)"/>
-                </g>
-
-                <text x="250" y="590" font-family="'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="14" filter="drop-shadow(0 0 16px rgba(0,229,255,0.95))">SOFIUL</text>
-            </svg>
+        <div class="neon-container" id="avatarContainer">
+            <img src="https://files.catbox.moe/4fp3sa.png" alt="SOFIUL Logo" id="avatarImage">
         </div>
     </header>
 
     <div class="container">
+        <!-- 1. PILOTO AUTOMÁTICO ANTISILENCIO (15s) -->
+        <div class="card" style="border-color: rgba(0, 255, 102, 0.4);">
+            <div class="card-title" style="color: #00ff66;">
+                <span>PILOTO AUTOM&Aacute;TICO ANTISILENCIO (15s)</span>
+                <span class="status-badge" style="background: rgba(0,255,102,0.15); color: #00ff66; border: 1px solid rgba(0,255,102,0.3);">ACTIVO</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 6px 8px; border-radius: 6px; font-size: 0.75rem; margin-top: 4px;">
+                <span style="color: #fff; font-style: italic;">Estado del Radar Anti-Silencio:</span>
+                <span class="auto-status" id="radarTimer">⏱️ Vigilando (0s / 15s)</span>
+            </div>
+        </div>
+
+        <!-- 2. CENTRO DE INTERACCIÓN MÓVIL EN VIVO (Con Climas Automáticos) -->
         <div class="card">
-            <div class="status-box">
-                <div>
-                    <h3>Estado del Live</h3>
-                    <p>Sincronización móvil con TikTok</p>
+            <div class="card-title" style="color: var(--accent-primary);">
+                <span>CENTRO DE INTERACCI&Oacute;N INTELIGENTE</span>
+                <span class="status-badge badge-active">AUTO-FX</span>
+            </div>
+
+            <div class="input-group">
+                <label>👋 Saludar Espectador:</label>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="input-espectador" class="neon-input" placeholder="Nombre...">
+                    <button class="action-button" onclick="saludarEspectador()" style="margin-top:0; width: 90px; padding: 6px; font-size: 0.75rem;">Saludar</button>
                 </div>
-                <div id="status-badge" class="badge">DESCONECTADO</div>
+            </div>
+
+            <div class="input-group">
+                <label>🎁 Agradecer Regalo (Cambia a Modo VIP Automático):</label>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="input-regalo-usuario" class="neon-input" placeholder="Usuario - Regalo...">
+                    <button class="action-button" onclick="agradecerRegalo()" style="margin-top:0; width: 90px; padding: 6px; font-size: 0.75rem; background: linear-gradient(135deg, #ffd700, #ff8c00); color:#000;">Agradecer</button>
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 4px;">
+                <label>💬 Responder Comentario:</label>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="input-comentario" class="neon-input" placeholder="Duda del chat...">
+                    <button class="action-button" onclick="responderComentario()" style="margin-top:0; width: 90px; padding: 6px; font-size: 0.75rem; background: linear-gradient(135deg, #00ff66, #00e5ff); color:#000;">Responder</button>
+                </div>
+            </div>
+
+            <div class="chat-bubble-live" id="mascotLiveResponse">
+                <span>🤖✨ ¡Hola a todos! Listos para romperla en el directo.</span>
+                <span id="autoActiveIndicator" style="font-size: 0.6rem; color: #00ff66; display:none;">[AUTO]</span>
             </div>
         </div>
 
+        <!-- 3. CONFIGURACIÓN GLOBAL & GALERÍA DE AVATARES -->
         <div class="card">
-            <h3>Configuración de Cuenta</h3>
-            <p style="margin-bottom: 5px;">Usuario de TikTok:</p>
-            <input type="text" id="tiktok-username" class="form-control" value="@family_fenix">
-        </div>
-
-        <div class="card card-red-accent">
-            <div class="status-box">
-                <h3 style="color: var(--accent-red);">🛡️ Escudo Anti-Bots & Cofres</h3>
-                <span style="font-size: 12px; color: #00ff64; font-weight: bold;">ACTIVO</span>
+            <div class="card-title" style="color: #fff;">
+                <span>GALER&Iacute;A DE AVATARES &amp; CONFIG</span>
+                <span class="status-badge badge-active">PRO</span>
             </div>
-            <p>Bloquea patrones de granjas falsas protegiendo tus cofres.</p>
-        </div>
 
-        <div class="card card-purple-accent">
-            <div class="status-box">
-                <h3 style="color: var(--accent-purple);">🧬 Clonación de Voz IA</h3>
-                <span style="font-size: 12px; color: var(--accent-purple); font-weight: bold;">VOZ ÚNICA</span>
+            <div class="input-group">
+                <label>Idioma Global:</label>
+                <select id="bot-lang" class="neon-select">
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="pt">🇧🇷 Português (Brasil)</option>
+                    <option value="en">🇺🇸 English</option>
+                </select>
             </div>
-            <p>Voz cálida y humana personalizada activa para saludos y metas.</p>
-        </div>
 
-        <div class="card">
-            <h3>🔊 Cabina de Sonidos</h3>
-            <div class="sound-grid">
-                <button class="sound-btn" onclick="triggerSoundWithVoice('Risas', '¡Qué buena risa en el directo!')">😂 Risas</button>
-                <button class="sound-btn" onclick="triggerSoundWithVoice('Épico', '¡Momento totalmente épico mi gente!')">🔥 Épico</button>
-                <button class="sound-btn" onclick="triggerSoundWithVoice('Nivel Up', '¡Subimos de nivel gracias al apoyo!')">⭐ Nivel Up</button>
+            <div class="input-group">
+                <label>Elige un Avatar Prediseñado:</label>
+                <select id="preset-avatar" class="neon-select" onchange="cambiarAvatarPreset(this.value)">
+                    <option value="https://files.catbox.moe/4fp3sa.png">🔥 Fénix Neón Principal</option>
+                    <option value="https://files.catbox.moe/e12345.png">🛡️ Guerrero Cyberpunk</option>
+                    <option value="https://files.catbox.moe/e67890.png">💎 Guardiana Diamante</option>
+                </select>
             </div>
-        </div>
-
-        <button id="master-btn" class="main-btn" onclick="toggleSofull()">ENCENDER SOFIUL ( MODO MÓVIL )</button>
-    </div>
-
-    <div id="floating-bubble" onclick="openBubbleMenu()">⚡</div>
-
-    <div id="bubble-modal">
-        <div class="modal-content">
-            <h3 style="color: var(--accent-cyan); text-align:center; margin-top:0;">⚡ Control Rápido</h3>
-            <p style="text-align:center; margin-bottom:15px; color: var(--text-muted);">Sistema en Directo</p>
             
-            <button class="modal-btn" onclick="triggerSoundWithVoice('Meta 1K Taps', '¡Increíble ritmo con esos taps!')">👆 Simular Meta 1K Taps</button>
-            <button class="modal-btn" onclick="triggerSoundWithVoice('Club de Fans', '¡Bienvenido al club de fans oficial!')">⭐ Simular Club de Fans</button>
-            
-            <button class="close-modal" onclick="closeBubbleMenu()">Cerrar Panel Flotante</button>
+            <div class="input-group" style="margin-bottom: 0;">
+                <label>O sube tu propia imagen personalizada:</label>
+                <label class="file-upload-btn" style="background: rgba(0, 229, 255, 0.1); border-color: rgba(0, 229, 255, 0.4); color: var(--accent-primary);">
+                    🖼️ Subir imagen desde tu celular
+                    <input type="file" id="avatar-file" style="display: none;" accept="image/*" onchange="cargarImagenPersonalizada(event)">
+                </label>
+            </div>
         </div>
     </div>
 
     <script>
-        let isLive = false;
-        let sofiulBridge = null;
+        let segundosSinActividad = 0;
+        const tiempoLimiteSilencio = 15;
 
-        class TikTokLiveConnector {
-            constructor(username) {
-                this.username = username;
-                this.isConnected = false;
-            }
-
-            start() {
-                console.log(`[SOFIUL] Sintonizando el flujo de datos para: @${this.username}`);
-                this.isConnected = true;
-                this.listenToStreamEvents();
-            }
-
-            listenToStreamEvents() {
-                if (!this.isConnected) return;
-                window.liveEventInterval = setTimeout(() => {
-                    if (isLive) {
-                        this.handleTaps(1000, "Community");
-                    }
-                }, 6000);
-            }
-
-            handleTaps(tapCount, sender) {
-                if (tapCount >= 1000) {
-                    sofiulVoice.speak("¡Impresionante ritmo con los taps!");
-                    const bubble = document.getElementById('floating-bubble');
-                    if (bubble) bubble.style.boxShadow = "0 0 25px #00ff64";
-                }
-            }
-
-            stop() {
-                this.isConnected = false;
-                if (window.liveEventInterval) clearTimeout(window.liveEventInterval);
-                console.log("[SOFIUL] Desconectado del flujo.");
+        // Cambiar Clima Automáticamente de forma Inteligente
+        function aplicarClimaAutomatico(tipo) {
+            const root = document.documentElement;
+            if (tipo === 'cyberpunk') {
+                root.style.setProperty('--bg-color', '#070a12');
+                root.style.setProperty('--card-bg', '#0b1424');
+                root.style.setProperty('--accent-primary', '#00e5ff');
+                root.style.setProperty('--accent-secondary', '#0088ff');
+                root.style.setProperty('--glow-color', 'rgba(0, 229, 255, 0.4)');
+            } else if (tipo === 'battle-pk') {
+                root.style.setProperty('--bg-color', '#140507');
+                root.style.setProperty('--card-bg', '#260a0f');
+                root.style.setProperty('--accent-primary', '#ff2a5f');
+                root.style.setProperty('--accent-secondary', '#ff8c00');
+                root.style.setProperty('--glow-color', 'rgba(255, 42, 95, 0.6)');
+            } else if (tipo === 'gold-vip') {
+                root.style.setProperty('--bg-color', '#120f07');
+                root.style.setProperty('--card-bg', '#211c0c');
+                root.style.setProperty('--accent-primary', '#ffd700');
+                root.style.setProperty('--accent-secondary', '#ffaa00');
+                root.style.setProperty('--glow-color', 'rgba(255, 215, 0, 0.5)');
             }
         }
 
-        class SofiulVoiceSynthesis {
-            constructor() {
-                this.synth = window.speechSynthesis;
-                this.isSupported = 'speechSynthesis' in window;
-            }
-
-            speak(textMessage) {
-                if (!this.isSupported) {
-                    alert("🔊 (Simulación de voz IA): " + textMessage);
-                    return;
-                }
-                this.synth.cancel();
-                const utterance = new SpeechSynthesisUtterance(textMessage);
-                utterance.lang = 'es-ES';
-                utterance.rate = 1.05;
-                utterance.pitch = 1.0;
-                
-                const voices = this.synth.getVoices();
-                const spanishVoice = voices.find(voice => voice.lang.includes('es'));
-                if (spanishVoice) {
-                    utterance.voice = spanishVoice;
-                }
-
-                this.synth.speak(utterance);
-            }
+        function reiniciarContadorSilencio() {
+            segundosSinActividad = 0;
+            document.getElementById('autoActiveIndicator').style.display = 'none';
         }
 
-        const sofiulVoice = new SofiulVoiceSynthesis();
+        setInterval(() => {
+            segundosSinActividad++;
+            document.getElementById('radarTimer').innerText = `⏱️ Vigilando (${segundosSinActividad}s / ${tiempoLimiteSilencio}s)`;
 
-        function triggerSoundWithVoice(effectName, customMessage) {
-            sofiulVoice.speak(customMessage || ("Efecto " + effectName + " activado"));
+            if (segundosSinActividad >= tiempoLimiteSilencio) {
+                dispararModoAntisilencioAutomatico();
+                segundosSinActividad = 0;
+            }
+        }, 1000);
+
+        function dispararModoAntisilencioAutomatico() {
+            aplicarClimaAutomatico('battle-pk'); // Pone modo alerta automáticamente
+            const idioma = document.getElementById('bot-lang').value;
+            const frasesAuto = {
+                es: [
+                    "¡Ey, el chat está muy callado! ¿Quién sigue por ahí? ¡Manden fuegos en la pantalla!",
+                    "¡Atención familia! No nos quedemos dormidos, ¡a darle con todo al directo!",
+                    "¡Momento de actividad! Vamos a sacudir el chat con esos likes, ¡no se queden atrás!"
+                ],
+                pt: [
+                    "Ei, o chat está muito quieto! Quem ainda tá aí? Manda fogos na tela!",
+                    "Atenção família! Ninguém dormindo, bora agitar esse directo!",
+                    "Hora de interagir! Vamos sacudir o chat com muitos likes!"
+                ],
+                en: [
+                    "Hey, the chat is too quiet! Who's still here? Drop some fire on the screen!",
+                    "Attention family! Don't fall asleep, let's keep the energy high!",
+                    "Time to wake up the chat! Hit those likes and let's go!"
+                ]
+            };
+
+            const lista = frasesAuto[idioma] || frasesAuto.es;
+            const fraseElegida = lista[Math.floor(Math.random() * lista.length)];
+
+            document.getElementById('autoActiveIndicator').style.display = 'inline';
+            hablarMascota(fraseElegida);
         }
 
-        function toggleSofull() {
-            isLive = !isLive;
-            const btn = document.getElementById('master-btn');
-            const badge = document.getElementById('status-badge');
-            const bubble = document.getElementById('floating-bubble');
-            const usernameInput = document.getElementById('tiktok-username') ? document.getElementById('tiktok-username').value : 'family_fenix';
+        function cambiarAvatarPreset(url) {
+            document.getElementById('avatarImage').src = url;
+            reiniciarContadorSilencio();
+        }
 
-            if (isLive) {
-                if (btn) {
-                    btn.innerText = "APAGAR SOFIUL";
-                    btn.classList.add('active');
-                }
-                if (badge) {
-                    badge.innerText = "CONECTADO";
-                    badge.classList.add('active');
-                }
-                if (bubble) bubble.style.display = 'flex';
-                
-                sofiulBridge = new TikTokLiveConnector(usernameInput);
-                sofiulBridge.start();
+        function cargarImagenPersonalizada(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('avatarImage').src = URL.createObjectURL(file);
+            }
+            reiniciarContadorSilencio();
+        }
 
-                sofiulVoice.speak("Sofiul encendido. Sistema conectado para " + usernameInput);
-            } else {
-                if (btn) {
-                    btn.innerText = "ENCENDER SOFIUL ( MODO MÓVIL )";
-                    btn.classList.remove('active');
-                }
-                if (badge) {
-                    badge.innerText = "DESCONECTADO";
-                    badge.classList.remove('active');
-                }
-                if (bubble) bubble.style.display = 'none';
-                closeBubbleMenu();
+        function hablarMascota(texto) {
+            const bubble = document.getElementById('mascotLiveResponse');
+            bubble.querySelector('span').innerText = texto;
 
-                if (sofiulBridge) {
-                    sofiulBridge.stop();
-                }
-                sofiulVoice.speak("Sistema apagado.");
+            const idioma = document.getElementById('bot-lang').value;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = idioma === 'pt' ? 'pt-BR' : idioma === 'en' ? 'en-US' : 'es-ES';
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
             }
         }
 
-        function openBubbleMenu() {
-            const modal = document.getElementById('bubble-modal');
-            if (modal) modal.style.display = 'flex';
+        function saludarEspectador() {
+            const nombre = document.getElementById('input-espectador').value.trim();
+            if (!nombre) return;
+            reiniciarContadorSilencio();
+            aplicarClimaAutomatico('cyberpunk'); // Vuelve al clima limpio
+            const idioma = document.getElementById('bot-lang').value;
+            let msg = idioma === 'pt' ? `Seja muito bem-vindo, ${nombre}! Que alegria ter você aqui.` : idioma === 'en' ? `Welcome, ${nombre}! So glad to have you here.` : `¡Bienvenid@ al directo, ${nombre}! Qué alegría tenerte por aquí.`;
+            document.getElementById('input-espectador').value = '';
+            hablarMascota(msg);
         }
 
-        function closeBubbleMenu() {
-            const modal = document.getElementById('bubble-modal');
-            if (modal) modal.style.display = 'none';
+        function agradecerRegalo() {
+            const info = document.getElementById('input-regalo-usuario').value.trim();
+            if (!info) return;
+            reiniciarContadorSilencio();
+            aplicarClimaAutomatico('gold-vip'); // ¡Cambia automático a Oro VIP cuando hay regalo!
+            const idioma = document.getElementById('bot-lang').value;
+            let msg = idioma === 'pt' ? `Muito obrigado pelo presente, ${info}! Você é demais!` : idioma === 'en' ? `Thank you so much for the gift, ${info}! You rock!` : `¡Muchísimas gracias por ese regalo, ${info}! ¡Eres un crack total!`;
+            document.getElementById('input-regalo-usuario').value = '';
+            hablarMascota(msg);
         }
 
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            console.log("[SOFIUL PWA] Listo para instalarse en pantalla de inicio.");
-        });
+        function responderComentario() {
+            const comentario = document.getElementById('input-comentario').value.trim();
+            if (!comentario) return;
+            reiniciarContadorSilencio();
+            aplicarClimaAutomatico('cyberpunk');
+            const idioma = document.getElementById('bot-lang').value;
+            let msg = idioma === 'pt' ? `Sobre "${comentario}": Com certeza, o chat tem toda a razão.` : idioma === 'en' ? `Regarding "${comentario}": Absolutely, the chat is totally right.` : `Sobre eso que comentan: ¡Totalmente de acuerdo con el chat, vamos con fuerza!`;
+            document.getElementById('input-comentario').value = '';
+            hablarMascota(msg);
+        }
     </script>
 </body>
-  </html>
-
+</html>
