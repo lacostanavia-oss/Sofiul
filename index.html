@@ -104,7 +104,6 @@
             box-shadow: 0 0 8px rgba(255, 42, 95, 0.4);
         }
 
-        /* DISEÑO PROFESIONAL PARA LAS OPCIONES DE VOZ CON BOTONES DE ESCUCHA */
         .voice-preview-container {
             display: flex; gap: 6px; margin-top: 4px;
         }
@@ -274,10 +273,10 @@
                 </div>
             </div>
 
-            <!-- 3. MASCOTA: IA HUMANA, VOCES NÍTIDAS Y MUESTRAS EN VIVO -->
+            <!-- 3. MASCOTA: IA HUMANA, PERFILES DE VOZ HD Y MUESTRAS INCLUIDAS -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
-                    <span>MASCOTA: IA HUMANA &amp; POLÍGLOTA</span>
+                    <span>MASCOTA: IA HUMANA &amp; PERFILES PRO</span>
                     <span class="status-badge badge-active">ESPEJO EMOCIONAL</span>
                 </div>
                 <div class="input-group">
@@ -285,28 +284,30 @@
                     <input type="text" id="assistant-name" class="neon-input" placeholder="Ej: Safire (Cálida, humana y cercana)...">
                 </div>
                 <div class="input-group">
-                    <label>Personalidad y Tono (Cero Robot, 100% Humano):</label>
+                    <label>Personalidad y Tono Dinámico:</label>
                     <select id="bot-tone" class="neon-select">
-                        <option value="warm">Cálido, Acogedor &amp; Empático (Espejo Emocional profundo)</option>
-                        <option value="hype">Extrovertido, Hype &amp; Súper Energético</option>
-                        <option value="sweet">Amable, Dulce &amp; Muy Afectuoso</option>
+                        <option value="warm">✨ Sofía (Cálida, Acogedor &amp; Empática - Ideal para conectar)</option>
+                        <option value="hype">🔥 Alex (Extrovertido, Hype &amp; Súper Energético)</option>
+                        <option value="sweet">💖 Luna (Amable, Dulce &amp; Muy Afectuosa)</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label>Seleccionar Timbre de Voz Humana Nítida:</label>
+                    <label>Seleccionar Perfil de Voz IA Prediseñado:</label>
                     <select id="bot-voice-gender" class="neon-select">
-                        <option value="female-hd">Femenino - Cálido, Natural, Acogedor &amp; Cristalino</option>
-                        <option value="male-hd">Masculino - Profundo, Enérgico, Clarito &amp; Confiable</option>
+                        <option value="profile-sofia">♀ Sofía Pro - Femenino Ultra Natural, Cálido &amp; Fluido</option>
+                        <option value="profile-mateo">♂ Mateo Pro - Masculino Profundo, Confiable &amp; Cercano</option>
+                        <option value="profile-nova">⚡ Nova AI - Dinámico, Moderno &amp; Cero Robótico</option>
                     </select>
                 </div>
 
-                <!-- BOTONES INDIVIDUALES DE MUESTRA PARA CADA VOZ -->
+                <!-- BOTONES DE MUESTRA PRO CON AUDIO FLUIDO Y NATURAL -->
                 <div style="font-size: 0.65rem; color: #a19bc8; margin: 6px 0 2px 0; font-style: italic;">
-                    🎧 Toca para escuchar la muestra de cada voz antes de conectar:
+                    🎧 Escucha la muestra de voz natural antes de conectar:
                 </div>
                 <div class="voice-preview-container">
-                    <button type="button" class="voice-preview-btn" onclick="previewSpecificVoice('female-hd')">▶ ♀ Probar Voz Femenina HD</button>
-                    <button type="button" class="voice-preview-btn" onclick="previewSpecificVoice('male-hd')">▶ ♂ Probar Voz Masculina HD</button>
+                    <button type="button" class="voice-preview-btn" onclick="playProVoiceSample('profile-sofia')">▶ ♀ Sofía Pro</button>
+                    <button type="button" class="voice-preview-btn" onclick="playProVoiceSample('profile-mateo')">▶ ♂ Mateo Pro</button>
+                    <button type="button" class="voice-preview-btn" onclick="playProVoiceSample('profile-nova')">▶ ⚡ Nova AI</button>
                 </div>
 
                 <div class="input-group" style="margin-top: 8px;">
@@ -439,97 +440,84 @@
             setTimeout(loadSpeechVoices, 300);
         }
 
-        function speakWithSpecificGender(text, genderType) {
+        function playProVoiceSample(profileId) {
             if (!window.speechSynthesis) return;
             window.speechSynthesis.cancel();
             
+            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
             const lang = document.getElementById('bot-lang').value;
             let targetLang = 'es-ES';
             if (lang === 'pt') targetLang = 'pt-BR';
             else if (lang === 'en') targetLang = 'en-US';
 
-            const utterance = new SpeechSynthesisUtterance(text);
+            let sampleText = `¡Hola, qué tal! Soy ${name}, tu asistente de IA optimizada para directos en TikTok.`;
+            if (lang === 'pt') sampleText = `¡Olá! Sou ${name}, sua assistente de IA otimizada para lives.`;
+            else if (lang === 'en') sampleText = `Hello! I am ${name}, your optimized AI live assistant.`;
+
+            const utterance = new SpeechSynthesisUtterance(sampleText);
             
-            // Buscar una voz adecuada según el género seleccionado
+            // Filtrar la mejor voz natural según el perfil seleccionado
             const bestVoice = voicesList.find(v => {
-                const name = v.name.toLowerCase();
-                const isMatchLang = v.lang.toLowerCase().includes(targetLang.split('-')[0]);
-                if (genderType === 'female-hd') {
-                    return isMatchLang && (name.includes('female') || name.includes('zira') || name.includes('helena') || name.includes('lucia') || name.includes('carmem') || name.includes('google español') || name.includes('es-'));
+                const vName = v.name.toLowerCase();
+                if (profileId === 'profile-sofia') {
+                    return v.lang.toLowerCase().includes(targetLang.split('-')[0]) && (vName.includes('female') || vName.includes('google') || vName.includes('natural') || vName.includes('zira'));
+                } else if (profileId === 'profile-mateo') {
+                    return v.lang.toLowerCase().includes(targetLang.split('-')[0]) && (vName.includes('male') || vName.includes('david') || vName.includes('pablo'));
                 } else {
-                    return isMatchLang && (name.includes('male') || name.includes('david') || name.includes('pablo') || name.includes('daniel') || name.includes('alex'));
+                    return v.lang.toLowerCase().includes('en') || vName.includes('natural');
                 }
             }) || voicesList[0];
 
             if (bestVoice) utterance.voice = bestVoice;
             
             utterance.lang = targetLang;
-            utterance.pitch = genderType === 'female-hd' ? 1.15 : 0.85; // Tono más claro o más profundo según corresponda
-            utterance.rate = 1.02;
-            utterance.volume = 1.0;
-
-            window.speechSynthesis.speak(utterance);
-        }
-
-        // FUNCIÓN PARA PROBAR DIRECTAMENTE CADA VOZ EN VIVO
-        function previewSpecificVoice(genderType) {
-            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
-            const lang = document.getElementById('bot-lang').value;
             
-            let sampleText = `¡Hola! Soy ${name}, tu asistente de inteligencia artificial humana y súper nítida para el directo en TikTok.`;
-            if (lang === 'pt') {
-                sampleText = `¡Olá! Sou ${name}, sua assistente de inteligência artificial humanizada para a live.`;
-            } else if (lang === 'en') {
-                sampleText = `Hello! I am ${name}, your crystal clear human AI assistant for the live.`;
+            // Calibración de tono e inflexión para evitar sonido metálico y dar fluidez
+            if (profileId === 'profile-sofia') {
+                utterance.pitch = 1.1;
+                utterance.rate = 1.05;
+            } else if (profileId === 'profile-mateo') {
+                utterance.pitch = 0.9;
+                utterance.rate = 1.0;
+            } else {
+                utterance.pitch = 1.0;
+                utterance.rate = 1.08;
             }
 
-            speakWithSpecificGender(sampleText, genderType);
-            
-            // Sincronizar automáticamente el selector visual con la voz probada
-            document.getElementById('bot-voice-gender').value = genderType;
-            localStorage.setItem("sofiul_gender", genderType);
+            utterance.volume = 1.0;
+            window.speechSynthesis.speak(utterance);
+
+            // Sincronizar selección
+            document.getElementById('bot-voice-gender').value = profileId;
+            localStorage.setItem("sofiul_gender", profileId);
         }
 
         function triggerLiveAction(type) {
             if (buttonCustomAudios[type]) {
                 buttonCustomAudios[type].currentTime = 0;
-                buttonCustomAudios[type].play().catch(e => console.log("Reproduciendo audio personalizado"));
+                buttonCustomAudios[type].play().catch(e => console.log("Audio personalizado"));
                 return;
             }
 
             const mode = document.getElementById('bot-lang').value;
-            const gender = document.getElementById('bot-voice-gender').value;
+            const profile = document.getElementById('bot-voice-gender').value;
             const tiktokAccount = document.getElementById('tiktok-user').value.trim() || "Streamer";
 
             let phrases = {
-                'welcome': `¡Hola, mi gente hermosa! ¡Un saludo súper gigante a todos los que van entrando al directo de ${tiktokAccount}! ¡Bienvenidos a la familia!`,
-                'hype': `¡Vamos con toda la energía, equipo! ¡A tocar la pantalla sin parar y compartir este directo ahora mismo!`,
-                'laugh': `¡Jajaja, qué gran momento estamos pasando aquí con ustedes! ¡Son lo máximo!`,
+                'welcome': `¡Hola, mi gente hermosa! ¡Un saludo súper gigante a todos los que van entrando al directo de ${tiktokAccount}!`,
+                'hype': `¡Vamos con toda la energía, equipo! ¡A tocar la pantalla sin parar y compartir este directo!`,
+                'laugh': `¡Jajaja, qué gran momento estamos pasando aquí con ustedes en directo!`,
                 'win': `¡Impresionante! ¡Muchísimas gracias de corazón por ese apoyo tan brutal y lleno de magia!`
             };
 
-            if (mode === 'pt') {
-                phrases = {
-                    'welcome': `¡Olá, minha gente linda! Sejam muito bem-vindos à live de ${tiktokAccount}!`,
-                    'hype': `¡Vamos com toda a energia da família! Vamos tocar na tela e compartilhar!`,
-                    'laugh': `¡Hahaha, que momento incrível e divertido na live de hoje!`,
-                    'win': `¡Uau! Muito obrigado de coração por esse apoio espetacular!`
-                };
-            }
-
-            speakWithSpecificGender(phrases[type] || phrases['hype'], gender);
+            playProVoiceSample(profile);
         }
 
         function controlSpotify(action) {
-            const mode = document.getElementById('bot-lang').value;
-            const gender = document.getElementById('bot-voice-gender').value;
-            if(action === 'play') {
-                speakWithSpecificGender("Reproduciendo música en Spotify para ambientar el directo.", gender);
-            } else if(action === 'pause') {
-                speakWithSpecificGender("Música pausada momentáneamente.", gender);
-            } else if(action === 'next') {
-                speakWithSpecificGender("Pasando a la siguiente canción en Spotify.", gender);
-            }
+            const profile = document.getElementById('bot-voice-gender').value;
+            if(action === 'play') playProVoiceSample(profile);
+            else if(action === 'pause') playProVoiceSample(profile);
+            else if(action === 'next') playProVoiceSample(profile);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -541,15 +529,13 @@
             const tiktokInput = document.getElementById("tiktok-user");
             const assistantInput = document.getElementById("assistant-name");
             const botToneSelect = document.getElementById("bot-tone");
-            const botGenderSelect = document.getElementById("bot-voice-gender");
+            const botVoiceSelect = document.getElementById("bot-voice-gender");
             const botLangSelect = document.getElementById("bot-lang");
             
             const spotifyInput = document.getElementById("spotify-link");
             const spotifyIframe = document.getElementById("spotify-iframe");
 
-            if(embeddedLivePanel) {
-                embeddedLivePanel.style.display = "none";
-            }
+            if(embeddedLivePanel) embeddedLivePanel.style.display = "none";
 
             if(toggleLiveBtn && embeddedLivePanel) {
                 toggleLiveBtn.addEventListener("click", function() {
@@ -567,7 +553,7 @@
             if(localStorage.getItem("sofiul_tiktok")) tiktokInput.value = localStorage.getItem("sofiul_tiktok");
             if(localStorage.getItem("sofiul_assistant")) assistantInput.value = localStorage.getItem("sofiul_assistant");
             if(localStorage.getItem("sofiul_tone")) botToneSelect.value = localStorage.getItem("sofiul_tone");
-            if(localStorage.getItem("sofiul_gender")) botGenderSelect.value = localStorage.getItem("sofiul_gender");
+            if(localStorage.getItem("sofiul_gender")) botVoiceSelect.value = localStorage.getItem("sofiul_gender");
             if(localStorage.getItem("sofiul_lang")) botLangSelect.value = localStorage.getItem("sofiul_lang");
             
             ['mvp', 'ghost', 'toxic', 'antisilence'].forEach(key => {
@@ -618,18 +604,17 @@
                 localStorage.setItem("sofiul_tiktok", tiktokInput.value.trim());
                 localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
                 localStorage.setItem("sofiul_tone", botToneSelect.value);
-                localStorage.setItem("sofiul_gender", botGenderSelect.value);
+                localStorage.setItem("sofiul_gender", botVoiceSelect.value);
                 localStorage.setItem("sofiul_lang", botLangSelect.value);
 
                 const nameAsistente = assistantInput.value.trim() || "Sofiul";
-                speakWithSpecificGender(`¡Configuración guardada y lista para TikTok Live! Hola, soy ${nameAsistente}.`, botGenderSelect.value);
+                playProVoiceSample(botVoiceSelect.value);
                 alert("¡Configuración guardada correctamente!");
             });
 
             setInterval(() => {
                 if (embeddedLivePanel.style.display === "block" && featuresState.antisilence) {
-                    const mode = botLangSelect.value;
-                    const gender = botGenderSelect.value;
+                    const profile = botVoiceSelect.value;
                     let frasesAuto = [
                         "¡Mi gente hermosa, vamos a tocar la pantalla con energía y compartir este directo!",
                         "¡Pessoal, deixem o seu like e vamos fazer essa live bombar juntos!",
@@ -638,7 +623,7 @@
                     const fraseElegida = frasesAuto[Math.floor(Math.random() * frasesAuto.length)];
                     
                     if (window.speechSynthesis && !window.speechSynthesis.speaking) {
-                        speakWithSpecificGender(fraseElegida, gender);
+                        playProVoiceSample(profile);
                     }
                 }
             }, 15000);
