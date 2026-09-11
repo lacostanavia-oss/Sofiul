@@ -77,7 +77,6 @@
             padding: 8px 10px; border-radius: 6px; margin-top: 5px; font-style: italic; font-size: 0.75rem;
         }
         
-        /* CONTENEDOR PARA LOS DOS BOTONES SEPARADOS (ON / OFF) */
         .dual-btn-group {
             display: flex; gap: 4px;
         }
@@ -92,20 +91,28 @@
             cursor: pointer; 
             text-transform: uppercase;
         }
-        /* ESTILO CUANDO EL BOTÓN ON ESTÁ ACTIVO */
         .dual-btn.on-active {
             background: rgba(0, 229, 255, 0.25); 
             border-color: var(--accent-cyan); 
             color: var(--accent-cyan);
             box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
         }
-        /* ESTILO CUANDO EL BOTÓN OFF ESTÁ ACTIVO */
         .dual-btn.off-active {
             background: rgba(255, 42, 95, 0.25); 
             border-color: #ff2a5f; 
             color: #ff2a5f;
             box-shadow: 0 0 8px rgba(255, 42, 95, 0.4);
         }
+
+        /* BOTÓN DE PRUEBA DE VOZ HD */
+        .test-voice-btn {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(154, 43, 162, 0.3));
+            border: 1px solid var(--accent-cyan); color: var(--accent-cyan);
+            padding: 6px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: bold;
+            cursor: pointer; text-transform: uppercase; margin-top: 4px; width: 100%;
+            text-align: center; font-style: italic; display: block; box-sizing: border-box;
+        }
+        .test-voice-btn:active { background: var(--accent-cyan); color: #000; }
 
         .live-mode-banner {
             background: linear-gradient(135deg, rgba(255, 42, 95, 0.25), rgba(0, 229, 255, 0.25));
@@ -265,7 +272,7 @@
                 </div>
             </div>
 
-            <!-- 3. MASCOTA: IA HUMANA, VOZ NÍTIDA Y POLÍGLOTA -->
+            <!-- 3. MASCOTA: IA HUMANA, VOZ NÍTIDA Y POLÍGLOTA CON PRUEBA EN VIVO -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
                     <span>MASCOTA: IA HUMANA &amp; POLÍGLOTA</span>
@@ -299,6 +306,8 @@
                         <option value="en">English (Global - Ultra nítido)</option>
                     </select>
                 </div>
+                <!-- BOTÓN NUEVO PARA PROBAR LA VOZ EN VIVO ANTES DE CONECTAR -->
+                <button type="button" class="test-voice-btn" onclick="previewSelectedVoice()">🔊 Probar Voz Seleccionada en Vivo</button>
             </div>
 
             <!-- 4. CONEXIÓN DIRECTA SPOTIFY LIVE BACKGROUND -->
@@ -381,7 +390,6 @@
         let voicesList = [];
         let buttonCustomAudios = { welcome: null, hype: null, laugh: null, win: null };
         
-        // ESTADOS INICIALES (TRUE POR DEFECTO)
         let featuresState = {
             mvp: true,
             ghost: true,
@@ -444,6 +452,22 @@
             utterance.volume = 1.0;
 
             window.speechSynthesis.speak(utterance);
+        }
+
+        // FUNCIÓN DE PRUEBA DE VOZ EN VIVO DESDE EL SELECTOR
+        function previewSelectedVoice() {
+            const gender = document.getElementById('bot-voice-gender').value;
+            const lang = document.getElementById('bot-lang').value;
+            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
+            
+            let sampleText = `¡Hola! Soy ${name}, tu asistente de IA humana y nítida, lista para tu directo en TikTok.`;
+            if (lang === 'pt') {
+                sampleText = `¡Olá! Sou ${name}, sua assistente de IA nítida e natural para a live.`;
+            } else if (lang === 'en') {
+                sampleText = `Hello! I am ${name}, your crystal clear AI assistant for the live stream.`;
+            }
+
+            speakCrystalHD(sampleText, lang, gender);
         }
 
         function triggerLiveAction(type) {
@@ -526,7 +550,6 @@
             if(localStorage.getItem("sofiul_gender")) botGenderSelect.value = localStorage.getItem("sofiul_gender");
             if(localStorage.getItem("sofiul_lang")) botLangSelect.value = localStorage.getItem("sofiul_lang");
             
-            // CARGAR ESTADOS GUARDADOS PARA CADA BOTÓN DUAL
             ['mvp', 'ghost', 'toxic', 'antisilence'].forEach(key => {
                 const savedVal = localStorage.getItem("sofiul_feat_" + key);
                 if(savedVal !== null) {
@@ -583,7 +606,6 @@
                 alert("¡Configuración guardada correctamente!");
             });
 
-            // Piloto automático inteligente respetando el estado ON/OFF
             setInterval(() => {
                 if (embeddedLivePanel.style.display === "block" && featuresState.antisilence) {
                     const mode = botLangSelect.value;
