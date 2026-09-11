@@ -77,7 +77,7 @@
             padding: 8px 10px; border-radius: 6px; margin-top: 5px; font-style: italic; font-size: 0.8rem;
         }
         
-        /* ESTILO INTERACTIVO PARA LOS BOTONES ON/OFF */
+        /* ESTILO INTERACTIVO ON / OFF */
         .toggle-btn {
             background: rgba(255, 42, 95, 0.2); 
             border: 1px solid #ff2a5f; 
@@ -306,7 +306,7 @@
                 </div>
             </div>
 
-            <!-- 5. ANIMACIONES MVP & FANTASMAS (BOTONES CONMUTABLES ON / OFF REALES) -->
+            <!-- 5. ANIMACIONES MVP & FANTASMAS (AHORA ACTIVOS EN ON POR DEFECTO) -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>ANIMACIONES MVP &amp; FANTASMAS</span>
@@ -314,11 +314,11 @@
                 </div>
                 <div class="toggle-row">
                     <span>🏆 Animación Top 3 MVPs (8s)</span>
-                    <button type="button" class="toggle-btn" id="btn-mvp" onclick="toggleFeature('mvp')">OFF</button>
+                    <button type="button" class="toggle-btn active" id="btn-mvp" onclick="toggleFeature('mvp')">ON</button>
                 </div>
                 <div class="toggle-row">
                     <span>👻 Resaltar Donantes "Fantasmas"</span>
-                    <button type="button" class="toggle-btn" id="btn-ghost" onclick="toggleFeature('ghost')">OFF</button>
+                    <button type="button" class="toggle-btn active" id="btn-ghost" onclick="toggleFeature('ghost')">ON</button>
                 </div>
             </div>
 
@@ -330,11 +330,11 @@
                 </div>
                 <div class="toggle-row">
                     <span>🛡️ Neutralizador de Comentarios Tóxicos</span>
-                    <button type="button" class="toggle-btn" id="btn-toxic" onclick="toggleFeature('toxic')">OFF</button>
+                    <button type="button" class="toggle-btn active" id="btn-toxic" onclick="toggleFeature('toxic')">ON</button>
                 </div>
                 <div class="toggle-row">
                     <span>💬 Modo Antisilencio Dinámico (15s)</span>
-                    <button type="button" class="toggle-btn" id="btn-antisilence" onclick="toggleFeature('antisilence')">OFF</button>
+                    <button type="button" class="toggle-btn active" id="btn-antisilence" onclick="toggleFeature('antisilence')">ON</button>
                 </div>
             </div>
 
@@ -359,12 +359,12 @@
         let voicesList = [];
         let buttonCustomAudios = { welcome: null, hype: null, laugh: null, win: null };
         
-        // ESTADOS INICIALES EN FALSE (OFF) PARA QUE CADA USUARIO DECIDA QUÉ ACTIVAR
+        // ESTADOS INICIALES EN TRUE (ON POR DEFECTO PARA QUE ESTÉN ACTIVOS Y ÚTILES)
         let featuresState = {
-            mvp: false,
-            ghost: false,
-            toxic: false,
-            antisilence: false
+            mvp: true,
+            ghost: true,
+            toxic: true,
+            antisilence: true
         };
 
         function toggleFeature(featureKey) {
@@ -380,7 +380,7 @@
                     btn.innerText = 'OFF';
                 }
             }
-            // Guardamos la preferencia exacta del usuario en el navegador
+            // Guardamos la preferencia exacta del usuario
             localStorage.setItem("sofiul_feat_" + featureKey, featuresState[featureKey]);
         }
 
@@ -499,20 +499,20 @@
             if(localStorage.getItem("sofiul_gender")) botGenderSelect.value = localStorage.getItem("sofiul_gender");
             if(localStorage.getItem("sofiul_lang")) botLangSelect.value = localStorage.getItem("sofiul_lang");
             
-            // CARGAR EL ESTADO REAL GUARDADO O PONERLO EN OFF POR DEFECTO
+            // CARGAR ESTADOS: SI NO HAY NADA GUARDADO, ARRANCAN EN TRUE (ON POR DEFECTO)
             ['mvp', 'ghost', 'toxic', 'antisilence'].forEach(key => {
                 const savedVal = localStorage.getItem("sofiul_feat_" + key);
                 const btn = document.getElementById('btn-' + key);
                 
                 if(btn) {
-                    if(savedVal === 'true') {
-                        featuresState[key] = true;
-                        btn.classList.add('active');
-                        btn.innerText = 'ON';
-                    } else {
+                    if(savedVal === 'false') {
                         featuresState[key] = false;
                         btn.classList.remove('active');
                         btn.innerText = 'OFF';
+                    } else {
+                        featuresState[key] = true;
+                        btn.classList.add('active');
+                        btn.innerText = 'ON';
                     }
                 }
             });
@@ -565,7 +565,7 @@
                 alert("¡Configuración guardada correctamente!");
             });
 
-            // Piloto automático solo si el modo antisilencio está activo en ON
+            // Piloto automático inteligente respetando el estado ON/OFF
             setInterval(() => {
                 if (embeddedLivePanel.style.display === "block" && featuresState.antisilence) {
                     const mode = botLangSelect.value;
