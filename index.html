@@ -90,6 +90,7 @@
             border: 1px solid var(--accent-cyan); border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 5px;
         }
         
+        /* GRILLA DE BOTONES DE CONTROL DENTRO DEL ACORDEÓN */
         .sfx-grid-embedded {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
         }
@@ -143,81 +144,78 @@
     </header>
 
     <div class="container">
-        <!-- BOTÓN ROJIZO PRINCIPAL QUE ABRE/CIERRA EL MANDO -->
+        <!-- CONTENEDOR PRINCIPAL DEL BOTÓN ROJIZO Y SU ACORDEÓN INTERNO -->
         <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
                 🚀 PANEL DE CONTROL &amp; MANDO EN VIVO
             </div>
+            <!-- BOTÓN ROJIZO QUE FUNCIONA COMO INTERRUPTOR DE APERTURA -->
             <button class="action-button" id="toggle-live-view" style="margin-top: 0; background: linear-gradient(135deg, #ff2a5f, var(--accent-cyan)); color: #fff; font-size: 0.8rem;">
                 ⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES
             </button>
-        </div>
 
-        <!-- MANDO DE TRANSMISIÓN OCULTO POR DEFECTO Y QUE SE DESPLIEGA AL TOCAR EL BOTÓN ROJIZO -->
-        <div id="embedded-live-panel" class="card" style="display: none; border-color: #ff2a5f; background: rgba(11, 20, 36, 0.99);">
-            <div class="card-title" style="color: #ff2a5f;">
-                <span>🔴 MANDO DE TRANSMISIÓN EN VIVO</span>
-                <span class="status-badge" style="background: rgba(255, 42, 95, 0.2); color: #ff2a5f;">EN DIRECTO</span>
-            </div>
-            
-            <div style="font-size: 0.65rem; color: #a19bc8; margin-bottom: 6px; font-style: italic;">
-                🎮 Botones de Control de Voz &amp; Efectos (Sube tu audio MP3/WAV en cada botón antes de conectar):
-            </div>
-
-            <div class="sfx-grid-embedded">
-                <!-- 1. BIENVENIDA -->
-                <div class="sfx-box-embedded">
-                    <button class="sfx-main-btn" onclick="triggerLiveAction('welcome')">👋 BIENVENIDA ÉPICA</button>
-                    <label class="file-upload-btn">
-                        📁 Subir efecto
-                        <input type="file" class="btn-audio-file" data-btn="welcome" style="display: none;" accept="audio/*">
-                    </label>
-                    <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-welcome">Voz IA HD</div>
+            <!-- MANDO DE TRANSMISIÓN OCULTO DENTRO DEL BOTÓN ROJIZO HASTA QUE HAGAS CLIC -->
+            <div id="embedded-live-panel" style="display: none; margin-top: 10px; border: 1px solid #ff2a5f; border-radius: 8px; background: rgba(11, 20, 36, 0.98); padding: 10px; text-align: left;">
+                <div class="card-title" style="color: #ff2a5f;">
+                    <span>🔴 MANDO DE TRANSMISIÓN EN VIVO</span>
+                    <span class="status-badge" style="background: rgba(255, 42, 95, 0.2); color: #ff2a5f;">EN DIRECTO</span>
+                </div>
+                
+                <div style="font-size: 0.65rem; color: #a19bc8; margin-bottom: 6px; font-style: italic;">
+                    🎮 Botones de Control de Voz &amp; Efectos (Sube tu audio MP3/WAV en cada botón antes de conectar):
                 </div>
 
-                <!-- 2. HYPE -->
-                <div class="sfx-box-embedded">
-                    <button class="sfx-main-btn" onclick="triggerLiveAction('hype')">🔥 JÚBILO &amp; HYPE</button>
-                    <label class="file-upload-btn">
-                        📁 Subir efecto
-                        <input type="file" class="btn-audio-file" data-btn="hype" style="display: none;" accept="audio/*">
-                    </label>
-                    <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-hype">Voz IA HD</div>
+                <div class="sfx-grid-embedded">
+                    <!-- 1. BIENVENIDA -->
+                    <div class="sfx-box-embedded">
+                        <button class="sfx-main-btn" onclick="triggerLiveAction('welcome')">👋 BIENVENIDA ÉPICA</button>
+                        <label class="file-upload-btn">
+                            📁 Subir efecto
+                            <input type="file" class="btn-audio-file" data-btn="welcome" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-welcome">Voz IA HD</div>
+                    </div>
+
+                    <!-- 2. HYPE -->
+                    <div class="sfx-box-embedded">
+                        <button class="sfx-main-btn" onclick="triggerLiveAction('hype')">🔥 JÚBILO &amp; HYPE</button>
+                        <label class="file-upload-btn">
+                            📁 Subir efecto
+                            <input type="file" class="btn-audio-file" data-btn="hype" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-hype">Voz IA HD</div>
+                    </div>
+
+                    <!-- 3. RISAS -->
+                    <div class="sfx-box-embedded">
+                        <button class="sfx-main-btn" onclick="triggerLiveAction('laugh')">😂 RISAS &amp; DIVERSIÓN</button>
+                        <label class="file-upload-btn">
+                            📁 Subir efecto
+                            <input type="file" class="btn-audio-file" data-btn="laugh" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-laugh">Voz IA HD</div>
+                    </div>
+
+                    <!-- 4. VICTORIA -->
+                    <div class="sfx-box-embedded">
+                        <button class="sfx-main-btn" onclick="triggerLiveAction('win')">🏆 VICTORIA / REGALO</button>
+                        <label class="file-upload-btn">
+                            📁 Subir efecto
+                            <input type="file" class="btn-audio-file" data-btn="win" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-win">Voz IA HD</div>
+                    </div>
                 </div>
 
-                <!-- 3. RISAS -->
-                <div class="sfx-box-embedded">
-                    <button class="sfx-main-btn" onclick="triggerLiveAction('laugh')">😂 RISAS &amp; DIVERSIÓN</button>
-                    <label class="file-upload-btn">
-                        📁 Subir efecto
-                        <input type="file" class="btn-audio-file" data-btn="laugh" style="display: none;" accept="audio/*">
-                    </label>
-                    <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-laugh">Voz IA HD</div>
+                <div style="font-size: 0.65rem; color: #1db954; margin: 10px 0 4px 0; font-style: italic; font-weight: bold;">
+                    🎵 Controles de Spotify (Fondo independiente al micro):
                 </div>
-
-                <!-- 4. VICTORIA -->
-                <div class="sfx-box-embedded">
-                    <button class="sfx-main-btn" onclick="triggerLiveAction('win')">🏆 VICTORIA / REGALO</button>
-                    <label class="file-upload-btn">
-                        📁 Subir efecto
-                        <input type="file" class="btn-audio-file" data-btn="win" style="display: none;" accept="audio/*">
-                    </label>
-                    <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-win">Voz IA HD</div>
+                <div class="spotify-live-controls">
+                    <button class="spotify-ctrl-btn" onclick="controlSpotify('play')">▶ PLAY</button>
+                    <button class="spotify-ctrl-btn" onclick="controlSpotify('pause')">⏸ PAUSAR</button>
+                    <button class="spotify-ctrl-btn" onclick="controlSpotify('next')">⏭ SIGUIENTE</button>
                 </div>
             </div>
-
-            <div style="font-size: 0.65rem; color: #1db954; margin: 10px 0 4px 0; font-style: italic; font-weight: bold;">
-                🎵 Controles de Spotify (Fondo independiente al micro):
-            </div>
-            <div class="spotify-live-controls">
-                <button class="spotify-ctrl-btn" onclick="controlSpotify('play')">▶ PLAY</button>
-                <button class="spotify-ctrl-btn" onclick="controlSpotify('pause')">⏸ PAUSAR</button>
-                <button class="spotify-ctrl-btn" onclick="controlSpotify('next')">⏭ SIGUIENTE</button>
-            </div>
-
-            <button class="action-button" id="exit-live-view" style="margin-top: 12px; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); font-size: 0.75rem;">
-                ⚙️ CERRAR MANDO
-            </button>
         </div>
 
         <!-- PANELES DE CONFIGURACIÓN PRINCIPALES -->
@@ -450,7 +448,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             const actionBtn = document.getElementById("main-action-btn");
             const toggleLiveBtn = document.getElementById("toggle-live-view");
-            const exitLiveBtn = document.getElementById("exit-live-view");
             const embeddedLivePanel = document.getElementById("embedded-live-panel");
             
             const emailInput = document.getElementById("user-email");
@@ -463,25 +460,16 @@
             const spotifyInput = document.getElementById("spotify-link");
             const spotifyIframe = document.getElementById("spotify-iframe");
 
-            // Lógica para abrir/cerrar el panel integrado en el botón rojizo
+            // ACORDEÓN INTEGRADO EN EL BOTÓN ROJIZO
             if(toggleLiveBtn && embeddedLivePanel) {
                 toggleLiveBtn.addEventListener("click", function() {
                     if(embeddedLivePanel.style.display === "none" || embeddedLivePanel.style.display === "") {
                         embeddedLivePanel.style.display = "block";
                         toggleLiveBtn.innerText = "⚡ CERRAR MANDO DE TRANSMISIÓN";
-                        embeddedLivePanel.scrollIntoView({ behavior: 'smooth' });
                     } else {
                         embeddedLivePanel.style.display = "none";
                         toggleLiveBtn.innerText = "⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES";
                     }
-                });
-            }
-
-            if(exitLiveBtn && embeddedLivePanel) {
-                exitLiveBtn.addEventListener("click", function() {
-                    embeddedLivePanel.style.display = "none";
-                    toggleLiveBtn.innerText = "⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES";
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
 
@@ -520,8 +508,6 @@
                     const btnType = this.getAttribute('data-btn');
                     if(this.files && this.files[0]) {
                         const file = this.files[0];
-                        buttonCustomAudios[type] = new Audio(URL.createObjectURL(file));
-                        // Corrección de variable para asignación correcta por tipo
                         buttonCustomAudios[btnType] = new Audio(URL.createObjectURL(file));
                         document.getElementById('txt-' + btnType).innerText = "🎵 " + file.name.substring(0, 10) + "...";
                     }
