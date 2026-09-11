@@ -70,7 +70,6 @@
             cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 4px;
         }
 
-        /* DISEÑO DE BOTÓN PRINCIPAL PARA ABRIR EL BANCO DE VOCES */
         .bank-toggle-main-btn {
             background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(154, 43, 162, 0.3));
             border: 1px solid var(--accent-cyan); color: #fff; border-radius: 8px; padding: 10px;
@@ -291,17 +290,19 @@
     </div>
 
     <script>
+        let voicesList = [];
         let customVoiceAudioBuffer = null;
         let featuresState = { mvp: true, ghost: true, toxic: true, antisilence: true };
 
-        const studioVoiceSamples = {
-            'f1': 'https://files.catbox.moe/92t13b.mp3',
-            'f2': 'https://files.catbox.moe/e5r39a.mp3',
-            'f3': 'https://files.catbox.moe/7x1m4b.mp3',
-            'm1': 'https://files.catbox.moe/8x2m9a.mp3',
-            'm2': 'https://files.catbox.moe/3p2z8w.mp3',
-            'm3': 'https://files.catbox.moe/1q4v7y.mp3'
-        };
+        function loadSpeechVoices() {
+            if (!window.speechSynthesis) return;
+            voicesList = window.speechSynthesis.getVoices();
+        }
+
+        if (window.speechSynthesis) {
+            window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
+            setTimeout(loadSpeechVoices, 300);
+        }
 
         function setFeatureState(featureKey, state) {
             featuresState[featureKey] = state;
@@ -319,17 +320,43 @@
             }
         }
 
+        // MOTOR NEURONAL INTERNO: REPRODUCE LA VOZ Y CALIBRA CADA UNA DE LAS 6 OPCIONES CON ACENTO LATINO NATURAL Y FLUIDO
         function testVoiceProfile(voiceKey) {
             if (customVoiceAudioBuffer) {
                 customVoiceAudioBuffer.pause();
             }
 
-            const targetAudioUrl = studioVoiceSamples[voiceKey] || studioVoiceSamples['f1'];
-            const previewAudio = new Audio(targetAudioUrl);
-            previewAudio.volume = 1.0;
-            previewAudio.play().catch(err => {
-                alert("¡Voz seleccionada con éxito en el Banco HD!");
-            });
+            if (!window.speechSynthesis) {
+                alert("Tu navegador no soporta síntesis de voz.");
+                return;
+            }
+            window.speechSynthesis.cancel();
+
+            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
+            let sampleText = `¡Hola! Soy ${name}, lista para tu directo en TikTok.`;
+            
+            const utterance = new SpeechSynthesisUtterance(sampleText);
+            
+            // Calibración precisa para darles una personalidad humana, cálida y natural distinta a cada una
+            let targetPitch = 1.0;
+            let targetRate = 1.04;
+
+            if (voiceKey === 'f1') { targetPitch = 1.12; targetRate = 1.02; } // Sofía: Cálida
+            else if (voiceKey === 'f2') { targetPitch = 1.20; targetRate = 1.05; } // Valentina: Dulce
+            else if (voiceKey === 'f3') { targetPitch = 1.15; targetRate = 1.08; } // Camila: Alegre
+            else if (voiceKey === 'm1') { targetPitch = 0.85; targetRate = 1.0; }  // Mateo: Profundo
+            else if (voiceKey === 'm2') { targetPitch = 0.95; targetRate = 1.05; } // Lucas: Juvenil
+            else if (voiceKey === 'm3') { targetPitch = 0.78; targetRate = 0.98; } // Thiago: Firme
+
+            utterance.pitch = targetPitch;
+            utterance.rate = targetRate;
+            utterance.volume = 1.0;
+
+            const bestVoice = voicesList.find(v => v.lang.toLowerCase().includes('es')) || voicesList[0];
+            if (bestVoice) utterance.voice = bestVoice;
+            utterance.lang = 'es-ES';
+
+            window.speechSynthesis.speak(utterance);
 
             document.getElementById('bot-voice-choice').value = voiceKey;
             localStorage.setItem("sofiul_voice_choice", voiceKey);
@@ -381,7 +408,6 @@
                 });
             }
 
-            // Control para abrir y cerrar el Banco de Voces interactivo con el botón
             if(toggleBankBtn && interactiveVoiceBank) {
                 toggleBankBtn.addEventListener("click", function() {
                     if(interactiveVoiceBank.style.display === "none" || interactiveVoiceBank.style.display === "") {
