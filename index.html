@@ -13,7 +13,6 @@
             --card-bg: #0b1424;
             --accent-cyan: #00e5ff;
             --accent-blue: #0088ff;
-            --accent-purple: #9a2ba2;
             --text-main: #ffffff;
             --text-muted: #8c82ce;
         }
@@ -63,11 +62,11 @@
             border-radius: 6px; padding: 8px; color: #fff; font-size: 0.85rem; box-sizing: border-box;
             outline: none; font-family: inherit; font-style: italic;
         }
-        
+
         .file-upload-btn {
             display: block; width: 100%; background: rgba(154, 43, 162, 0.2);
-            border: 1px dashed rgba(154, 43, 162, 0.6); color: #e2b7ff; padding: 5px;
-            border-radius: 6px; text-align: center; font-size: 0.6rem; font-weight: bold;
+            border: 1px dashed rgba(154, 43, 162, 0.6); color: #e2b7ff; padding: 8px;
+            border-radius: 6px; text-align: center; font-size: 0.7rem; font-weight: bold;
             cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 4px;
         }
 
@@ -77,73 +76,18 @@
             padding: 8px 10px; border-radius: 6px; margin-top: 5px; font-style: italic; font-size: 0.75rem;
         }
         
-        .dual-btn-group {
-            display: flex; gap: 4px;
-        }
+        .dual-btn-group { display: flex; gap: 4px; }
         .dual-btn {
-            background: rgba(255, 255, 255, 0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: #8c82ce;
-            padding: 4px 8px; 
-            border-radius: 4px; 
-            font-size: 0.6rem; 
-            font-weight: bold; 
-            cursor: pointer; 
-            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #8c82ce; padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; text-transform: uppercase;
         }
-        .dual-btn.on-active {
-            background: rgba(0, 229, 255, 0.25); 
-            border-color: var(--accent-cyan); 
-            color: var(--accent-cyan);
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
-        }
-        .dual-btn.off-active {
-            background: rgba(255, 42, 95, 0.25); 
-            border-color: #ff2a5f; 
-            color: #ff2a5f;
-            box-shadow: 0 0 8px rgba(255, 42, 95, 0.4);
-        }
-
-        .voice-preview-container {
-            display: flex; gap: 6px; margin-top: 4px;
-        }
-        .voice-preview-btn {
-            flex: 1; background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(154, 43, 162, 0.25));
-            border: 1px solid rgba(0, 229, 255, 0.5); color: var(--accent-cyan);
-            padding: 6px; border-radius: 6px; font-size: 0.65rem; font-weight: bold;
-            cursor: pointer; text-align: center; text-transform: uppercase; font-style: italic;
-        }
-        .voice-preview-btn:active { background: var(--accent-cyan); color: #000; }
+        .dual-btn.on-active { background: rgba(0, 229, 255, 0.25); border-color: var(--accent-cyan); color: var(--accent-cyan); box-shadow: 0 0 8px rgba(0, 229, 255, 0.4); }
+        .dual-btn.off-active { background: rgba(255, 42, 95, 0.25); border-color: #ff2a5f; color: #ff2a5f; box-shadow: 0 0 8px rgba(255, 42, 95, 0.4); }
 
         .live-mode-banner {
             background: linear-gradient(135deg, rgba(255, 42, 95, 0.25), rgba(0, 229, 255, 0.25));
             border: 1px solid var(--accent-cyan); border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 5px;
         }
-        
-        .sfx-grid-embedded {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
-        }
-        .sfx-box-embedded {
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(154, 43, 162, 0.2));
-            border: 1px solid rgba(0, 229, 255, 0.4); border-radius: 8px; padding: 8px;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .sfx-main-btn {
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.25), rgba(0, 136, 255, 0.35));
-            border: 1px solid var(--accent-cyan); color: #fff; border-radius: 6px; padding: 10px 4px;
-            font-size: 0.7rem; font-weight: bold; text-align: center; cursor: pointer;
-            text-transform: uppercase; font-style: italic; width: 100%; box-sizing: border-box;
-        }
-        .sfx-main-btn:active { transform: scale(0.95); background: var(--accent-cyan); color: #000; }
-
-        .spotify-live-controls {
-            display: flex; gap: 6px; margin-top: 8px;
-        }
-        .spotify-ctrl-btn {
-            flex: 1; background: rgba(29, 185, 84, 0.2); border: 1px solid #1db954; color: #1db954;
-            padding: 8px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; text-align: center; cursor: pointer; text-transform: uppercase;
-        }
-        .spotify-ctrl-btn:active { background: #1db954; color: #000; }
 
         .action-button {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
@@ -153,14 +97,10 @@
             font-style: italic; width: 100%; text-decoration: none; display: block; box-sizing: border-box;
         }
 
-        .pay-box {
-            background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.4);
-            border-radius: 8px; padding: 10px; margin-top: 8px; text-align: center;
-        }
+        .pay-box { background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.4); border-radius: 8px; padding: 10px; margin-top: 8px; text-align: center; }
         .plan-btn {
-            background: linear-gradient(135deg, #ffa500, #ff8c00); color: #000;
-            border: none; border-radius: 6px; padding: 8px 10px; font-size: 0.75rem;
-            font-weight: bold; text-align: center; cursor: pointer; text-transform: uppercase;
+            background: linear-gradient(135deg, #ffa500, #ff8c00); color: #000; border: none; border-radius: 6px;
+            padding: 8px 10px; font-size: 0.75rem; font-weight: bold; text-align: center; cursor: pointer; text-transform: uppercase;
             display: block; width: 100%; margin-top: 6px; text-decoration: none; font-style: italic;
         }
     </style>
@@ -173,95 +113,35 @@
     </header>
 
     <div class="container">
-        <!-- BOTÓN ROJIZO DE INICIO CON ACORDEÓN -->
+        <!-- PANEL DE LECTURA DE CHAT EN VIVO -->
         <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
-                🚀 PANEL DE CONTROL &amp; MANDO EN VIVO
+                🚀 PANEL DE CONTROL &amp; LECTOR HUMANO DE CHAT
             </div>
             
             <button class="action-button" id="toggle-live-view" style="margin-top: 0; background: linear-gradient(135deg, #ff2a5f, var(--accent-cyan)); color: #fff; font-size: 0.8rem;">
-                ⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES
+                ⚡ ABRIR MANDO DE LECTURA EN DIRECTO
             </button>
 
-            <!-- MANDO DE TRANSMISIÓN OCULTO HASTA HACER CLIC -->
             <div id="embedded-live-panel" style="display: none; margin-top: 10px; border: 1px solid #ff2a5f; border-radius: 8px; background: rgba(11, 20, 36, 0.98); padding: 10px; text-align: left;">
                 <div class="card-title" style="color: #ff2a5f;">
-                    <span>🔴 MANDO DE TRANSMISIÓN EN VIVO</span>
-                    <span class="status-badge" style="background: rgba(255, 42, 95, 0.2); color: #ff2a5f;">EN DIRECTO</span>
+                    <span>🔴 LECTOR EXPRESIVO EN DIRECTO</span>
+                    <span class="status-badge" style="background: rgba(255, 42, 95, 0.2); color: #ff2a5f;">ACTIVO</span>
                 </div>
                 
                 <div style="font-size: 0.65rem; color: #a19bc8; margin-bottom: 6px; font-style: italic;">
-                    🎮 Botones de Control de Voz &amp; Efectos (Sube tu archivo MP3 o WAV en cada botón antes de conectar):
+                    💬 Escribe un comentario del chat para probar la interacción fluida y cálida:
                 </div>
 
-                <div class="sfx-grid-embedded">
-                    <!-- 1. BIENVENIDA -->
-                    <div class="sfx-box-embedded">
-                        <button class="sfx-main-btn" onclick="triggerLiveAction('welcome')">👋 BIENVENIDA ÉPICA</button>
-                        <label class="file-upload-btn">
-                            🎵 Subir MP3 / WAV
-                            <input type="file" class="btn-audio-file" data-btn="welcome" style="display: none;" accept=".mp3, .wav, .ogg, audio/mp3, audio/wav, audio/ogg">
-                        </label>
-                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-welcome">Voz IA HD</div>
-                    </div>
-
-                    <!-- 2. HYPE -->
-                    <div class="sfx-box-embedded">
-                        <button class="sfx-main-btn" onclick="triggerLiveAction('hype')">🔥 JÚBILO &amp; HYPE</button>
-                        <label class="file-upload-btn">
-                            🎵 Subir MP3 / WAV
-                            <input type="file" class="btn-audio-file" data-btn="hype" style="display: none;" accept=".mp3, .wav, .ogg, audio/mp3, audio/wav, audio/ogg">
-                        </label>
-                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-hype">Voz IA HD</div>
-                    </div>
-
-                    <!-- 3. RISAS -->
-                    <div class="sfx-box-embedded">
-                        <button class="sfx-main-btn" onclick="triggerLiveAction('laugh')">😂 RISAS &amp; DIVERSIÓN</button>
-                        <label class="file-upload-btn">
-                            🎵 Subir MP3 / WAV
-                            <input type="file" class="btn-audio-file" data-btn="laugh" style="display: none;" accept=".mp3, .wav, .ogg, audio/mp3, audio/wav, audio/ogg">
-                        </label>
-                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-laugh">Voz IA HD</div>
-                    </div>
-
-                    <!-- 4. VICTORIA -->
-                    <div class="sfx-box-embedded">
-                        <button class="sfx-main-btn" onclick="triggerLiveAction('win')">🏆 VICTORIA / REGALO</button>
-                        <label class="file-upload-btn">
-                            🎵 Subir MP3 / WAV
-                            <input type="file" class="btn-audio-file" data-btn="win" style="display: none;" accept=".mp3, .wav, .ogg, audio/mp3, audio/wav, audio/ogg">
-                        </label>
-                        <div style="font-size: 0.5rem; color: var(--accent-cyan); font-style: italic; text-align: center; margin-top: 2px;" id="txt-win">Voz IA HD</div>
-                    </div>
+                <div class="input-group" style="margin-bottom: 6px;">
+                    <input type="text" id="simulated-chat-input" class="neon-input" placeholder="Escribe un mensaje de chat aquí...">
                 </div>
-
-                <div style="font-size: 0.65rem; color: #1db954; margin: 10px 0 4px 0; font-style: italic; font-weight: bold;">
-                    🎵 Controles de Spotify (Fondo independiente al micro):
-                </div>
-                <div class="spotify-live-controls">
-                    <button class="spotify-ctrl-btn" onclick="controlSpotify('play')">▶ PLAY</button>
-                    <button class="spotify-ctrl-btn" onclick="controlSpotify('pause')">⏸ PAUSAR</button>
-                    <button class="spotify-ctrl-btn" onclick="controlSpotify('next')">⏭ SIGUIENTE</button>
-                </div>
+                <button type="button" class="action-button" style="padding: 8px; font-size: 0.75rem; margin-top: 0;" onclick="readChatExpressive()">🗣️ Leer Chat con Tono Humano</button>
             </div>
         </div>
 
-        <!-- PANELES DE CONFIGURACIÓN PRINCIPALES -->
         <div id="config-panels">
-            <!-- 1. ESTADO DE CUENTA Y SEGURIDAD -->
-            <div class="card" style="border-color: rgba(0, 229, 255, 0.4);">
-                <div class="card-title" style="color: var(--accent-cyan);">
-                    <span>ESTADO DE CUENTA &amp; SEGURIDAD</span>
-                    <span class="status-badge badge-active">72 HORAS GRATIS</span>
-                </div>
-                <div class="input-group">
-                    <label>Correo Electr&oacute;nico (Gmail / Registro Premium):</label>
-                    <input type="email" id="user-email" class="neon-input" placeholder="Ingresa tu email para sincronizar plan...">
-                </div>
-            </div>
-
-            <!-- 2. VINCULACIÓN TIKTOK LIVE -->
+            <!-- 1. VINCULACIÓN TIKTOK LIVE -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>VINCULACI&Oacute;N TIKTOK LIVE</span>
@@ -273,70 +153,41 @@
                 </div>
             </div>
 
-            <!-- 3. MASCOTA: IA HUMANA, PERFILES DE VOZ HD Y MUESTRAS INCLUIDAS -->
+            <!-- 2. SELECCIÓN DE VOZ HUMANA EXPRESIVA (MUJER / HOMBRE) O MP3 -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
-                    <span>MASCOTA: IA HUMANA &amp; PERFILES PRO</span>
-                    <span class="status-badge badge-active">ESPEJO EMOCIONAL</span>
+                    <span>VOZ DE INTERACCIÓN DEL BOT</span>
+                    <span class="status-badge badge-active">CÁLIDA &amp; NATURAL</span>
                 </div>
                 <div class="input-group">
                     <label>Nombre de la Mascota / Asistente:</label>
-                    <input type="text" id="assistant-name" class="neon-input" placeholder="Ej: Safire (Cálida, humana y cercana)...">
+                    <input type="text" id="assistant-name" class="neon-input" placeholder="Ej: Sofiul...">
                 </div>
+                
                 <div class="input-group">
-                    <label>Personalidad y Tono Dinámico:</label>
-                    <select id="bot-tone" class="neon-select">
-                        <option value="warm">✨ Sofía (Cálida, Acogedor &amp; Empática - Ideal para conectar)</option>
-                        <option value="hype">🔥 Alex (Extrovertido, Hype &amp; Súper Energético)</option>
-                        <option value="sweet">💖 Luna (Amable, Dulce &amp; Muy Afectuosa)</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Seleccionar Perfil de Voz IA Prediseñado:</label>
-                    <select id="bot-voice-gender" class="neon-select">
-                        <option value="profile-sofia">♀ Sofía Pro - Femenino Ultra Natural, Cálido &amp; Fluido</option>
-                        <option value="profile-mateo">♂ Mateo Pro - Masculino Profundo, Confiable &amp; Cercano</option>
-                        <option value="profile-nova">⚡ Nova AI - Dinámico, Moderno &amp; Cero Robótico</option>
+                    <label>A. Voces Opcionales con Tono Humano y Afectuoso:</label>
+                    <select id="bot-voice-choice" class="neon-select">
+                        <option value="female-expressive">♀ Sofía Pro - Femenino Súper Cálido, Expresivo &amp; Cercano</option>
+                        <option value="male-expressive">♂ Mateo Pro - Masculino Enérgico, Confiable &amp; Dinámico</option>
                     </select>
                 </div>
 
-                <!-- BOTONES DE MUESTRA PRO CON AUDIO FLUIDO Y NATURAL -->
-                <div style="font-size: 0.65rem; color: #a19bc8; margin: 6px 0 2px 0; font-style: italic;">
-                    🎧 Escucha la muestra de voz natural antes de conectar:
-                </div>
-                <div class="voice-preview-container">
-                    <button type="button" class="voice-preview-btn" onclick="playProVoiceSample('profile-sofia')">▶ ♀ Sofía Pro</button>
-                    <button type="button" class="voice-preview-btn" onclick="playProVoiceSample('profile-mateo')">▶ ♂ Mateo Pro</button>
-                    <button type="button" class="voice-preview-btn" onclick="playProVoiceSample('profile-nova')">▶ ⚡ Nova AI</button>
+                <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); margin: 6px 0; font-style: italic;">
+                    --- O ---
                 </div>
 
-                <div class="input-group" style="margin-top: 8px;">
-                    <label>Detección de Idioma Inteligente (Políglota Nativo):</label>
-                    <select id="bot-lang" class="neon-select">
-                        <option value="auto-poly">✨ Automático (Detecta si entran de Brasil, USA o Hispanoamérica)</option>
-                        <option value="es">Español Nativo (Hispanoamérica cristalina)</option>
-                        <option value="pt">Português Nativo (Brasil - Sem sotaque estranho)</option>
-                        <option value="en">English (Global - Ultra nítido)</option>
-                    </select>
+                <!-- OPCIÓN LIBRE DE SUBIR MP3 PERSONALIZADO -->
+                <div class="input-group">
+                    <label>B. Subir tu propio audio en MP3 (Alternativa personalizada):</label>
+                    <label class="file-upload-btn">
+                        🎙️ Subir Audio MP3 / WAV
+                        <input type="file" id="custom-voice-file" style="display: none;" accept=".mp3, .wav, .ogg, audio/mp3, audio/wav, audio/ogg">
+                    </label>
+                    <div style="font-size: 0.55rem; color: var(--accent-cyan); font-style: italic; margin-top: 3px;" id="txt-custom-voice">Usando perfiles opcionales de voz expresiva</div>
                 </div>
             </div>
 
-            <!-- 4. CONEXIÓN DIRECTA SPOTIFY LIVE BACKGROUND -->
-            <div class="card" style="border-color: rgba(29, 185, 84, 0.4);">
-                <div class="card-title" style="color: #1db954;">
-                    <span>CONEXIÓN DIRECTA SPOTIFY LIVE BACKGROUND</span>
-                    <span class="status-badge" style="background: rgba(29, 185, 84, 0.2); color: #1db954;">AUDIO ACTIVO</span>
-                </div>
-                <div class="input-group" style="margin-bottom: 6px;">
-                    <label>Pega el Enlace de tu Playlist / Canción de Spotify:</label>
-                    <input type="text" id="spotify-link" class="neon-input" placeholder="https://open.spotify.com/playlist/...">
-                </div>
-                <div id="spotify-player-container" style="border-radius: 8px; overflow: hidden;">
-                    <iframe id="spotify-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                </div>
-            </div>
-
-            <!-- 5. ANIMACIONES MVP & FANTASMAS (DOS BOTONES SEPARADOS: ON / OFF) -->
+            <!-- 3. ANIMACIONES MVP & FANTASMAS -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>ANIMACIONES MVP &amp; FANTASMAS</span>
@@ -358,29 +209,7 @@
                 </div>
             </div>
 
-            <!-- 6. IA EMOCIONAL & ANTISILENCIO (DOS BOTONES SEPARADOS: ON / OFF) -->
-            <div class="card">
-                <div class="card-title" style="color: var(--accent-cyan);">
-                    <span>IA EMOCIONAL &amp; ANTISILENCIO</span>
-                    <span class="status-badge badge-active">HUMANO V2.0</span>
-                </div>
-                <div class="toggle-row">
-                    <span>🛡️ Neutralizador de Comentarios Tóxicos</span>
-                    <div class="dual-btn-group">
-                        <button type="button" class="dual-btn" id="btn-toxic-on" onclick="setFeatureState('toxic', true)">ON</button>
-                        <button type="button" class="dual-btn" id="btn-toxic-off" onclick="setFeatureState('toxic', false)">OFF</button>
-                    </div>
-                </div>
-                <div class="toggle-row">
-                    <span>💬 Modo Antisilencio Dinámico (15s)</span>
-                    <div class="dual-btn-group">
-                        <button type="button" class="dual-btn" id="btn-antisilence-on" onclick="setFeatureState('antisilence', true)">ON</button>
-                        <button type="button" class="dual-btn" id="btn-antisilence-off" onclick="setFeatureState('antisilence', false)">OFF</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. PLANES COMERCIALES MERCADO PAGO -->
+            <!-- 4. PLANES COMERCIALES -->
             <div class="card" style="border-color: rgba(255, 165, 0, 0.4);">
                 <div class="card-title" style="color: #ffa500;">
                     <span>LICENCIA COMERCIAL &amp; PLANES SOFIUL PRO</span>
@@ -389,7 +218,6 @@
                 <div class="pay-box" style="display: block;">
                     <a href="https://mpago.la/1Pi5cbX" target="_blank" class="plan-btn">⭐ Plan Mensual (R$ 49,90)</a>
                     <a href="https://mpago.la/2MrRYRg" target="_blank" class="plan-btn">💎 Plan Trimestral (R$ 199,90)</a>
-                    <a href="https://mpago.la/15J8E6x" target="_blank" class="plan-btn">👑 Plan Anual (R$ 349,90)</a>
                 </div>
             </div>
 
@@ -399,14 +227,8 @@
 
     <script>
         let voicesList = [];
-        let buttonCustomAudios = { welcome: null, hype: null, laugh: null, win: null };
-        
-        let featuresState = {
-            mvp: true,
-            ghost: true,
-            toxic: true,
-            antisilence: true
-        };
+        let customVoiceAudioBuffer = null;
+        let featuresState = { mvp: true, ghost: true, toxic: true, antisilence: true };
 
         function setFeatureState(featureKey, state) {
             featuresState[featureKey] = state;
@@ -418,15 +240,9 @@
             const isOn = featuresState[featureKey];
             const btnOn = document.getElementById('btn-' + featureKey + '-on');
             const btnOff = document.getElementById('btn-' + featureKey + '-off');
-            
             if (btnOn && btnOff) {
-                if (isOn) {
-                    btnOn.classList.add('on-active');
-                    btnOff.classList.remove('off-active');
-                } else {
-                    btnOn.classList.remove('on-active');
-                    btnOff.classList.add('off-active');
-                }
+                if (isOn) { btnOn.classList.add('on-active'); btnOff.classList.remove('off-active'); }
+                else { btnOn.classList.remove('on-active'); btnOff.classList.add('off-active'); }
             }
         }
 
@@ -440,100 +256,57 @@
             setTimeout(loadSpeechVoices, 300);
         }
 
-        function playProVoiceSample(profileId) {
-            if (!window.speechSynthesis) return;
-            window.speechSynthesis.cancel();
-            
-            const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
-            const lang = document.getElementById('bot-lang').value;
-            let targetLang = 'es-ES';
-            if (lang === 'pt') targetLang = 'pt-BR';
-            else if (lang === 'en') targetLang = 'en-US';
-
-            let sampleText = `¡Hola, qué tal! Soy ${name}, tu asistente de IA optimizada para directos en TikTok.`;
-            if (lang === 'pt') sampleText = `¡Olá! Sou ${name}, sua assistente de IA otimizada para lives.`;
-            else if (lang === 'en') sampleText = `Hello! I am ${name}, your optimized AI live assistant.`;
-
-            const utterance = new SpeechSynthesisUtterance(sampleText);
-            
-            // Filtrar la mejor voz natural según el perfil seleccionado
-            const bestVoice = voicesList.find(v => {
-                const vName = v.name.toLowerCase();
-                if (profileId === 'profile-sofia') {
-                    return v.lang.toLowerCase().includes(targetLang.split('-')[0]) && (vName.includes('female') || vName.includes('google') || vName.includes('natural') || vName.includes('zira'));
-                } else if (profileId === 'profile-mateo') {
-                    return v.lang.toLowerCase().includes(targetLang.split('-')[0]) && (vName.includes('male') || vName.includes('david') || vName.includes('pablo'));
-                } else {
-                    return v.lang.toLowerCase().includes('en') || vName.includes('natural');
-                }
-            }) || voicesList[0];
-
-            if (bestVoice) utterance.voice = bestVoice;
-            
-            utterance.lang = targetLang;
-            
-            // Calibración de tono e inflexión para evitar sonido metálico y dar fluidez
-            if (profileId === 'profile-sofia') {
-                utterance.pitch = 1.1;
-                utterance.rate = 1.05;
-            } else if (profileId === 'profile-mateo') {
-                utterance.pitch = 0.9;
-                utterance.rate = 1.0;
-            } else {
-                utterance.pitch = 1.0;
-                utterance.rate = 1.08;
-            }
-
-            utterance.volume = 1.0;
-            window.speechSynthesis.speak(utterance);
-
-            // Sincronizar selección
-            document.getElementById('bot-voice-gender').value = profileId;
-            localStorage.setItem("sofiul_gender", profileId);
-        }
-
-        function triggerLiveAction(type) {
-            if (buttonCustomAudios[type]) {
-                buttonCustomAudios[type].currentTime = 0;
-                buttonCustomAudios[type].play().catch(e => console.log("Audio personalizado"));
+        // MOTOR CON MODULACIÓN EXPRESIVA Y CALIDEZ HUMANA
+        function speakExpressive(text) {
+            if (customVoiceAudioBuffer) {
+                customVoiceAudioBuffer.currentTime = 0;
+                customVoiceAudioBuffer.play().catch(e => console.log("Reproduciendo audio personalizado"));
                 return;
             }
 
-            const mode = document.getElementById('bot-lang').value;
-            const profile = document.getElementById('bot-voice-gender').value;
-            const tiktokAccount = document.getElementById('tiktok-user').value.trim() || "Streamer";
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            
+            const choice = document.getElementById('bot-voice-choice').value;
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            const bestVoice = voicesList.find(v => {
+                const vName = v.name.toLowerCase();
+                if (choice === 'female-expressive') return vName.includes('female') || vName.includes('lucia') || vName.includes('google español') || vName.includes('natural');
+                if (choice === 'male-expressive') return vName.includes('male') || vName.includes('pablo') || vName.includes('david') || vName.includes('natural');
+                return v.lang.includes('es');
+            }) || voicesList[0];
 
-            let phrases = {
-                'welcome': `¡Hola, mi gente hermosa! ¡Un saludo súper gigante a todos los que van entrando al directo de ${tiktokAccount}!`,
-                'hype': `¡Vamos con toda la energía, equipo! ¡A tocar la pantalla sin parar y compartir este directo!`,
-                'laugh': `¡Jajaja, qué gran momento estamos pasando aquí con ustedes en directo!`,
-                'win': `¡Impresionante! ¡Muchísimas gracias de corazón por ese apoyo tan brutal y lleno de magia!`
-            };
+            if (bestVoice) utterance.voice = bestVoice;
+            utterance.lang = 'es-ES';
+            
+            // Calibración de tono y velocidad para evitar el sonido robótico y dar fluidez conversacional
+            utterance.pitch = choice === 'female-expressive' ? 1.12 : 0.94;
+            utterance.rate = 1.04;
+            utterance.volume = 1.0;
 
-            playProVoiceSample(profile);
+            window.speechSynthesis.speak(utterance);
         }
 
-        function controlSpotify(action) {
-            const profile = document.getElementById('bot-voice-gender').value;
-            if(action === 'play') playProVoiceSample(profile);
-            else if(action === 'pause') playProVoiceSample(profile);
-            else if(action === 'next') playProVoiceSample(profile);
+        function readChatExpressive() {
+            const inputField = document.getElementById('simulated-chat-input');
+            const chatText = inputField.value.trim();
+
+            if (!chatText) {
+                alert("Escribe un mensaje de chat para probar.");
+                return;
+            }
+            speakExpressive(chatText);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             const actionBtn = document.getElementById("main-action-btn");
             const toggleLiveBtn = document.getElementById("toggle-live-view");
             const embeddedLivePanel = document.getElementById("embedded-live-panel");
-            
-            const emailInput = document.getElementById("user-email");
             const tiktokInput = document.getElementById("tiktok-user");
             const assistantInput = document.getElementById("assistant-name");
-            const botToneSelect = document.getElementById("bot-tone");
-            const botVoiceSelect = document.getElementById("bot-voice-gender");
-            const botLangSelect = document.getElementById("bot-lang");
-            
-            const spotifyInput = document.getElementById("spotify-link");
-            const spotifyIframe = document.getElementById("spotify-iframe");
+            const voiceChoiceSelect = document.getElementById("bot-voice-choice");
+            const customVoiceFileInput = document.getElementById("custom-voice-file");
 
             if(embeddedLivePanel) embeddedLivePanel.style.display = "none";
 
@@ -541,92 +314,43 @@
                 toggleLiveBtn.addEventListener("click", function() {
                     if(embeddedLivePanel.style.display === "none" || embeddedLivePanel.style.display === "") {
                         embeddedLivePanel.style.display = "block";
-                        toggleLiveBtn.innerText = "⚡ CERRAR MANDO DE TRANSMISIÓN";
+                        toggleLiveBtn.innerText = "⚡ CERRAR MANDO DE LECTURA EN DIRECTO";
                     } else {
                         embeddedLivePanel.style.display = "none";
-                        toggleLiveBtn.innerText = "⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES";
+                        toggleLiveBtn.innerText = "⚡ ABRIR MANDO DE LECTURA EN DIRECTO";
                     }
                 });
             }
 
-            if(localStorage.getItem("sofiul_email")) emailInput.value = localStorage.getItem("sofiul_email");
+            if (customVoiceFileInput) {
+                customVoiceFileInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const file = this.files[0];
+                        customVoiceAudioBuffer = new Audio(URL.createObjectURL(file));
+                        document.getElementById('txt-custom-voice').innerText = "🎙️ MP3 cargado: " + file.name.substring(0, 18) + "...";
+                    }
+                });
+            }
+
             if(localStorage.getItem("sofiul_tiktok")) tiktokInput.value = localStorage.getItem("sofiul_tiktok");
             if(localStorage.getItem("sofiul_assistant")) assistantInput.value = localStorage.getItem("sofiul_assistant");
-            if(localStorage.getItem("sofiul_tone")) botToneSelect.value = localStorage.getItem("sofiul_tone");
-            if(localStorage.getItem("sofiul_gender")) botVoiceSelect.value = localStorage.getItem("sofiul_gender");
-            if(localStorage.getItem("sofiul_lang")) botLangSelect.value = localStorage.getItem("sofiul_lang");
-            
+            if(localStorage.getItem("sofiul_voice_choice")) voiceChoiceSelect.value = localStorage.getItem("sofiul_voice_choice");
+
             ['mvp', 'ghost', 'toxic', 'antisilence'].forEach(key => {
                 const savedVal = localStorage.getItem("sofiul_feat_" + key);
-                if(savedVal !== null) {
-                    featuresState[key] = (savedVal === 'true');
-                }
+                if(savedVal !== null) featuresState[key] = (savedVal === 'true');
                 updateDualButtonsUI(key);
             });
 
-            if(localStorage.getItem("sofiul_spotify")) {
-                spotifyInput.value = localStorage.getItem("sofiul_spotify");
-                updateSpotifyEmbed(localStorage.getItem("sofiul_spotify"));
-            }
-
-            document.querySelectorAll('.btn-audio-file').forEach(input => {
-                input.addEventListener('change', function() {
-                    const btnType = this.getAttribute('data-btn');
-                    if(this.files && this.files[0]) {
-                        const file = this.files[0];
-                        buttonCustomAudios[btnType] = new Audio(URL.createObjectURL(file));
-                        document.getElementById('txt-' + btnType).innerText = "🎵 " + file.name.substring(0, 10) + "...";
-                    }
-                });
-            });
-
-            spotifyInput.addEventListener("change", function() {
-                const val = this.value.trim();
-                localStorage.setItem("sofiul_spotify", val);
-                updateSpotifyEmbed(val);
-            });
-
-            function updateSpotifyEmbed(url) {
-                if(!url) return;
-                let embedUrl = url;
-                if(url.includes("open.spotify.com/playlist/")) {
-                    const id = url.split("playlist/")[1].split("?")[0];
-                    embedUrl = `https://open.spotify.com/embed/playlist/${id}?utm_source=generator&theme=0`;
-                } else if(url.includes("open.spotify.com/track/")) {
-                    const id = url.split("track/")[1].split("?")[0];
-                    embedUrl = `https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0`;
-                }
-                spotifyIframe.src = embedUrl;
-            }
-
             actionBtn.addEventListener("click", function() {
-                localStorage.setItem("sofiul_email", emailInput.value.trim());
                 localStorage.setItem("sofiul_tiktok", tiktokInput.value.trim());
                 localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
-                localStorage.setItem("sofiul_tone", botToneSelect.value);
-                localStorage.setItem("sofiul_gender", botVoiceSelect.value);
-                localStorage.setItem("sofiul_lang", botLangSelect.value);
+                localStorage.setItem("sofiul_voice_choice", voiceChoiceSelect.value);
 
                 const nameAsistente = assistantInput.value.trim() || "Sofiul";
-                playProVoiceSample(botVoiceSelect.value);
+                speakExpressive(`¡Configuración guardada! Hola, soy ${nameAsistente}, lista para interactuar en tu directo.`);
                 alert("¡Configuración guardada correctamente!");
             });
-
-            setInterval(() => {
-                if (embeddedLivePanel.style.display === "block" && featuresState.antisilence) {
-                    const profile = botVoiceSelect.value;
-                    let frasesAuto = [
-                        "¡Mi gente hermosa, vamos a tocar la pantalla con energía y compartir este directo!",
-                        "¡Pessoal, deixem o seu like e vamos fazer essa live bombar juntos!",
-                        "Hey everyone, let's keep this energy high, tap the screen and share the live!"
-                    ];
-                    const fraseElegida = frasesAuto[Math.floor(Math.random() * frasesAuto.length)];
-                    
-                    if (window.speechSynthesis && !window.speechSynthesis.speaking) {
-                        playProVoiceSample(profile);
-                    }
-                }
-            }, 15000);
         });
     </script>
 </body>
