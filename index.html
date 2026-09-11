@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOFIUL - Live Stream Ecosystem</title>
+    <title>SOFIUL - Ultimate Live Ecosystem</title>
     <meta name="theme-color" content="#070a12">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -66,9 +66,9 @@
         
         .file-upload-btn {
             display: block; width: 100%; background: rgba(154, 43, 162, 0.15);
-            border: 1px dashed rgba(154, 43, 162, 0.5); color: #e2b7ff; padding: 8px;
-            border-radius: 6px; text-align: center; font-size: 0.75rem; font-weight: bold;
-            cursor: pointer; box-sizing: border-box; font-style: italic;
+            border: 1px dashed rgba(154, 43, 162, 0.5); color: #e2b7ff; padding: 6px 8px;
+            border-radius: 6px; text-align: center; font-size: 0.7rem; font-weight: bold;
+            cursor: pointer; box-sizing: border-box; font-style: italic; margin-top: 3px;
         }
 
         .live-mode-banner {
@@ -103,6 +103,17 @@
             box-shadow: 0 0 15px rgba(0, 181, 255, 0.4); text-transform: uppercase; margin-top: 5px;
             font-style: italic; width: 100%; text-decoration: none; display: block; box-sizing: border-box;
         }
+
+        .pay-box {
+            background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.4);
+            border-radius: 8px; padding: 10px; margin-top: 8px; text-align: center; display: none;
+        }
+        .plan-btn {
+            background: linear-gradient(135deg, #ffa500, #ff8c00); color: #000;
+            border: none; border-radius: 6px; padding: 8px 10px; font-size: 0.75rem;
+            font-weight: bold; text-align: center; cursor: pointer; text-transform: uppercase;
+            display: block; width: 100%; margin-top: 6px; text-decoration: none; font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -113,7 +124,7 @@
     </header>
 
     <div class="container">
-        <!-- BOTÓN DE ACCESO AL MODO DIRECTO -->
+        <!-- BOTÓN DE ACCESO AL MANDO EN VIVO -->
         <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
                 🚀 PANEL DE CONTROL &amp; MANDO EN VIVO
@@ -125,24 +136,43 @@
 
         <!-- PANELES DE CONFIGURACIÓN -->
         <div id="config-panels">
+            <!-- 1. VINCULACIÓN TIKTOK (PRUEBA 72H Y PLANES DE PAGO) -->
             <div class="card" style="border-color: rgba(0, 229, 255, 0.4);">
                 <div class="card-title" style="color: var(--accent-cyan);">
-                    <span>VINCULACI&Oacute;N TIKTOK LIVE (ANTIABUSO 72H)</span>
-                    <span class="status-badge badge-active" id="trial-status-badge">72H ACTIVAS</span>
+                    <span>VINCULACI&Oacute;N TIKTOK (PRUEBA 72H)</span>
+                    <span class="status-badge badge-active" id="trial-status-badge">72H LIBRES</span>
                 </div>
+                
                 <div class="input-group">
-                    <label>Correo Electr&oacute;nico (Gmail / Registro):</label>
-                    <input type="email" id="user-email" class="neon-input" placeholder="tucorreo@gmail.com">
+                    <label>Tu Usuario P&uacute;blico de TikTok (@Usuario):</label>
+                    <input type="text" id="tiktok-user" class="neon-input" placeholder="Ej: @tu_usuario (Entrada inmediata)">
                 </div>
-                <div class="input-group" style="margin-bottom: 0;">
-                    <label>Tu Usuario P&uacute;blico (@TikTok - Único por Prueba):</label>
-                    <input type="text" id="tiktok-user" class="neon-input" placeholder="Ej: @tu_usuario">
-                </div>
-                <div style="font-size: 0.6rem; color: #ff2a5f; font-style: italic; margin-top: 4px;" id="anti-abuse-notice">
-                    * Sistema antiabuso activo: Las 72 horas de prueba se vinculan estrictamente al usuario de TikTok para evitar registros múltiples.
+
+                <div id="gmail-required-section" style="display: none; margin-top: 8px; border-top: 1px dashed rgba(255, 42, 95, 0.4); padding-top: 8px;">
+                    <div style="font-size: 0.65rem; color: #ff2a5f; font-weight: bold; margin-bottom: 4px; font-style: italic;">
+                        ⚠️ Tus 72 horas han expirado. Elige tu plan y activa tu licencia:
+                    </div>
+                    <div class="input-group">
+                        <label>Correo Electr&oacute;nico (Gmail de Registro):</label>
+                        <input type="email" id="user-email" class="neon-input" placeholder="tucorreo@gmail.com">
+                    </div>
+                    
+                    <!-- Pasarela con los 3 Planes Oficiales de Mercado Pago -->
+                    <div class="pay-box" id="payment-gateway-box" style="display: block;">
+                        <div style="font-size: 0.7rem; color: #ffa500; font-weight: bold; margin-bottom: 6px;">💳 SELECCIONA TU PLAN SOFIUL PRO</div>
+                        
+                        <a href="https://mpago.la/1Pi5cbX" target="_blank" class="plan-btn">⭐ Plan Mensual (R$ 49,90)</a>
+                        <a href="https://mpago.la/2MrRYRg" target="_blank" class="plan-btn">💎 Plan Trimestral (R$ 199,90)</a>
+                        <a href="https://mpago.la/15J8E6x" target="_blank" class="plan-btn">👑 Plan Anual (R$ 349,90)</a>
+
+                        <div style="font-size: 0.55rem; color: #ccc; margin-top: 6px; font-style: italic;">
+                            * Tras realizar tu pago, registra tu Gmail arriba para sincronizar tu cuenta de por vida.
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <!-- 2. MASCOTA & CLONACIÓN GLOBAL -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
                     <span>MASCOTA: CLONACIÓN DE VOZ HD &amp; POLÍGLOTA</span>
@@ -163,15 +193,61 @@
                 </div>
                 
                 <div class="input-group" style="margin-top: 6px; border-top: 1px dashed rgba(154, 43, 162, 0.4); padding-top: 6px;">
-                    <label style="color: #e2b7ff; font-weight: bold;">🎙️ Clonación de Voz por Audio (Tono, Acento y Calidez):</label>
+                    <label style="color: #e2b7ff; font-weight: bold;">🎙️ Clonación General de Voz de la Mascota:</label>
                     <label class="file-upload-btn">
-                        📁 Subir muestra de voz (.mp3 / .wav)
+                        📁 Subir muestra de voz principal (.mp3 / .wav)
                         <input type="file" id="voice-file" style="display: none;" accept="audio/*">
                     </label>
-                    <div id="voice-file-name" style="font-size: 0.65rem; color: #e2b7ff; font-style: italic; margin-top: 3px;">Ningún archivo clonado cargado</div>
+                    <div id="voice-file-name" style="font-size: 0.65rem; color: #e2b7ff; font-style: italic; margin-top: 3px;">Voz predeterminada del sistema</div>
                 </div>
             </div>
 
+            <!-- 3. ASIGNACIÓN DE AUDIOS PROPIOS A LOS 4 BOTONES -->
+            <div class="card" style="border-color: rgba(154, 43, 162, 0.5);">
+                <div class="card-title" style="color: #e2b7ff;">
+                    <span>🎛️ ASIGNAR AUDIOS PROPIOS A BOTONES EN VIVO</span>
+                    <span class="status-badge" style="background: rgba(154, 43, 162, 0.2); color: #e2b7ff;">SFX INDIVIDUAL</span>
+                </div>
+                <div style="font-size: 0.65rem; color: #a19bc8; font-style: italic; margin-bottom: 8px;">
+                    Sube un audio personalizado (.mp3 / .wav) para cada botón de directo:
+                </div>
+
+                <div class="sfx-grid">
+                    <div>
+                        <div style="font-size: 0.7rem; color: #fff; font-weight: bold;">👋 Bienvenida</div>
+                        <label class="file-upload-btn">📁 Subir audio
+                            <input type="file" class="btn-audio-file" data-btn="welcome" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.6rem; color: var(--accent-cyan); font-style: italic;" id="txt-welcome">Voz IA HD</div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 0.7rem; color: #fff; font-weight: bold;">🔥 Júbilo &amp; Hype</div>
+                        <label class="file-upload-btn">📁 Subir audio
+                            <input type="file" class="btn-audio-file" data-btn="hype" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.6rem; color: var(--accent-cyan); font-style: italic;" id="txt-hype">Voz IA HD</div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 0.7rem; color: #fff; font-weight: bold;">😂 Risas &amp; SFX</div>
+                        <label class="file-upload-btn">📁 Subir audio
+                            <input type="file" class="btn-audio-file" data-btn="laugh" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.6rem; color: var(--accent-cyan); font-style: italic;" id="txt-laugh">Voz IA HD</div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 0.7rem; color: #fff; font-weight: bold;">🏆 Victoria</div>
+                        <label class="file-upload-btn">📁 Subir audio
+                            <input type="file" class="btn-audio-file" data-btn="win" style="display: none;" accept="audio/*">
+                        </label>
+                        <div style="font-size: 0.6rem; color: var(--accent-cyan); font-style: italic;" id="txt-win">Voz IA HD</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. SPOTIFY BACKGROUND -->
             <div class="card" style="border-color: rgba(29, 185, 84, 0.4);">
                 <div class="card-title" style="color: #1db954;">
                     <span>SPOTIFY LIVE BACKGROUND (FONDO INDEPENDIENTE)</span>
@@ -189,7 +265,7 @@
             <button class="action-button" id="main-action-btn">GUARDAR CONFIGURACIÓN</button>
         </div>
 
-        <!-- PANTALLA DE CONTROL EN VIVO -->
+        <!-- PANTALLA DE CONTROL EN VIVO (MANDO DIRECTO) -->
         <div id="live-control-panel" class="card" style="display: none; border-color: #ff2a5f; background: rgba(11, 20, 36, 0.98);">
             <div class="card-title" style="color: #ff2a5f;">
                 <span>🔴 MANDO DE TRANSMISIÓN EN VIVO</span>
@@ -197,7 +273,7 @@
             </div>
             
             <div style="font-size: 0.7rem; color: #fff; margin-bottom: 6px; font-style: italic;">
-                🎮 Botones de Control de Voz &amp; Efectos (Júbilo y Bienvenida):
+                🎮 Toca para lanzar audios propios o frases de la Mascota IA:
             </div>
 
             <div class="sfx-grid">
@@ -224,17 +300,17 @@
 
     <script>
         let voicesList = [];
-        let clonedAudioElement = null;
+        let globalClonedVoice = null;
+        let buttonCustomAudios = { welcome: null, hype: null, laugh: null, win: null };
 
         function loadSpeechVoices() {
             if (!window.speechSynthesis) return;
             voicesList = window.speechSynthesis.getVoices();
-            // Priorización estricta para buscar las voces con mayor brillo, nitidez y presencia
             voicesList.sort((a, b) => {
                 const aName = a.name.toLowerCase();
                 const bName = b.name.toLowerCase();
-                if (aName.includes('natural') || aName.includes('google') || aName.includes('enhanced')) return -1;
-                if (bName.includes('natural') || bName.includes('google') || bName.includes('enhanced')) return 1;
+                if (aName.includes('natural') || aName.includes('google')) return -1;
+                if (bName.includes('natural') || bName.includes('google')) return 1;
                 return 0;
             });
         }
@@ -244,10 +320,10 @@
             setTimeout(loadSpeechVoices, 300);
         }
 
-        // Motor de locución ultra nítido, brillante y con expresividad humana (ant時点でapagado)
         function speakBrilliantHD(text, explicitLang = 'auto-poly') {
-            if (clonedAudioElement) {
-                clonedAudioElement.play().catch(e => console.log("Reproduciendo voz clonada"));
+            if (globalClonedVoice) {
+                globalClonedVoice.currentTime = 0;
+                globalClonedVoice.play().catch(e => console.log("Audio clonado"));
                 return;
             }
 
@@ -257,7 +333,7 @@
             let targetLang = 'es-ES';
             const lowerText = text.toLowerCase();
 
-            if (explicitLang === 'pt' || (explicitLang === 'auto-poly' && (lowerText.includes('tudo') || lowerText.includes('obrigado') || lowerText.includes('legal') || lowerText.includes('bom')))) {
+            if (explicitLang === 'pt' || (explicitLang === 'auto-poly' && (lowerText.includes('tudo') || lowerText.includes('obrigado') || lowerText.includes('legal')))) {
                 targetLang = 'pt-BR';
             } else if (explicitLang === 'en' || (explicitLang === 'auto-poly' && (lowerText.includes('hello') || lowerText.includes('thanks') || lowerText.includes('stream')))) {
                 targetLang = 'en-US';
@@ -268,16 +344,20 @@
             if (bestVoice) utterance.voice = bestVoice;
             
             utterance.lang = targetLang;
-            
-            // CALIBRACIÓN MAESTRA ANTI-APAGADO: Pitch en 1.02 (nitidez cristalina sin chillidos) y Rate en 1.05 (energía viva)
-            utterance.pitch = 1.02; 
-            utterance.rate = 1.05;  
+            utterance.pitch = 1.02;
+            utterance.rate = 1.05;
             utterance.volume = 1.0;
 
             window.speechSynthesis.speak(utterance);
         }
 
         function triggerLiveAction(type) {
+            if (buttonCustomAudios[type]) {
+                buttonCustomAudios[type].currentTime = 0;
+                buttonCustomAudios[type].play().catch(e => console.log("Error al reproducir audio del botón"));
+                return;
+            }
+
             const mode = document.getElementById('bot-lang').value;
             const tiktokAccount = document.getElementById('tiktok-user').value.trim() || "Streamer";
 
@@ -290,7 +370,7 @@
 
             if (mode === 'pt') {
                 phrases = {
-                    'welcome': `¡Boas-vindas a todos que estão chegando na live de ${tiktokAccount}! Sejam muito bem-vindos!`,
+                    'welcome': `¡Boas-vindas a todos que estão chegando na live de ${tiktokAccount}!`,
                     'hype': `¡Vamos com toda a energia da família! Vamos tocar na tela e compartilhar!`,
                     'laugh': `¡Hahaha, que momento incrível na live!`,
                     'win': `¡Uau! Muito obrigado por esse apoio espetacular!`
@@ -317,8 +397,11 @@
             const configPanels = document.getElementById("config-panels");
             const liveControlPanel = document.getElementById("live-control-panel");
             
-            const emailInput = document.getElementById("user-email");
             const tiktokInput = document.getElementById("tiktok-user");
+            const emailRequiredSection = document.getElementById("gmail-required-section");
+            const emailInput = document.getElementById("user-email");
+            const trialBadge = document.getElementById("trial-status-badge");
+
             const assistantInput = document.getElementById("assistant-name");
             const botLangSelect = document.getElementById("bot-lang");
             const voiceFileInput = document.getElementById("voice-file");
@@ -326,12 +409,28 @@
             const spotifyInput = document.getElementById("spotify-link");
             const spotifyIframe = document.getElementById("spotify-iframe");
 
-            // Gestión de Antiabuso vinculada al usuario de TikTok
-            if(localStorage.getItem("sofiul_tiktok")) {
-                tiktokInput.value = localStorage.getItem("sofiul_tiktok");
-                const savedTime = localStorage.getItem("sofiul_trial_start") || Date.now();
-                localStorage.setItem("sofiul_trial_start", savedTime);
+            let savedTiktok = localStorage.getItem("sofiul_tiktok") || "";
+            let trialStart = localStorage.getItem("sofiul_trial_start");
+
+            if (savedTiktok) {
+                tiktokInput.value = savedTiktok;
+                if (!trialStart) {
+                    trialStart = Date.now();
+                    localStorage.setItem("sofiul_trial_start", trialStart);
+                }
+
+                const hoursPassed = (Date.now() - parseInt(trialStart)) / (1000 * 60 * 60);
+                if (hoursPassed > 72 && localStorage.getItem("sofiul_paid") !== "true") {
+                    emailRequiredSection.style.display = "block";
+                    trialBadge.innerText = "EXPIRADO";
+                    trialBadge.style.background = "rgba(255, 42, 95, 0.2)";
+                    trialBadge.style.color = "#ff2a5f";
+                } else {
+                    const hoursLeft = Math.max(0, Math.floor(72 - hoursPassed));
+                    trialBadge.innerText = hoursLeft + "H RESTANTES";
+                }
             }
+
             if(localStorage.getItem("sofiul_email")) emailInput.value = localStorage.getItem("sofiul_email");
             if(localStorage.getItem("sofiul_assistant")) assistantInput.value = localStorage.getItem("sofiul_assistant");
             if(localStorage.getItem("sofiul_lang")) botLangSelect.value = localStorage.getItem("sofiul_lang");
@@ -344,13 +443,28 @@
             voiceFileInput.addEventListener("change", function() {
                 if(this.files && this.files[0]) {
                     const file = this.files[0];
-                    const audioUrl = URL.createObjectURL(file);
-                    clonedAudioElement = new Audio(audioUrl);
-                    voiceFileName.innerText = "📁 Archivo clonado cargado: " + file.name;
+                    globalClonedVoice = new Audio(URL.createObjectURL(file));
+                    voiceFileName.innerText = "📁 Archivo de voz cargado: " + file.name;
                 }
             });
 
+            document.querySelectorAll('.btn-audio-file').forEach(input => {
+                input.addEventListener('change', function() {
+                    const btnType = this.getAttribute('data-btn');
+                    if(this.files && this.files[0]) {
+                        const file = this.files[0];
+                        buttonCustomAudios[btnType] = new Audio(URL.createObjectURL(file));
+                        document.getElementById('txt-' + btnType).innerText = "🎵 " + file.name;
+                    }
+                });
+            });
+
             toggleLiveBtn.addEventListener("click", function() {
+                const tiktokVal = tiktokInput.value.trim();
+                if(!tiktokVal) {
+                    alert("Por favor ingresa tu usuario de TikTok para iniciar.");
+                    return;
+                }
                 configPanels.style.display = "none";
                 liveControlPanel.style.display = "block";
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -384,28 +498,24 @@
             actionBtn.addEventListener("click", function() {
                 const tiktokVal = tiktokInput.value.trim();
                 if(!tiktokVal) {
-                    alert("Por favor ingresa tu usuario de TikTok para activar la prueba gratuita.");
+                    alert("Ingresa tu usuario de TikTok.");
                     return;
                 }
 
-                localStorage.setItem("sofiul_email", emailInput.value.trim());
-                localStorage.setItem("sofiul_tiktok", tiktokVal);
-                localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
-                localStorage.setItem("sofiul_lang", botLangSelect.value);
-                if(!localStorage.getItem("sofiul_trial_start")) {
+                if (!localStorage.getItem("sofiul_tiktok")) {
                     localStorage.setItem("sofiul_trial_start", Date.now());
                 }
 
-                const nameAsistente = assistantInput.value.trim() || "Sofiul";
-                const mode = botLangSelect.value;
-                let saludo = `¡Configuración guardada! Soy ${nameAsistente}, con voz nítida y brillante lista para tu directo.`;
-                if(mode === 'pt') saludo = `¡Configuração salva! Sou ${nameAsistente}, pronta com voz nítida e brilhante para a live.`;
+                localStorage.setItem("sofiul_tiktok", tiktokVal);
+                localStorage.setItem("sofiul_assistant", assistantInput.value.trim());
+                localStorage.setItem("sofiul_lang", botLangSelect.value);
 
-                speakBrilliantHD(saludo, mode);
-                alert("¡Configuración guardada y protegido contra abuso por 72 horas! Ya puedes abrir tu pantalla de directo.");
+                const nameAsistente = assistantInput.value.trim() || "Sofiul";
+                speakBrilliantHD(`¡Configuración guardada para ${tiktokVal}!`, botLangSelect.value);
+
+                alert("¡Configuración guardada correctamente!");
             });
 
-            // Piloto automático inteligente cada 15 segundos
             setInterval(() => {
                 if (liveControlPanel.style.display === "block") {
                     const mode = botLangSelect.value;
