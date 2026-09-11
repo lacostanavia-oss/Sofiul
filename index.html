@@ -143,7 +143,7 @@
     </header>
 
     <div class="container">
-        <!-- BOTÓN ROJIZO DE INICIO CON ACORDEÓN -->
+        <!-- CONTENEDOR PRINCIPAL DEL BOTÓN ROJIZO CON EL ACORDEÓN INTERNO -->
         <div class="live-mode-banner">
             <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-cyan); margin-bottom: 6px; font-style: italic;">
                 🚀 PANEL DE CONTROL &amp; MANDO EN VIVO
@@ -153,7 +153,7 @@
                 ⚡ ABRIR PANTALLA DE DIRECTO CON BOTONES
             </button>
 
-            <!-- MANDO DE TRANSMISIÓN (OCULTO HASTA HACER CLIC) -->
+            <!-- MANDO DE TRANSMISIÓN OCULTO POR DEFECTO -->
             <div id="embedded-live-panel" style="display: none; margin-top: 10px; border: 1px solid #ff2a5f; border-radius: 8px; background: rgba(11, 20, 36, 0.98); padding: 10px; text-align: left;">
                 <div class="card-title" style="color: #ff2a5f;">
                     <span>🔴 MANDO DE TRANSMISIÓN EN VIVO</span>
@@ -294,7 +294,7 @@
                 </div>
             </div>
 
-            <!-- 5. ANIMACIONES MVP & FANTASMAS -->
+            <!-- 5. ANIMACIONES MVP & FANTASMAS (BOTONES INTERACTIVOS FUNCIONALES) -->
             <div class="card">
                 <div class="card-title" style="color: var(--accent-cyan);">
                     <span>ANIMACIONES MVP &amp; FANTASMAS</span>
@@ -357,12 +357,26 @@
         function toggleFeature(featureKey) {
             featuresState[featureKey] = !featuresState[featureKey];
             const btn = document.getElementById('btn-' + featureKey);
+            
             if (featuresState[featureKey]) {
                 btn.classList.add('active');
                 btn.innerText = featureKey === 'toxic' ? 'SMART' : 'ON';
+                
+                // Interacción real para los botones de MVP y Fantasmas
+                if (featureKey === 'mvp') {
+                    speakCrystalHD("Animación Top 3 MVPs activada. Reconociendo a los mejores donantes.", 'es', 'female-hd');
+                } else if (featureKey === 'ghost') {
+                    speakCrystalHD("Filtro de donantes fantasmas activado. Dando la bienvenida a los nuevos espectadores.", 'es', 'female-hd');
+                }
             } else {
                 btn.classList.remove('active');
                 btn.innerText = 'OFF';
+                
+                if (featureKey === 'mvp') {
+                    speakCrystalHD("Animación Top 3 MVPs desactivada.", 'es', 'female-hd');
+                } else if (featureKey === 'ghost') {
+                    speakCrystalHD("Filtro de donantes fantasmas desactivado.", 'es', 'female-hd');
+                }
             }
             localStorage.setItem("sofiul_feat_" + featureKey, featuresState[featureKey]);
         }
