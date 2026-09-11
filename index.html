@@ -104,15 +104,17 @@
             box-shadow: 0 0 8px rgba(255, 42, 95, 0.4);
         }
 
-        /* BOTÓN DE PRUEBA DE VOZ HD */
-        .test-voice-btn {
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(154, 43, 162, 0.3));
-            border: 1px solid var(--accent-cyan); color: var(--accent-cyan);
-            padding: 6px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: bold;
-            cursor: pointer; text-transform: uppercase; margin-top: 4px; width: 100%;
-            text-align: center; font-style: italic; display: block; box-sizing: border-box;
+        /* DISEÑO PROFESIONAL PARA LAS OPCIONES DE VOZ CON BOTONES DE ESCUCHA */
+        .voice-preview-container {
+            display: flex; gap: 6px; margin-top: 4px;
         }
-        .test-voice-btn:active { background: var(--accent-cyan); color: #000; }
+        .voice-preview-btn {
+            flex: 1; background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(154, 43, 162, 0.25));
+            border: 1px solid rgba(0, 229, 255, 0.5); color: var(--accent-cyan);
+            padding: 6px; border-radius: 6px; font-size: 0.65rem; font-weight: bold;
+            cursor: pointer; text-align: center; text-transform: uppercase; font-style: italic;
+        }
+        .voice-preview-btn:active { background: var(--accent-cyan); color: #000; }
 
         .live-mode-banner {
             background: linear-gradient(135deg, rgba(255, 42, 95, 0.25), rgba(0, 229, 255, 0.25));
@@ -272,7 +274,7 @@
                 </div>
             </div>
 
-            <!-- 3. MASCOTA: IA HUMANA, VOZ NÍTIDA Y POLÍGLOTA CON PRUEBA EN VIVO -->
+            <!-- 3. MASCOTA: IA HUMANA, VOCES NÍTIDAS Y MUESTRAS EN VIVO -->
             <div class="card">
                 <div class="card-title" style="color: #fff;">
                     <span>MASCOTA: IA HUMANA &amp; POLÍGLOTA</span>
@@ -297,7 +299,17 @@
                         <option value="male-hd">Masculino - Profundo, Enérgico, Clarito &amp; Confiable</option>
                     </select>
                 </div>
-                <div class="input-group">
+
+                <!-- BOTONES INDIVIDUALES DE MUESTRA PARA CADA VOZ -->
+                <div style="font-size: 0.65rem; color: #a19bc8; margin: 6px 0 2px 0; font-style: italic;">
+                    🎧 Toca para escuchar la muestra de cada voz antes de conectar:
+                </div>
+                <div class="voice-preview-container">
+                    <button type="button" class="voice-preview-btn" onclick="previewSpecificVoice('female-hd')">▶ ♀ Probar Voz Femenina HD</button>
+                    <button type="button" class="voice-preview-btn" onclick="previewSpecificVoice('male-hd')">▶ ♂ Probar Voz Masculina HD</button>
+                </div>
+
+                <div class="input-group" style="margin-top: 8px;">
                     <label>Detección de Idioma Inteligente (Políglota Nativo):</label>
                     <select id="bot-lang" class="neon-select">
                         <option value="auto-poly">✨ Automático (Detecta si entran de Brasil, USA o Hispanoamérica)</option>
@@ -306,8 +318,6 @@
                         <option value="en">English (Global - Ultra nítido)</option>
                     </select>
                 </div>
-                <!-- BOTÓN NUEVO PARA PROBAR LA VOZ EN VIVO ANTES DE CONECTAR -->
-                <button type="button" class="test-voice-btn" onclick="previewSelectedVoice()">🔊 Probar Voz Seleccionada en Vivo</button>
             </div>
 
             <!-- 4. CONEXIÓN DIRECTA SPOTIFY LIVE BACKGROUND -->
@@ -429,45 +439,55 @@
             setTimeout(loadSpeechVoices, 300);
         }
 
-        function speakCrystalHD(text, explicitLang = 'auto-poly', gender = 'female-hd') {
+        function speakWithSpecificGender(text, genderType) {
             if (!window.speechSynthesis) return;
             window.speechSynthesis.cancel();
             
+            const lang = document.getElementById('bot-lang').value;
             let targetLang = 'es-ES';
-            const lowerText = text.toLowerCase();
-
-            if (explicitLang === 'pt' || (explicitLang === 'auto-poly' && (lowerText.includes('tudo') || lowerText.includes('obrigado') || lowerText.includes('legal')))) {
-                targetLang = 'pt-BR';
-            } else if (explicitLang === 'en' || (explicitLang === 'auto-poly' && (lowerText.includes('hello') || lowerText.includes('thanks')))) {
-                targetLang = 'en-US';
-            }
+            if (lang === 'pt') targetLang = 'pt-BR';
+            else if (lang === 'en') targetLang = 'en-US';
 
             const utterance = new SpeechSynthesisUtterance(text);
-            const bestVoice = voicesList.find(v => v.lang.toLowerCase().includes(targetLang.split('-')[0])) || voicesList[0];
+            
+            // Buscar una voz adecuada según el género seleccionado
+            const bestVoice = voicesList.find(v => {
+                const name = v.name.toLowerCase();
+                const isMatchLang = v.lang.toLowerCase().includes(targetLang.split('-')[0]);
+                if (genderType === 'female-hd') {
+                    return isMatchLang && (name.includes('female') || name.includes('zira') || name.includes('helena') || name.includes('lucia') || name.includes('carmem') || name.includes('google español') || name.includes('es-'));
+                } else {
+                    return isMatchLang && (name.includes('male') || name.includes('david') || name.includes('pablo') || name.includes('daniel') || name.includes('alex'));
+                }
+            }) || voicesList[0];
+
             if (bestVoice) utterance.voice = bestVoice;
             
             utterance.lang = targetLang;
-            utterance.pitch = gender === 'female-hd' ? 1.05 : 0.95;
-            utterance.rate = 1.04;
+            utterance.pitch = genderType === 'female-hd' ? 1.15 : 0.85; // Tono más claro o más profundo según corresponda
+            utterance.rate = 1.02;
             utterance.volume = 1.0;
 
             window.speechSynthesis.speak(utterance);
         }
 
-        // FUNCIÓN DE PRUEBA DE VOZ EN VIVO DESDE EL SELECTOR
-        function previewSelectedVoice() {
-            const gender = document.getElementById('bot-voice-gender').value;
-            const lang = document.getElementById('bot-lang').value;
+        // FUNCIÓN PARA PROBAR DIRECTAMENTE CADA VOZ EN VIVO
+        function previewSpecificVoice(genderType) {
             const name = document.getElementById('assistant-name').value.trim() || "Sofiul";
+            const lang = document.getElementById('bot-lang').value;
             
-            let sampleText = `¡Hola! Soy ${name}, tu asistente de IA humana y nítida, lista para tu directo en TikTok.`;
+            let sampleText = `¡Hola! Soy ${name}, tu asistente de inteligencia artificial humana y súper nítida para el directo en TikTok.`;
             if (lang === 'pt') {
-                sampleText = `¡Olá! Sou ${name}, sua assistente de IA nítida e natural para a live.`;
+                sampleText = `¡Olá! Sou ${name}, sua assistente de inteligência artificial humanizada para a live.`;
             } else if (lang === 'en') {
-                sampleText = `Hello! I am ${name}, your crystal clear AI assistant for the live stream.`;
+                sampleText = `Hello! I am ${name}, your crystal clear human AI assistant for the live.`;
             }
 
-            speakCrystalHD(sampleText, lang, gender);
+            speakWithSpecificGender(sampleText, genderType);
+            
+            // Sincronizar automáticamente el selector visual con la voz probada
+            document.getElementById('bot-voice-gender').value = genderType;
+            localStorage.setItem("sofiul_gender", genderType);
         }
 
         function triggerLiveAction(type) {
@@ -497,18 +517,18 @@
                 };
             }
 
-            speakCrystalHD(phrases[type] || phrases['hype'], mode, gender);
+            speakWithSpecificGender(phrases[type] || phrases['hype'], gender);
         }
 
         function controlSpotify(action) {
             const mode = document.getElementById('bot-lang').value;
             const gender = document.getElementById('bot-voice-gender').value;
             if(action === 'play') {
-                speakCrystalHD("Reproduciendo música en Spotify para ambientar el directo.", mode, gender);
+                speakWithSpecificGender("Reproduciendo música en Spotify para ambientar el directo.", gender);
             } else if(action === 'pause') {
-                speakCrystalHD("Música pausada momentáneamente.", mode, gender);
+                speakWithSpecificGender("Música pausada momentáneamente.", gender);
             } else if(action === 'next') {
-                speakCrystalHD("Pasando a la siguiente canción en Spotify.", mode, gender);
+                speakWithSpecificGender("Pasando a la siguiente canción en Spotify.", gender);
             }
         }
 
@@ -602,7 +622,7 @@
                 localStorage.setItem("sofiul_lang", botLangSelect.value);
 
                 const nameAsistente = assistantInput.value.trim() || "Sofiul";
-                speakCrystalHD(`¡Configuración guardada y lista para TikTok Live! Hola, soy ${nameAsistente}.`, botLangSelect.value, botGenderSelect.value);
+                speakWithSpecificGender(`¡Configuración guardada y lista para TikTok Live! Hola, soy ${nameAsistente}.`, botGenderSelect.value);
                 alert("¡Configuración guardada correctamente!");
             });
 
@@ -618,7 +638,7 @@
                     const fraseElegida = frasesAuto[Math.floor(Math.random() * frasesAuto.length)];
                     
                     if (window.speechSynthesis && !window.speechSynthesis.speaking) {
-                        speakCrystalHD(fraseElegida, mode, gender);
+                        speakWithSpecificGender(fraseElegida, gender);
                     }
                 }
             }, 15000);
